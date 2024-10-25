@@ -1,7 +1,6 @@
-import React from './node_modules/react';
-import ReactDOM from './node_modules/react-dom/client';
-import ReactFlow, { MiniMap, Controls, Background } from './node_modules/@xyflow/react';
-import './node_modules/@xyflow/react/dist/style.css';
+import React from 'https://unpkg.com/react@18/umd/react.production.min.js';
+import ReactDOM from 'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js';
+import ReactFlow, { MiniMap, Controls, Background } from 'https://unpkg.com/@xyflow/react@12.3.2/umd/xyflow-react.production.min.js';
 
 const aboutMeNode = {
   id: '1',
