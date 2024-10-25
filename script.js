@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import ReactFlow, { MiniMap, Controls, Background } from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
+import React from './node_modules/react';
+import ReactDOM from './node_modules/react-dom/client';
+import ReactFlow, { MiniMap, Controls, Background } from './node_modules/@xyflow/react';
+import './node_modules/@xyflow/react/dist/style.css';
 
 const aboutMeNode = {
   id: '1',
