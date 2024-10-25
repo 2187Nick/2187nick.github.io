@@ -2,11 +2,7 @@
   "name": "2187nick.github.io",
   "version": "1.0.0",
   "description": "Personal GitHub page for 2187Nick",
-  "dependencies": {
-    "@xyflow/react": "^12.3.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
-  },
+  "dependencies": {},
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
