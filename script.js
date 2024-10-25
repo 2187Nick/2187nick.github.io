@@ -1,6 +1,6 @@
 import React from 'https://unpkg.com/react@18/umd/react.production.min.js';
 import ReactDOM from 'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js';
-import ReactFlow, { MiniMap, Controls, Background } from 'https://unpkg.com/@xyflow/react@12.3.2/umd/xyflow-react.production.min.js';
+import ReactFlow, { MiniMap, Controls, Background } from 'https://unpkg.com/react-flow-renderer@10.0.0/dist/react-flow-renderer.min.js';
 
 const aboutMeNode = {
   id: '1',
