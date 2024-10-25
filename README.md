@@ -1,2 +1,1 @@
-# github-pages-site
-A repository for my GitHub Pages site
+This repository is empty. Any task executed on it should be considered a new capability and needs to be created.
