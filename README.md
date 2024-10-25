@@ -1,6 +1,6 @@
-# Experimenting with copilot workspace to create and modify a personal github page
+# Experimenting with Copilot Workspace
 
-## View the GitHub Pages Site:
+`It will create and modify a personal github page`
 
 
-[https://2187Nick.github.io/2187Nick.github.io/](https://2187Nick.github.io/2187Nick.github.io/)
+[https://2187nick.github.io/](https://2187nick.github.io/)
