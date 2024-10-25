@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import ReactFlow, { MiniMap, Controls, Background } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
@@ -24,38 +24,39 @@ const projectNodes = [
 ];
 
 const initialNodes = [aboutMeNode, ...projectNodes];
-
 const initialEdges = [
   { id: 'e1-2', source: '1', target: '2', animated: true },
   { id: 'e1-3', source: '1', target: '3', animated: true },
 ];
 
-const AboutMe = () => (
-  <div>
-    <h1>About Me</h1>
-    <p>This is the about me section.</p>
-  </div>
-);
+const AboutMe = () => {
+  return React.createElement('div', null, [
+    React.createElement('h1', null, 'About Me'),
+    React.createElement('p', null, 'This is the about me section.')
+  ]);
+};
 
-const MyProjects = () => (
-  <div>
-    <h2>My Projects</h2>
-    <ReactFlow
-      elements={[...initialNodes, ...initialEdges]}
-      style={{ width: '100%', height: '500px' }}
-    >
-      <MiniMap />
-      <Controls />
-      <Background />
-    </ReactFlow>
-  </div>
-);
+const MyProjects = () => {
+  return React.createElement('div', null, [
+    React.createElement('h2', null, 'My Projects'),
+    React.createElement(ReactFlow, {
+      nodes: initialNodes,
+      edges: initialEdges,
+      style: { width: '100%', height: '500px' }
+    }, [
+      React.createElement(MiniMap, null),
+      React.createElement(Controls, null),
+      React.createElement(Background, null)
+    ])
+  ]);
+};
 
-const App = () => (
-  <div>
-    <AboutMe />
-    <MyProjects />
-  </div>
-);
+const App = () => {
+  return React.createElement('div', null, [
+    React.createElement(AboutMe, null),
+    React.createElement(MyProjects, null)
+  ]);
+};
 
-ReactDOM.render(<App />, document.getElementById('react-root'));
+const root = ReactDOM.createRoot(document.getElementById('react-root'));
+root.render(React.createElement(App, null));
