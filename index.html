@@ -1,15 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>About Me and My Projects</title>
+    <title>Snake Game - 2187Nick</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-flow-renderer@10.0.0/dist/react-flow-renderer.min.js" crossorigin></script>
-    <link rel="stylesheet" href="https://unpkg.com/react-flow-renderer@10.0.0/dist/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <div id="react-root"></div>
+    <div class="game-container">
+        <h1>Snake Game</h1>
+        <div class="score-container">
+            <p>Score: <span id="score">0</span></p>
+            <p>High Score: <span id="highScore">0</span></p>
+        </div>
+        <canvas id="gameCanvas"></canvas>
+        <div class="controls">
+            <button id="startBtn">Start Game</button>
+            <p class="instructions">Use arrow keys or swipe (on mobile) to control the snake.</p>
+            <div class="mobile-controls">
+                <button id="upBtn">⬆️</button>
+                <div class="mobile-controls-row">
+                    <button id="leftBtn">⬅️</button>
+                    <button id="rightBtn">➡️</button>
+                </div>
+                <button id="downBtn">⬇️</button>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>Created by <a href="https://github.com/2187Nick" target="_blank">2187Nick</a> | May 2025</p>
+    </footer>
     <script src="script.js"></script>
 </body>
 </html>
