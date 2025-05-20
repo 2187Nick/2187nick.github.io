@@ -10,7 +10,7 @@ export default defineConfig({
       input: {
         main: './index.html',
         space_invader: './space_invader.html',
-        snake: './snake-react.html'
+        snake: './snake_react.html'
       },
       output: {
         assetFileNames: (assetInfo) => {
