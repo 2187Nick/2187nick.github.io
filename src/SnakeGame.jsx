@@ -98,13 +98,23 @@ export default function SnakeGame() {
       }
 
       const newSnake = [newHead, ...currentSnake];
+      let isGrowing = false;
+
+      console.log("Old Head:", currentSnake[0]);
+      console.log("New Head:", newHead);
+      console.log("Food Position:", food);
+      const headOnFood = newHead.x === food.x && newHead.y === food.y;
+      console.log("Is head on food?", headOnFood);
 
       // Check if food is eaten
-      if (newHead.x === food.x && newHead.y === food.y) {
+      if (headOnFood) {
         setScore(s => s + 1);
         setFood(generateFood());
+        isGrowing = true;
+        console.log("Snake is GROWING.");
       } else {
         newSnake.pop();
+        console.log("Snake is MOVING (not growing).");
       }
 
       return newSnake;
