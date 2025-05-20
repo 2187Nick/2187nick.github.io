@@ -10,7 +10,7 @@ A simple and fun Snake game built with HTML, CSS, and JavaScript. Enjoy playing 
 - Increasing difficulty as your score grows
 
 ## How to Play
-1. Visit [https://2187Nick.github.io/](https://2187Nick.github.io/)
+1. Visit [https://2187nick.github.io/](https://2187nick.github.io/)
 2. Click "Start Game" to begin
 3. Use arrow keys (on desktop) or the on-screen buttons (on mobile) to control the snake
 4. Eat the red food to grow and increase your score
