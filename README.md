@@ -22,8 +22,3 @@ A simple and fun Snake game built with HTML, CSS, and JavaScript. Enjoy playing 
 - Vanilla JavaScript
 - HTML5 Canvas for rendering
 
-Workflow:
-
-For development: npm run dev
-Before committing: npm run build and copy files to root
-Commit and push
