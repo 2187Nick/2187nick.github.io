@@ -29,8 +29,8 @@ const GameOverModal = ({ score, onRestart, onClose, isWin }) => {
     return (
       <div className="game-over-modal">
         <ScoreSubmission 
-          score={score} 
-          onClose={() => setShowSubmission(false)} 
+          score={score}
+          onClose={() => setShowSubmission(false)}
           onSubmitSuccess={handleSubmitSuccess}
         />
       </div>
@@ -39,24 +39,25 @@ const GameOverModal = ({ score, onRestart, onClose, isWin }) => {
 
   console.log("Rendering GameOverModal with score:", score, "isWin:", isWin);
   
-  return (
+  const modalContent = (
     <div className="game-over-modal" style={{
-      position: "absolute",
+      position: "fixed",  /* Changed from absolute to fixed */
       top: "50%",
       left: "50%",
       transform: "translate(-50%, -50%)",
-      backgroundColor: "rgba(0, 0, 0, 0.9)",
+      backgroundColor: "rgba(0, 0, 0, 0.95)",  /* Slightly more opaque */
       padding: "20px",
       borderRadius: "8px",
-      border: "2px solid #38bdf8",
-      boxShadow: "0 0 20px rgba(56, 189, 248, 0.5)",
+      border: "5px solid #ff3800",  /* Changed to bright orange for visibility */
+      boxShadow: "0 0 30px rgba(255, 56, 0, 0.8)",  /* Brighter shadow */
       color: "white",
       width: "90%",
       maxWidth: "500px",
-      maxHeight: "80vh",
+      maxHeight: "90vh",  /* Slightly taller */
       overflow: "auto",
-      zIndex: 10000,
-      textAlign: "center"
+      zIndex: 999999,  /* Super high z-index */
+      textAlign: "center",
+      pointerEvents: "auto"  /* Ensure clicks work */
     }}>
       <h2 style={{ 
         color: isWin ? "#4ade80" : "#ef4444", 
@@ -137,6 +138,7 @@ const GameOverModal = ({ score, onRestart, onClose, isWin }) => {
       </div>
     </div>
   );
+  return modalContent;
 };
 
 export default GameOverModal;

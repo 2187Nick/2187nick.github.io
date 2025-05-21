@@ -57,6 +57,38 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Game over modal styles - Added to ensure visibility */
+.game-over-modal {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  background-color: #000000 !important;
+  padding: 30px !important;
+  border-radius: 10px !important;
+  border: 5px solid #ff3800 !important;
+  box-shadow: 0 0 30px rgba(255, 56, 0, 0.8) !important;
+  color: white !important;
+  width: 90% !important;
+  max-width: 500px !important;
+  max-height: 90vh !important;
+  overflow: auto !important;
+  z-index: 9999999 !important;
+}
+
+#game-over-modal-container {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  z-index: 9999998 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     color: #213547;

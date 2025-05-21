@@ -97,6 +97,7 @@ export default function SpaceInvaders() {
   const [dir, setDir] = useState(1);
   const [active, setActive] = useState(false);
   const [score, setScore] = useState(0);
+  const scoreRef = useRef(0); // <-- Add this
   const [gameOver, setGameOver] = useState(false);
   const [gameWon, setGameWon] = useState(false);
   const [finalScore, setFinalScore] = useState(0);
@@ -231,11 +232,19 @@ export default function SpaceInvaders() {
     return () => window.removeEventListener("keydown", onKey);
   }, [active, handleShoot]);
 
+  /* ------------------------------ keep scoreRef in sync --------------------------- */
+  useEffect(() => {
+    scoreRef.current = score;
+  }, [score]);
+
   /* ------------------------------ game loop --------------------------- */
   useEffect(() => {
+    console.log("Game loop useEffect initiated");
     if (!active) return;
 
     const loop = setInterval(() => {
+      console.log("Game loop tick"); // Added log
+
       /* Move bullets */
       const movedBullets = bullets
         .map((b) => ({ ...b, position: { x: b.position.x, y: b.position.y - BULLET_STEP } }))
@@ -276,6 +285,9 @@ export default function SpaceInvaders() {
 
       setInvaders(remainingInvaders);
 
+      // Debug: log remaining invaders count
+      console.log("Remaining invaders count:", remainingInvaders.length);
+
       /* Remove bullets that hit */
       const survivingBullets = movedBullets.filter((b) => {
         return !remainingInvaders.some((inv) => {
@@ -289,15 +301,17 @@ export default function SpaceInvaders() {
       /* Win / lose checks */
       if (remainingInvaders.some((n) => n.position.y >= PLAYER_Y - 20)) {
         // Game over sequence
-        console.log("%c Game Over! Final score: " + score, "background: red; color: white; font-size: 20px");
+        const final = scoreRef.current;
+        console.log("%c Game Over! Final score: " + final, "background: red; color: white; font-size: 20px");
         setActive(false);
         setGameOver(true);
-        setFinalScore(score);
+        setFinalScore(final);
         
         // Make sure we see the modal by forcing a focus
         setTimeout(() => {
-          console.log("%c Showing Game Over modal with score: " + score, "background: blue; color: white");
+          console.log("%c Showing Game Over modal with score: " + final, "background: blue; color: white");
           document.body.style.overflow = "hidden"; // Prevent scrolling behind modal
+          
           // Force re-render
           forceRender();
         }, 100);
@@ -306,14 +320,16 @@ export default function SpaceInvaders() {
       }
       if (remainingInvaders.length === 0) {
         // Game won sequence
-        console.log("%c Game Won! Final score: " + score, "background: green; color: white; font-size: 20px");
+        console.log("Help me please!!!!!!!");  // Debug log added here
+        const final = scoreRef.current;
+        console.log("%c Game Won! Final score: " + final, "background: green; color: white; font-size: 20px");
         setActive(false);
         setGameWon(true);
-        setFinalScore(score);
+        setFinalScore(final);
         
         // Make sure we see the modal by forcing a focus
         setTimeout(() => {
-          console.log("%c Showing Game Won modal with score: " + score, "background: blue; color: white");
+          console.log("%c Showing Game Won modal with score: " + final, "background: blue; color: white");
           document.body.style.overflow = "hidden"; // Prevent scrolling behind modal
           // Force re-render
           forceRender();
@@ -324,7 +340,7 @@ export default function SpaceInvaders() {
     }, TICK_MS);
 
     return () => clearInterval(loop);
-  }, [active, bullets, invaders, dir, playSound, score]);
+  }, [active, bullets, invaders, dir, playSound]);
 
   /* ----------------------------- reflect nodes ------------------------ */
   const playerNode = useMemo(() => makePlayer(playerX), [makePlayer, playerX]);
@@ -334,193 +350,186 @@ export default function SpaceInvaders() {
 
   /* ------------------------------- render ----------------------------- */
   return (
-    <div style={{ 
-      height: "100vh", 
-      width: "100%", 
-      display: "flex", 
-      flexDirection: "column", 
-      color: "white", 
-      overflow: "hidden", 
-      backgroundColor: "#000000"
-    }}>
-      <motion.div
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        style={{
-          textAlign: "center",
-          backgroundColor: "#0f172a",
-          padding: "12px 0",
-          borderBottom: "2px solid #38bdf8",
-          boxShadow: "0 4px 12px rgba(56, 189, 248, 0.4)",
-          fontFamily: "'Press Start 2P', monospace, system-ui"
-        }}
-      >
-        <h1 style={{
-          margin: 0,
-          fontSize: window.innerWidth < 768 ? "24px" : "32px",
-          background: "linear-gradient(to right, #38bdf8, #818cf8)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          fontWeight: "bold",
-          textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
-          letterSpacing: "2px"
-        }}>
-          SPACE INVADERS
-        </h1>
-      </motion.div>
-      <motion.div
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        style={{
-          padding: "16px",
-          display: "flex",
-          gap: "16px",
-          alignItems: "center",
-          backgroundColor: "#000000",
-          boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-          zIndex: 10,
-          borderBottom: "1px solid rgb(51, 51, 51)"
-        }}
-      >
-        <Button type="button" onClick={(e) => { e.preventDefault(); initGame(); }}>
-          {active ? "Restart" : "Start"}
-        </Button>
-        
-        <span style={{ marginLeft: "auto", fontSize: "14px", fontWeight: "600", color: "green" }}>Score: {score}</span>
-      </motion.div>
-
-      <div style={{ flex: 1, position: "relative", width: "100%", backgroundColor: "#000000" }}>
-        
-        <div style={{ width: "100vw", height: "80vh", background: "#000000" }}>
-          
-          <ReactFlow
-            nodes={nodes}
-            edges={[]}
-            panOnDrag={false}
-            zoomOnScroll={false}
-            panOnScroll={false}
-            minZoom={window.innerWidth < 768 ? 0.4 : 0.2}
-            maxZoom={1}
-            defaultViewport={{
-              x: 0,
-              y: 0,
-              zoom: Math.min(window.innerWidth / totalWidth, zoom),
-            }}
-          >
-            <Background gap={40} size={1.5} color="#333333" variant="lines" style={{ opacity: 0.4 }} />
-          </ReactFlow>
-        </div>
-      </div>
-
-      {active && window.innerWidth < 768 && (
-        <div style={{
-          height: "128px", 
-          backgroundColor: "#000000", 
-          display: "flex", 
-          justifyContent: "center", 
-          alignItems: "center",
-          borderTop: "1px solid rgb(51, 51, 51)"
-        }}>
-          <div style={{
-            display: "flex", 
-            justifyContent: "space-between", 
-            alignItems: "center",
-            width: "100%",
-            maxWidth: "340px"
-          }}>
-            <button
-              onTouchStart={() => setPlayerX((x) => Math.max(10, x - 20))}
-              onTouchEnd={(e) => e.preventDefault()}
-              style={{ 
-                width: "64px", 
-                height: "64px", 
-                borderRadius: "50%", 
-                backgroundColor: "rgba(59, 130, 246, 0.5)", 
-                display: "flex", 
-                justifyContent: "center", 
-                alignItems: "center", 
-                color: "white", 
-                fontSize: "28px", 
-                border: "none",
-                padding: 0,
-                touchAction: "manipulation"
-              }}
-            >
-              ←
-            </button>
-            <button
-              onPointerDown={handleShoot}
-              onTouchStart={handleShoot}
-              style={{ 
-                width: "64px", 
-                height: "64px", 
-                borderRadius: "50%", 
-                backgroundColor: "rgba(59, 130, 246, 0.5)", 
-                display: "flex", 
-                justifyContent: "center", 
-                alignItems: "center", 
-                color: "white", 
-                fontSize: "28px", 
-                border: "none",
-                padding: 0,
-                touchAction: "manipulation"
-              }}
-            >
-              🔥
-            </button>
-            <button
-              onTouchStart={() => setPlayerX((x) => Math.min(WIDTH - 50, x + 20))}
-              onTouchEnd={(e) => e.preventDefault()}
-              style={{ 
-                width: "64px", 
-                height: "64px", 
-                borderRadius: "50%", 
-                backgroundColor: "rgba(59, 130, 246, 0.5)", 
-                display: "flex", 
-                justifyContent: "center", 
-                alignItems: "center", 
-                color: "white", 
-                fontSize: "28px", 
-                border: "none",
-                padding: 0,
-                touchAction: "manipulation"
-              }}
-            >
-              →
-            </button>
-          </div>
-        </div>
-      )}
-      
-      {/* Game Over Modal */}
-      {(gameOver || gameWon) && !active && (
-        <div key={forceUpdate} 
-          style={{ 
-            position: "fixed", 
-            top: 0, 
-            left: 0, 
-            width: "100%", 
-            height: "100%", 
-            zIndex: 99999,
-            backgroundColor: "rgba(0,0,0,0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
+    <>
+      <div style={{ 
+        height: "100vh", 
+        width: "100%", 
+        display: "flex", 
+        flexDirection: "column", 
+        color: "white", 
+        overflow: "visible",  // Allow modal to overflow
+        backgroundColor: "#000000"
+      }}>
+        <motion.div
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          style={{
+            textAlign: "center",
+            backgroundColor: "#0f172a",
+            padding: "12px 0",
+            borderBottom: "2px solid #38bdf8",
+            boxShadow: "0 4px 12px rgba(56, 189, 248, 0.4)",
+            fontFamily: "'Press Start 2P', monospace, system-ui"
           }}
         >
-          <GameOverModal 
-            score={finalScore} 
-            isWin={gameWon} 
-            onRestart={() => {
-              initGame();
-            }}
-            onClose={() => {
-              setGameOver(false);
-              setGameWon(false);
-            }}
-          />
+          <h1 style={{
+            margin: 0,
+            fontSize: window.innerWidth < 768 ? "24px" : "32px",
+            background: "linear-gradient(to right, #38bdf8, #818cf8)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            fontWeight: "bold",
+            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+            letterSpacing: "2px"
+          }}>
+            SPACE INVADERS
+          </h1>
+        </motion.div>
+        <motion.div
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          style={{
+            padding: "16px",
+            display: "flex",
+            gap: "16px",
+            alignItems: "center",
+            backgroundColor: "#000000",
+            boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+            zIndex: 10,
+            borderBottom: "1px solid rgb(51, 51, 51)"
+          }}
+        >
+          <Button type="button" onClick={(e) => { e.preventDefault(); initGame(); }}>
+            {active ? "Restart" : "Start"}
+          </Button>
+          
+          <span style={{ marginLeft: "auto", fontSize: "14px", fontWeight: "600", color: "green" }}>Score: {score}</span>
+        </motion.div>
+
+        <div style={{ flex: 1, position: "relative", width: "100%", backgroundColor: "#000000" }}>
+          
+          <div style={{ width: "100vw", height: "80vh", background: "#000000" }}>
+            
+            <ReactFlow
+              nodes={nodes}
+              edges={[]}
+              panOnDrag={false}
+              zoomOnScroll={false}
+              panOnScroll={false}
+              minZoom={window.innerWidth < 768 ? 0.4 : 0.2}
+              maxZoom={1}
+              defaultViewport={{
+                x: 0,
+                y: 0,
+                zoom: Math.min(window.innerWidth / totalWidth, zoom),
+              }}
+            >
+              <Background gap={40} size={1.5} color="#333333" variant="lines" style={{ opacity: 0.4 }} />
+            </ReactFlow>
+          </div>
         </div>
+
+        {active && window.innerWidth < 768 && (
+          <div style={{
+            height: "128px", 
+            backgroundColor: "#000000", 
+            display: "flex", 
+            justifyContent: "center", 
+            alignItems: "center",
+            borderTop: "1px solid rgb(51, 51, 51)"
+          }}>
+            <div style={{
+              display: "flex", 
+              justifyContent: "space-between", 
+              alignItems: "center",
+              width: "100%",
+              maxWidth: "340px"
+            }}>
+              <button
+                onTouchStart={() => setPlayerX((x) => Math.max(10, x - 20))}
+                onTouchEnd={(e) => e.preventDefault()}
+                style={{ 
+                  width: "64px", 
+                  height: "64px", 
+                  borderRadius: "50%", 
+                  backgroundColor: "rgba(59, 130, 246, 0.5)", 
+                  display: "flex", 
+                  justifyContent: "center", 
+                  alignItems: "center", 
+                  color: "white", 
+                  fontSize: "28px", 
+                  border: "none",
+                  padding: 0,
+                  touchAction: "manipulation"
+                }}
+              >
+                ←
+              </button>
+              <button
+                onPointerDown={handleShoot}
+                onTouchStart={handleShoot}
+                style={{ 
+                  width: "64px", 
+                  height: "64px", 
+                  borderRadius: "50%", 
+                  backgroundColor: "rgba(59, 130, 246, 0.5)", 
+                  display: "flex", 
+                  justifyContent: "center", 
+                  alignItems: "center", 
+                  color: "white", 
+                  fontSize: "28px", 
+                  border: "none",
+                  padding: 0,
+                  touchAction: "manipulation"
+                }}
+              >
+                🔥
+              </button>
+              <button
+                onTouchStart={() => setPlayerX((x) => Math.min(WIDTH - 50, x + 20))}
+                onTouchEnd={(e) => e.preventDefault()}
+                style={{ 
+                  width: "64px", 
+                  height: "64px", 
+                  borderRadius: "50%", 
+                  backgroundColor: "rgba(59, 130, 246, 0.5)", 
+                  display: "flex", 
+                  justifyContent: "center", 
+                  alignItems: "center", 
+                  color: "white", 
+                  fontSize: "28px", 
+                  border: "none",
+                  padding: 0,
+                  touchAction: "manipulation"
+                }}
+              >
+                →
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+      
+      {(gameOver || gameWon) && (
+        <GameOverModal
+          score={finalScore}
+          isWin={gameWon}
+          onRestart={() => {
+            // Reset body overflow and remove debug element when restarting
+            document.body.style.overflow = "auto";
+            
+            initGame();
+          }}
+          onClose={() => {
+            // Reset body overflow and remove debug element when closing
+            document.body.style.overflow = "auto";
+
+            setActive(false); // Ensure game is not active
+            setGameOver(false);
+            setGameWon(false);
+          }}
+        />
       )}
-    </div>
+    </>
   );
 }
