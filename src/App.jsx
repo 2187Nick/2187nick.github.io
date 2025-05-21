@@ -100,6 +100,13 @@ export default function SpaceInvaders() {
   const [gameOver, setGameOver] = useState(false);
   const [gameWon, setGameWon] = useState(false);
   const [finalScore, setFinalScore] = useState(0);
+  const [forceUpdate, setForceUpdate] = useState(0); // Add this for forcing re-render
+
+  // Force a component re-render
+  const forceRender = useCallback(() => {
+    setForceUpdate((prev) => prev + 1);
+    console.log("Forcing re-render");
+  }, []);
 
   const lastShotRef = useRef(0);
   const SHOOT_COOLDOWN = window.innerWidth < 768 ? 200 : 100; // still throttle to avoid audio spam
@@ -282,30 +289,34 @@ export default function SpaceInvaders() {
       /* Win / lose checks */
       if (remainingInvaders.some((n) => n.position.y >= PLAYER_Y - 20)) {
         // Game over sequence
-        console.log("Game Over! Final score:", score);
+        console.log("%c Game Over! Final score: " + score, "background: red; color: white; font-size: 20px");
         setActive(false);
         setGameOver(true);
         setFinalScore(score);
         
         // Make sure we see the modal by forcing a focus
         setTimeout(() => {
-          console.log("Showing Game Over modal with score:", score);
+          console.log("%c Showing Game Over modal with score: " + score, "background: blue; color: white");
           document.body.style.overflow = "hidden"; // Prevent scrolling behind modal
+          // Force re-render
+          forceRender();
         }, 100);
         
         playSound("gameOver");
       }
       if (remainingInvaders.length === 0) {
         // Game won sequence
-        console.log("Game Won! Final score:", score);
+        console.log("%c Game Won! Final score: " + score, "background: green; color: white; font-size: 20px");
         setActive(false);
         setGameWon(true);
         setFinalScore(score);
         
         // Make sure we see the modal by forcing a focus
         setTimeout(() => {
-          console.log("Showing Game Won modal with score:", score);
+          console.log("%c Showing Game Won modal with score: " + score, "background: blue; color: white");
           document.body.style.overflow = "hidden"; // Prevent scrolling behind modal
+          // Force re-render
+          forceRender();
         }, 100);
         
         playSound("gameWin");
@@ -483,7 +494,20 @@ export default function SpaceInvaders() {
       
       {/* Game Over Modal */}
       {(gameOver || gameWon) && !active && (
-        <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 9999 }}>
+        <div key={forceUpdate} 
+          style={{ 
+            position: "fixed", 
+            top: 0, 
+            left: 0, 
+            width: "100%", 
+            height: "100%", 
+            zIndex: 99999,
+            backgroundColor: "rgba(0,0,0,0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
           <GameOverModal 
             score={finalScore} 
             isWin={gameWon} 

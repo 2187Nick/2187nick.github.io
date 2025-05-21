@@ -37,6 +37,8 @@ const GameOverModal = ({ score, onRestart, onClose, isWin }) => {
     );
   }
 
+  console.log("Rendering GameOverModal with score:", score, "isWin:", isWin);
+  
   return (
     <div className="game-over-modal" style={{
       position: "absolute",
@@ -53,7 +55,7 @@ const GameOverModal = ({ score, onRestart, onClose, isWin }) => {
       maxWidth: "500px",
       maxHeight: "80vh",
       overflow: "auto",
-      zIndex: 1000,
+      zIndex: 10000,
       textAlign: "center"
     }}>
       <h2 style={{ 

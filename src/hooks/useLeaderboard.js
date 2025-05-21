@@ -7,6 +7,7 @@ export const useLeaderboard = () => {
 
   const fetchLeaderboard = async () => {
     try {
+      console.log("Fetching leaderboard data...");
       setLoading(true);
       const response = await fetch(
         "https://raw.githubusercontent.com/2187Nick/2187Nick.github.io/main/leaderboard/scores.json",
