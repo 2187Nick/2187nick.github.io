@@ -16,6 +16,9 @@ dist-ssr
 .env.development.local
 .env.test.local
 .env.production.local
+.dev.vars
+.env.cloudflare
+wrangler.toml
 
 # Editor directories and files
 .vscode/*
@@ -36,4 +39,12 @@ pnpm-debug.log*
 logs
 *.log
 
+# Sensitive files
+# Add any other files that might contain API keys, tokens, etc.
+secret_tokens.txt
+api_keys.txt
+token.json
+
+# Project specific
 notes.txt
+.wrangler/

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo, useRef } from "react";
+﻿import { useEffect, useState, useCallback, useMemo, useRef } from "react";
 import {
   ReactFlow,
   Background,
@@ -11,6 +11,7 @@ import shoot from "./assets/fireball.mp3";
 import explosion from "./assets/Break_Brick.mp3";
 import gameWin from "./assets/game-win.mp3";
 import gameOver from "./assets/die.mp3";
+import GameOverModal from "./components/leaderboard/GameOverModal";
 
 const Button = ({ style = {}, children, ...rest }) => (
   <button
@@ -96,6 +97,9 @@ export default function SpaceInvaders() {
   const [dir, setDir] = useState(1);
   const [active, setActive] = useState(false);
   const [score, setScore] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
+  const [gameWon, setGameWon] = useState(false);
+  const [finalScore, setFinalScore] = useState(0);
 
   const lastShotRef = useRef(0);
   const SHOOT_COOLDOWN = window.innerWidth < 768 ? 200 : 100; // still throttle to avoid audio spam
@@ -199,6 +203,8 @@ export default function SpaceInvaders() {
     setDir(1);
     setScore(0);
     setActive(true);
+    setGameOver(false);
+    setGameWon(false);
     playSound("gameStart");
   };
 
@@ -275,17 +281,39 @@ export default function SpaceInvaders() {
 
       /* Win / lose checks */
       if (remainingInvaders.some((n) => n.position.y >= PLAYER_Y - 20)) {
+        // Game over sequence
+        console.log("Game Over! Final score:", score);
         setActive(false);
+        setGameOver(true);
+        setFinalScore(score);
+        
+        // Make sure we see the modal by forcing a focus
+        setTimeout(() => {
+          console.log("Showing Game Over modal with score:", score);
+          document.body.style.overflow = "hidden"; // Prevent scrolling behind modal
+        }, 100);
+        
         playSound("gameOver");
       }
       if (remainingInvaders.length === 0) {
+        // Game won sequence
+        console.log("Game Won! Final score:", score);
         setActive(false);
+        setGameWon(true);
+        setFinalScore(score);
+        
+        // Make sure we see the modal by forcing a focus
+        setTimeout(() => {
+          console.log("Showing Game Won modal with score:", score);
+          document.body.style.overflow = "hidden"; // Prevent scrolling behind modal
+        }, 100);
+        
         playSound("gameWin");
       }
     }, TICK_MS);
 
     return () => clearInterval(loop);
-  }, [active, bullets, invaders, dir, playSound]);
+  }, [active, bullets, invaders, dir, playSound, score]);
 
   /* ----------------------------- reflect nodes ------------------------ */
   const playerNode = useMemo(() => makePlayer(playerX), [makePlayer, playerX]);
@@ -450,6 +478,23 @@ export default function SpaceInvaders() {
               →
             </button>
           </div>
+        </div>
+      )}
+      
+      {/* Game Over Modal */}
+      {(gameOver || gameWon) && !active && (
+        <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 9999 }}>
+          <GameOverModal 
+            score={finalScore} 
+            isWin={gameWon} 
+            onRestart={() => {
+              initGame();
+            }}
+            onClose={() => {
+              setGameOver(false);
+              setGameWon(false);
+            }}
+          />
         </div>
       )}
     </div>
