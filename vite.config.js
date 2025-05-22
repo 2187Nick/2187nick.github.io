@@ -6,6 +6,8 @@ export default defineConfig({
   base: './',
   build: {
     outDir: 'dist',
+    sourcemap: true, // Enable source maps
+    minify: false, // Disable minification for debugging
     rollupOptions: {
       input: {
         main: './index.html',

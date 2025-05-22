@@ -97,11 +97,56 @@ export default function SpaceInvaders() {
   const [dir, setDir] = useState(1);
   const [active, setActive] = useState(false);
   const [score, setScore] = useState(0);
-  const scoreRef = useRef(0); // <-- Add this
+  const scoreRef = useRef(0);
+  const bulletsRef = useRef([]);
+  const invadersRef = useRef([]);
+  const dirRef = useRef(1);
   const [gameOver, setGameOver] = useState(false);
   const [gameWon, setGameWon] = useState(false);
-  const [finalScore, setFinalScore] = useState(0);
+  const [finalScore, setFinalScore] = useState(1000); // Set an initial score to display
   const [forceUpdate, setForceUpdate] = useState(0); // Add this for forcing re-render
+
+  // Add immediate console log when component mounts
+  useEffect(() => {
+    console.log('%c SpaceInvaders Component Mounted', 'background: purple; color: white; font-size: 20px');
+    
+    // Create a more visible debug panel
+    const debugDiv = document.createElement('div');
+    debugDiv.style.position = 'fixed';
+    debugDiv.style.top = '10px';
+    debugDiv.style.right = '10px';
+    debugDiv.style.background = 'rgba(0, 0, 0, 0.9)';
+    debugDiv.style.color = 'lime';
+    debugDiv.style.padding = '15px';
+    debugDiv.style.zIndex = '99999';
+    debugDiv.style.fontSize = '14px';
+    debugDiv.style.fontFamily = 'monospace';
+    debugDiv.style.border = '2px solid lime';
+    debugDiv.style.borderRadius = '5px';
+    debugDiv.style.minWidth = '300px';
+    debugDiv.style.maxHeight = '200px';
+    debugDiv.style.overflow = 'auto';
+    debugDiv.id = 'debug-output';
+    debugDiv.innerHTML = 'Debug Panel Initialized<br/>';
+    document.body.appendChild(debugDiv);
+    
+    // Keep original console.log working AND add to debug panel
+    const originalLog = console.log;
+    console.log = (...args) => {
+      originalLog.apply(console, args);
+      const message = args.join(' ');
+      debugDiv.innerHTML += message + '<br/>';
+      debugDiv.scrollTop = debugDiv.scrollHeight;
+    };
+
+    // Log current game state
+    console.log(`Initial gameOver: ${gameOver}, gameWon: ${gameWon}, finalScore: ${finalScore}`);
+
+    return () => {
+      console.log = originalLog;
+      debugDiv?.remove();
+    };
+  }, [gameOver, gameWon, finalScore]);
 
   // Force a component re-render
   const forceRender = useCallback(() => {
@@ -181,6 +226,8 @@ export default function SpaceInvaders() {
 
   /* --------------------------------- init ----------------------------- */
   const initGame = () => {
+    console.log("=== INIT GAME CALLED ===");
+    
     const inv = [];
     let id = 0;
     for (let r = 0; r < INV_ROWS; r++) {
@@ -205,6 +252,8 @@ export default function SpaceInvaders() {
         });
       }
     }
+    
+    console.log("Setting game state...");
     setInvaders(inv);
     setBullets([]);
     setPlayerX(WIDTH / 2 - 20);
@@ -213,6 +262,13 @@ export default function SpaceInvaders() {
     setActive(true);
     setGameOver(false);
     setGameWon(false);
+    setFinalScore(0);
+    
+    console.log("Game initialized successfully!");
+    console.log(`New state will be: gameOver=false, gameWon=false, active=true`);
+    
+    // Reset any debug flags
+    window.gameDebug = true;
     playSound("gameStart");
   };
 
@@ -232,10 +288,22 @@ export default function SpaceInvaders() {
     return () => window.removeEventListener("keydown", onKey);
   }, [active, handleShoot]);
 
-  /* ------------------------------ keep scoreRef in sync --------------------------- */
+  /* ------------------------------ keep refs in sync --------------------------- */
   useEffect(() => {
     scoreRef.current = score;
   }, [score]);
+
+  useEffect(() => {
+    bulletsRef.current = bullets;
+  }, [bullets]);
+
+  useEffect(() => {
+    invadersRef.current = invaders;
+  }, [invaders]);
+
+  useEffect(() => {
+    dirRef.current = dir;
+  }, [dir]);
 
   /* ------------------------------ game loop --------------------------- */
   useEffect(() => {
@@ -245,25 +313,28 @@ export default function SpaceInvaders() {
     const loop = setInterval(() => {
       console.log("Game loop tick"); // Added log
 
+      // Get current values from refs to avoid stale closures
+      const currentBullets = bulletsRef.current;
+      const currentInvaders = invadersRef.current;
+      const currentDir = dirRef.current;
+
       /* Move bullets */
-      const movedBullets = bullets
+      const movedBullets = currentBullets
         .map((b) => ({ ...b, position: { x: b.position.x, y: b.position.y - BULLET_STEP } }))
         .filter((b) => b.position.y > -30);
-      setBullets(movedBullets);
 
       /* Move invaders */
-      const edgeHit = invaders.some(
-        (n) => n.position.x + dir * INV_STEP < 10 || n.position.x + dir * INV_STEP > WIDTH - 50
+      const edgeHit = currentInvaders.some(
+        (n) => n.position.x + currentDir * INV_STEP < 10 || n.position.x + currentDir * INV_STEP > WIDTH - 50
       );
-      const newDir = edgeHit ? dir * -1 : dir;
-      const movedInvaders = invaders.map((n) => ({
+      const newDir = edgeHit ? currentDir * -1 : currentDir;
+      const movedInvaders = currentInvaders.map((n) => ({
         ...n,
         position: {
           x: n.position.x + newDir * INV_STEP,
           y: n.position.y + (edgeHit ? INV_DROP : 0),
         },
       }));
-      setDir(newDir);
 
       /* Collision detection */
       const remainingInvaders = [];
@@ -279,14 +350,13 @@ export default function SpaceInvaders() {
       });
 
       if (hitCount) {
-        setScore((s) => s + hitCount * 100);
+        setScore((s) => {
+          const newScore = s + hitCount * 100;
+          scoreRef.current = newScore; // Update ref immediately
+          return newScore;
+        });
         playSound("explosion");
       }
-
-      setInvaders(remainingInvaders);
-
-      // Debug: log remaining invaders count
-      console.log("Remaining invaders count:", remainingInvaders.length);
 
       /* Remove bullets that hit */
       const survivingBullets = movedBullets.filter((b) => {
@@ -296,7 +366,13 @@ export default function SpaceInvaders() {
           return withinX && withinY;
         });
       });
+
+      // Update state
       setBullets(survivingBullets);
+      setInvaders(remainingInvaders);
+      setDir(newDir);
+
+      console.log("Remaining invaders count:", remainingInvaders.length);
 
       /* Win / lose checks */
       if (remainingInvaders.some((n) => n.position.y >= PLAYER_Y - 20)) {
@@ -340,10 +416,10 @@ export default function SpaceInvaders() {
     }, TICK_MS);
 
     return () => clearInterval(loop);
-  }, [active, bullets, invaders, dir, playSound]);
+  }, [active, playSound, forceRender, invaders]); // Added invaders to dependency array
 
-  /* ----------------------------- reflect nodes ------------------------ */
   const playerNode = useMemo(() => makePlayer(playerX), [makePlayer, playerX]);
+
   useEffect(() => {
     setNodes([playerNode, ...invaders, ...bullets]);
   }, [playerNode, invaders, bullets, setNodes]);
