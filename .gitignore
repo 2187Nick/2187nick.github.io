@@ -48,3 +48,12 @@ token.json
 # Project specific
 notes.txt
 .wrangler/
+
+/src
+index.html
+package.json
+snake_react.html
+package-lock.json
+space_invaders.html
+styles.css
+vite.config.js
