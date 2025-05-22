@@ -9,8 +9,8 @@ Games using xyflow library
 
 | Rank | Player&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Score&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
 |:----:|:-----------------------------|:-----------------|:-----------------------|
-| 🥇 1 | yo                           | 3000            | 2025-05-22           |
-| 🥈 2 | qqq                          | 3000            | 2025-05-22           |
-| 🥉 3 | asdf                         | 3000            | 2025-05-22           |
+| 🥇 1 | Yoooo                        | 24425           | 2025-05-22           |
+| 🥈 2 | yo                           | 3000            | 2025-05-22           |
+| 🥉 3 | qqq                          | 3000            | 2025-05-22           |
 
 
