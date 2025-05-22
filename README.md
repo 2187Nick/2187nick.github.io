@@ -7,10 +7,10 @@ Games using xyflow library
 
 ## 🏆 Leaderboard
 
-| Rank | Player | Score | Date |
-|------|--------|-------|------|
-| 🥇 1 | Nick333 | 3000 | 2025-05-22 |
-| 🥈 2 | nick222 | 3000 | 2025-05-22 |
-| 🥉 3 | Nick | 3000 | 2025-05-22 |
+| Rank | Player&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Score&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
+|:----:|:-----------------------------|:-----------------|:-----------------------|
+|   |  |  |  |
+|   |  |  |  |
+|   |  |  |  |
 
 
