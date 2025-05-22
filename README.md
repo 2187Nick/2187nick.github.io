@@ -12,6 +12,7 @@ Games using xyflow library
 | Rank | Player | Score | Date |
 |------|--------|-------|------|
 | 🥇 1 | Nick333 | 3000 | 2025-05-22 |
-| 🥈 2 | TestPlayer | 100 | 2025-05-22 |
+| 🥈 2 | nick222 | 3000 | 2025-05-22 |
+| 🥉 3 | TestPlayer | 100 | 2025-05-22 |
 
 
