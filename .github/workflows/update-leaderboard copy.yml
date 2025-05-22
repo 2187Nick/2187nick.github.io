@@ -8,8 +8,6 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # Added: Allow workflow to write to repository contents
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
