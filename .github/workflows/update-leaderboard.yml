@@ -89,8 +89,8 @@ jobs:
               // Pad player name and score for better visual spacing if needed, or rely on column width
               const playerName = score.name.padEnd(28, ' '); // Example padding
               const scoreStr = String(score.score).padEnd(15, ' ');
-              const dateStr = score.date.padEnd(20, ' ');`
-              leaderboardTable += `| ${rankEmoji} ${rank} | ${playerName} | ${scoreStr} | ${dateStr} |\\n`; // Changed \n to \\n
+              const dateStr = score.date.padEnd(20, ' ');` // Corrected: Added closing backtick
+              leaderboardTable += `| ${rankEmoji} ${rank} | ${playerName} | ${scoreStr} | ${dateStr} |\\n`;
             });
             
             // Check if leaderboard section already exists
