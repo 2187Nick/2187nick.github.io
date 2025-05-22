@@ -1,5 +1,7 @@
-﻿[
-  {"name": "Player1", "score": 1000, "date": "2023-05-15"},
-  {"name": "Player2", "score": 850, "date": "2023-05-18"},
-  {"name": "Player3", "score": 750, "date": "2023-05-20"}
+[
+  {
+    "name": "TestPlayer",
+    "score": 100,
+    "date": "2025-05-22"
+  }
 ]

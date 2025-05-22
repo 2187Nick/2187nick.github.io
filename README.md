@@ -40,3 +40,10 @@ To set up the leaderboard system on your own fork:
 4. Update the API URL in `src/hooks/useLeaderboard.js` to point to your deployed worker
 5. Push the changes to your repository
 
+
+
+## 🏆 Leaderboard
+
+| Rank | Player | Score | Date |
+|------|--------|-------|------|
+| 🥇 1 | TestPlayer | 100 | 2025-05-22 |
