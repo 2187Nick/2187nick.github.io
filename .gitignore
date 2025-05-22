@@ -50,10 +50,11 @@ notes.txt
 .wrangler/
 
 /src
-index.html
-package.json
-snake_react.html
+src/
 package-lock.json
-space_invaders.html
+package.json
 styles.css
 vite.config.js
+
+api/
+.vscode
