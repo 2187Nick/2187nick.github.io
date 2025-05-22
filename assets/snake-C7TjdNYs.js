@@ -1,4 +1,4 @@
-import { u as useNodesState, r as reactExports, j as jsxRuntimeExports, m as motion, i as index, B as Background, R as ReactDOM, a as React, b as ReactFlowProvider } from "./proxy-Q7kh5bO0.js";
+import { c as useNodesState, r as reactExports, j as jsxRuntimeExports, m as motion, d as index, B as Background, R as ReactDOM, f as React, g as ReactFlowProvider } from "./proxy-B2eiEogY.js";
 const Button = ({ style = {}, children, ...rest }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
   "button",
   {
@@ -319,4 +319,4 @@ function SnakeGame() {
 ReactDOM.createRoot(document.getElementById("root")).render(
   /* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ReactFlowProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(SnakeGame, {}) }) })
 );
-//# sourceMappingURL=snake-CmZjd-Tl.js.map
+//# sourceMappingURL=snake-C7TjdNYs.js.map

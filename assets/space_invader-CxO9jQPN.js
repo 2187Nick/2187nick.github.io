@@ -1,4 +1,185 @@
-import { r as reactExports, j as jsxRuntimeExports, u as useNodesState, m as motion, i as index, B as Background, c as clientExports } from "./proxy-Q7kh5bO0.js";
+import { r as reactExports, M as MotionConfigContext, j as jsxRuntimeExports, i as isHTMLElement, u as useConstant, P as PresenceContext, a as usePresence, b as useIsomorphicLayoutEffect, L as LayoutGroupContext, c as useNodesState, m as motion, d as index, B as Background, e as clientExports } from "./proxy-B2eiEogY.js";
+class PopChildMeasure extends reactExports.Component {
+  getSnapshotBeforeUpdate(prevProps) {
+    const element = this.props.childRef.current;
+    if (element && prevProps.isPresent && !this.props.isPresent) {
+      const parent = element.offsetParent;
+      const parentWidth = isHTMLElement(parent) ? parent.offsetWidth || 0 : 0;
+      const size = this.props.sizeRef.current;
+      size.height = element.offsetHeight || 0;
+      size.width = element.offsetWidth || 0;
+      size.top = element.offsetTop;
+      size.left = element.offsetLeft;
+      size.right = parentWidth - size.width - size.left;
+    }
+    return null;
+  }
+  /**
+   * Required with getSnapshotBeforeUpdate to stop React complaining.
+   */
+  componentDidUpdate() {
+  }
+  render() {
+    return this.props.children;
+  }
+}
+function PopChild({ children, isPresent, anchorX }) {
+  const id = reactExports.useId();
+  const ref = reactExports.useRef(null);
+  const size = reactExports.useRef({
+    width: 0,
+    height: 0,
+    top: 0,
+    left: 0,
+    right: 0
+  });
+  const { nonce } = reactExports.useContext(MotionConfigContext);
+  reactExports.useInsertionEffect(() => {
+    const { width: width2, height, top, left, right } = size.current;
+    if (isPresent || !ref.current || !width2 || !height)
+      return;
+    const x = anchorX === "left" ? `left: ${left}` : `right: ${right}`;
+    ref.current.dataset.motionPopId = id;
+    const style = document.createElement("style");
+    if (nonce)
+      style.nonce = nonce;
+    document.head.appendChild(style);
+    if (style.sheet) {
+      style.sheet.insertRule(`
+          [data-motion-pop-id="${id}"] {
+            position: absolute !important;
+            width: ${width2}px !important;
+            height: ${height}px !important;
+            ${x}px !important;
+            top: ${top}px !important;
+          }
+        `);
+    }
+    return () => {
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
+    };
+  }, [isPresent]);
+  return jsxRuntimeExports.jsx(PopChildMeasure, { isPresent, childRef: ref, sizeRef: size, children: reactExports.cloneElement(children, { ref }) });
+}
+const PresenceChild = ({ children, initial, isPresent, onExitComplete, custom, presenceAffectsLayout, mode, anchorX }) => {
+  const presenceChildren = useConstant(newChildrenMap);
+  const id = reactExports.useId();
+  let isReusedContext = true;
+  let context = reactExports.useMemo(() => {
+    isReusedContext = false;
+    return {
+      id,
+      initial,
+      isPresent,
+      custom,
+      onExitComplete: (childId) => {
+        presenceChildren.set(childId, true);
+        for (const isComplete of presenceChildren.values()) {
+          if (!isComplete)
+            return;
+        }
+        onExitComplete && onExitComplete();
+      },
+      register: (childId) => {
+        presenceChildren.set(childId, false);
+        return () => presenceChildren.delete(childId);
+      }
+    };
+  }, [isPresent, presenceChildren, onExitComplete]);
+  if (presenceAffectsLayout && isReusedContext) {
+    context = { ...context };
+  }
+  reactExports.useMemo(() => {
+    presenceChildren.forEach((_, key) => presenceChildren.set(key, false));
+  }, [isPresent]);
+  reactExports.useEffect(() => {
+    !isPresent && !presenceChildren.size && onExitComplete && onExitComplete();
+  }, [isPresent]);
+  if (mode === "popLayout") {
+    children = jsxRuntimeExports.jsx(PopChild, { isPresent, anchorX, children });
+  }
+  return jsxRuntimeExports.jsx(PresenceContext.Provider, { value: context, children });
+};
+function newChildrenMap() {
+  return /* @__PURE__ */ new Map();
+}
+const getChildKey = (child) => child.key || "";
+function onlyElements(children) {
+  const filtered = [];
+  reactExports.Children.forEach(children, (child) => {
+    if (reactExports.isValidElement(child))
+      filtered.push(child);
+  });
+  return filtered;
+}
+const AnimatePresence = ({ children, custom, initial = true, onExitComplete, presenceAffectsLayout = true, mode = "sync", propagate = false, anchorX = "left" }) => {
+  const [isParentPresent, safeToRemove] = usePresence(propagate);
+  const presentChildren = reactExports.useMemo(() => onlyElements(children), [children]);
+  const presentKeys = propagate && !isParentPresent ? [] : presentChildren.map(getChildKey);
+  const isInitialRender = reactExports.useRef(true);
+  const pendingPresentChildren = reactExports.useRef(presentChildren);
+  const exitComplete = useConstant(() => /* @__PURE__ */ new Map());
+  const [diffedChildren, setDiffedChildren] = reactExports.useState(presentChildren);
+  const [renderedChildren, setRenderedChildren] = reactExports.useState(presentChildren);
+  useIsomorphicLayoutEffect(() => {
+    isInitialRender.current = false;
+    pendingPresentChildren.current = presentChildren;
+    for (let i = 0; i < renderedChildren.length; i++) {
+      const key = getChildKey(renderedChildren[i]);
+      if (!presentKeys.includes(key)) {
+        if (exitComplete.get(key) !== true) {
+          exitComplete.set(key, false);
+        }
+      } else {
+        exitComplete.delete(key);
+      }
+    }
+  }, [renderedChildren, presentKeys.length, presentKeys.join("-")]);
+  const exitingChildren = [];
+  if (presentChildren !== diffedChildren) {
+    let nextChildren = [...presentChildren];
+    for (let i = 0; i < renderedChildren.length; i++) {
+      const child = renderedChildren[i];
+      const key = getChildKey(child);
+      if (!presentKeys.includes(key)) {
+        nextChildren.splice(i, 0, child);
+        exitingChildren.push(child);
+      }
+    }
+    if (mode === "wait" && exitingChildren.length) {
+      nextChildren = exitingChildren;
+    }
+    setRenderedChildren(onlyElements(nextChildren));
+    setDiffedChildren(presentChildren);
+    return null;
+  }
+  const { forceRender } = reactExports.useContext(LayoutGroupContext);
+  return jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: renderedChildren.map((child) => {
+    const key = getChildKey(child);
+    const isPresent = propagate && !isParentPresent ? false : presentChildren === renderedChildren || presentKeys.includes(key);
+    const onExit = () => {
+      if (exitComplete.has(key)) {
+        exitComplete.set(key, true);
+      } else {
+        return;
+      }
+      let isEveryExitComplete = true;
+      exitComplete.forEach((isExitComplete) => {
+        if (!isExitComplete)
+          isEveryExitComplete = false;
+      });
+      if (isEveryExitComplete) {
+        forceRender == null ? void 0 : forceRender();
+        setRenderedChildren(pendingPresentChildren.current);
+        propagate && (safeToRemove == null ? void 0 : safeToRemove());
+        onExitComplete && onExitComplete();
+      }
+    };
+    return jsxRuntimeExports.jsx(PresenceChild, { isPresent, initial: !isInitialRender.current || initial ? void 0 : false, custom, presenceAffectsLayout, mode, onExitComplete: isPresent ? void 0 : onExit, anchorX, children: child }, key);
+  }) });
+};
 const startSound = "" + new URL("Mario 1 - Mario Riff-DIBFaSI-.mp3", import.meta.url).href;
 const shoot = "" + new URL("fireball-Bu_16San.mp3", import.meta.url).href;
 const explosion = "" + new URL("Break_Brick-CyosectS.mp3", import.meta.url).href;
@@ -301,7 +482,7 @@ const LeaderboardComponent = () => {
     ] })
   ] });
 };
-const GameOverModal = ({ score, onRestart, onClose, isWin }) => {
+const GameOverModal = ({ score, level, onRestart, onClose, isWin }) => {
   const [showSubmission, setShowSubmission] = reactExports.useState(false);
   const { isHighScore, fetchLeaderboard } = useLeaderboard();
   const [isHighEnough, setIsHighEnough] = reactExports.useState(false);
@@ -376,10 +557,24 @@ const GameOverModal = ({ score, onRestart, onClose, isWin }) => {
     }, children: isWin ? "You Win!" : "Game Over" }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { style: {
       fontSize: "20px",
-      marginBottom: "24px"
+      marginBottom: "8px"
     }, children: [
       "Your Score: ",
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "#f59e0b", fontWeight: "bold" }, children: score })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { style: {
+      fontSize: "18px",
+      marginBottom: "24px"
+    }, children: [
+      "Level Reached: ",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "#3b82f6", fontWeight: "bold" }, children: level })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { style: {
+      fontSize: "20px",
+      marginBottom: "24px"
+    }, children: [
+      "Level: ",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "#f59e0b", fontWeight: "bold" }, children: level })
     ] }),
     isHighEnough && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
       marginBottom: "24px",
@@ -522,6 +717,58 @@ const TICK_MS = window.innerWidth < 768 ? 120 : 120;
 const BULLET_STEP = 20;
 const INV_STEP = window.innerWidth < 768 ? 10 : 10;
 const INV_DROP = window.innerWidth < 768 ? 10 : 20;
+const LevelTransition = ({ level }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+  motion.div,
+  {
+    initial: { opacity: 0, scale: 0.5 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 1.5 },
+    style: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "rgba(0, 0, 0, 0.7)",
+      zIndex: 9999
+    },
+    children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      motion.div,
+      {
+        initial: { rotate: -10 },
+        animate: { rotate: 10 },
+        transition: { duration: 0.5, repeat: 3, repeatType: "reverse" },
+        style: {
+          padding: "2rem 3rem",
+          backgroundColor: "#0f172a",
+          border: "3px solid #38bdf8",
+          borderRadius: "10px",
+          boxShadow: "0 0 30px rgba(56, 189, 248, 0.6)",
+          textAlign: "center"
+        },
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { style: {
+            fontSize: "32px",
+            fontWeight: "bold",
+            marginBottom: "8px",
+            color: "#ffffff",
+            textShadow: "0 0 10px rgba(56, 189, 248, 0.8)"
+          }, children: [
+            "Level ",
+            level
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: {
+            fontSize: "18px",
+            color: "#f59e0b"
+          }, children: "Get Ready!" })
+        ]
+      }
+    )
+  }
+);
 function SpaceInvaders() {
   const [nodes, setNodes] = useNodesState([]);
   const [invaders, setInvaders] = reactExports.useState([]);
@@ -530,6 +777,9 @@ function SpaceInvaders() {
   const [dir, setDir] = reactExports.useState(1);
   const [active, setActive] = reactExports.useState(false);
   const [score, setScore] = reactExports.useState(0);
+  const [level, setLevel] = reactExports.useState(1);
+  const [showLevelTransition, setShowLevelTransition] = reactExports.useState(false);
+  const levelRef = reactExports.useRef(1);
   const scoreRef = reactExports.useRef(0);
   const bulletsRef = reactExports.useRef([]);
   const invadersRef = reactExports.useRef([]);
@@ -583,6 +833,12 @@ function SpaceInvaders() {
       soundsRef.current[key] = loadSound(url);
     });
   }, []);
+  const calculateInvaderPoints = (row, level2, isSpecial = false) => {
+    const rowBonus = Math.max(3 - row, 0) * 50;
+    const levelBonus = (level2 - 1) * 25;
+    const specialBonus = isSpecial ? 100 : 0;
+    return 100 + rowBonus + levelBonus + specialBonus;
+  };
   const makePlayer = reactExports.useCallback(
     (x) => ({
       id: "player",
@@ -604,19 +860,33 @@ function SpaceInvaders() {
     }),
     []
   );
-  const initGame = () => {
+  const initGame = (startNewGame = true) => {
     console.log("=== INIT GAME CALLED ===");
+    if (startNewGame) {
+      setLevel(1);
+      levelRef.current = 1;
+    }
+    const currentLevel = startNewGame ? 1 : levelRef.current;
+    const invadersPerRow = Math.min(INV_COLS + Math.floor(currentLevel / 2), 14);
+    const invaderRows = Math.min(INV_ROWS + Math.floor(currentLevel / 3), 6);
     const inv = [];
     let id = 0;
-    for (let r = 0; r < INV_ROWS; r++) {
-      for (let c = 0; c < INV_COLS; c++) {
+    for (let r = 0; r < invaderRows; r++) {
+      for (let c = 0; c < invadersPerRow; c++) {
+        const isSpecial = currentLevel > 3 && r < 2 || currentLevel > 2 && r === 0;
+        const isElite = currentLevel > 4 && r === 0;
+        const emoji = isElite ? "👾" : isSpecial ? "👿" : "👽";
+        const pointValue = calculateInvaderPoints(r, currentLevel, isSpecial || isElite);
         inv.push({
           id: `inv-${id++}`,
           position: { x: 200 + c * INV_SPACING_X, y: 150 + r * INV_SPACING_Y },
           draggable: false,
-          data: { label: "👾" },
+          data: {
+            label: emoji,
+            pointValue
+          },
           style: {
-            background: "#b91c1c",
+            background: isElite ? "#7e22ce" : isSpecial ? "#b91c1c" : "#0369a1",
             width: 40,
             height: 40,
             borderRadius: 8,
@@ -625,7 +895,8 @@ function SpaceInvaders() {
             justifyContent: "center",
             alignItems: "center",
             color: "white",
-            border: "none"
+            border: "none",
+            boxShadow: isElite ? "0 0 10px #a855f7" : isSpecial ? "0 0 5px #ef4444" : "none"
           }
         });
       }
@@ -635,13 +906,15 @@ function SpaceInvaders() {
     setBullets([]);
     setPlayerX(WIDTH / 2 - 20);
     setDir(1);
-    setScore(0);
+    if (startNewGame) {
+      setScore(0);
+    }
     setActive(true);
     setGameOver(false);
     setGameWon(false);
     setFinalScore(0);
     console.log("Game initialized successfully!");
-    console.log(`New state will be: gameOver=false, gameWon=false, active=true`);
+    console.log(`New state will be: gameOver=false, gameWon=false, active=true, level: ${currentLevel}`);
     window.gameDebug = true;
     playSound("gameStart");
   };
@@ -662,6 +935,9 @@ function SpaceInvaders() {
     scoreRef.current = score;
   }, [score]);
   reactExports.useEffect(() => {
+    levelRef.current = level;
+  }, [level]);
+  reactExports.useEffect(() => {
     bulletsRef.current = bullets;
   }, [bullets]);
   reactExports.useEffect(() => {
@@ -673,6 +949,7 @@ function SpaceInvaders() {
   reactExports.useEffect(() => {
     console.log("Game loop useEffect initiated");
     if (!active) return;
+    const invaderSpeed = INV_STEP + Math.floor(levelRef.current / 2);
     const loop = setInterval(() => {
       console.log("Game loop tick");
       const currentBullets = bulletsRef.current;
@@ -680,30 +957,36 @@ function SpaceInvaders() {
       const currentDir = dirRef.current;
       const movedBullets = currentBullets.map((b) => ({ ...b, position: { x: b.position.x, y: b.position.y - BULLET_STEP } })).filter((b) => b.position.y > -30);
       const edgeHit = currentInvaders.some(
-        (n) => n.position.x + currentDir * INV_STEP < 10 || n.position.x + currentDir * INV_STEP > WIDTH - 50
+        (n) => n.position.x + currentDir * invaderSpeed < 10 || n.position.x + currentDir * invaderSpeed > WIDTH - 50
       );
       const newDir = edgeHit ? currentDir * -1 : currentDir;
       const movedInvaders = currentInvaders.map((n) => ({
         ...n,
         position: {
-          x: n.position.x + newDir * INV_STEP,
+          x: n.position.x + newDir * invaderSpeed,
           y: n.position.y + (edgeHit ? INV_DROP : 0)
         }
       }));
       const remainingInvaders = [];
       let hitCount = 0;
+      let hitPoints = 0;
       movedInvaders.forEach((inv) => {
         const hit = movedBullets.some((b) => {
           const withinX = b.position.x >= inv.position.x && b.position.x <= inv.position.x + 40;
           const withinY = b.position.y >= inv.position.y && b.position.y <= inv.position.y + 40;
           return withinX && withinY;
         });
-        if (!hit) remainingInvaders.push(inv);
-        else hitCount += 1;
+        if (!hit) {
+          remainingInvaders.push(inv);
+        } else {
+          hitCount += 1;
+          const points = inv.data.pointValue || 100;
+          hitPoints += points;
+        }
       });
       if (hitCount) {
         setScore((s) => {
-          const newScore = s + hitCount * 100;
+          const newScore = s + hitPoints;
           scoreRef.current = newScore;
           return newScore;
         });
@@ -731,22 +1014,35 @@ function SpaceInvaders() {
         playSound("gameOver");
       }
       if (remainingInvaders.length === 0) {
-        const final = scoreRef.current;
-        setActive(false);
-        setGameWon(true);
-        setFinalScore(final);
-        setTimeout(() => {
-          document.body.style.overflow = "hidden";
-          forceRender();
-        }, 100);
         playSound("gameWin");
+        const newLevel = levelRef.current + 1;
+        setLevel(newLevel);
+        levelRef.current = newLevel;
+        setActive(false);
+        setShowLevelTransition(true);
+        setTimeout(() => {
+          setShowLevelTransition(false);
+          initGame(false);
+        }, 3e3);
       }
     }, TICK_MS);
     return () => clearInterval(loop);
   }, [active, playSound, forceRender, invaders]);
   const playerNode = reactExports.useMemo(() => makePlayer(playerX), [makePlayer, playerX]);
   reactExports.useEffect(() => {
-    setNodes([playerNode, ...invaders, ...bullets]);
+    const nodesWithTooltips = [
+      playerNode,
+      ...invaders.map((inv) => ({
+        ...inv,
+        // For desktop, add a title to show points on hover
+        data: {
+          ...inv.data,
+          title: window.innerWidth >= 768 ? `${inv.data.pointValue} pts` : void 0
+        }
+      })),
+      ...bullets
+    ];
+    setNodes(nodesWithTooltips);
   }, [playerNode, invaders, bullets, setNodes]);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
@@ -804,9 +1100,15 @@ function SpaceInvaders() {
               e.preventDefault();
               initGame();
             }, children: active ? "Restart" : "Start" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { marginLeft: "auto", fontSize: "14px", fontWeight: "600", color: "green" }, children: [
-              "Score: ",
-              score
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginLeft: "auto", display: "flex", gap: "16px" }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { fontSize: "14px", fontWeight: "600", color: "#3b82f6" }, children: [
+                "Level: ",
+                level
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { fontSize: "14px", fontWeight: "600", color: "green" }, children: [
+                "Score: ",
+                score
+              ] })
             ] })
           ]
         }
@@ -911,10 +1213,12 @@ function SpaceInvaders() {
         )
       ] }) })
     ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: showLevelTransition && /* @__PURE__ */ jsxRuntimeExports.jsx(LevelTransition, { level }) }),
     (gameOver2 || gameWon) && /* @__PURE__ */ jsxRuntimeExports.jsx(
       GameOverModal,
       {
         score: finalScore,
+        level,
         isWin: gameWon,
         onRestart: () => {
           document.body.style.overflow = "auto";
@@ -933,4 +1237,4 @@ function SpaceInvaders() {
 clientExports.createRoot(document.getElementById("root")).render(
   /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(SpaceInvaders, {}) })
 );
-//# sourceMappingURL=space_invader-C-4FP-M6.js.map
+//# sourceMappingURL=space_invader-CxO9jQPN.js.map
