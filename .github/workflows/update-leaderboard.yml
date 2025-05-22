@@ -79,14 +79,18 @@ jobs:
             const readmeContent = fs.readFileSync('README.md', 'utf8');
             
             // Create leaderboard markdown table
-            let leaderboardTable = '## 🏆 Leaderboard\n\n';
-            leaderboardTable += '| Rank | Player | Score | Date |\n';
-            leaderboardTable += '|------|--------|-------|------|\n';
+            let leaderboardTable = '## 🏆 Leaderboard\\n\\n';
+            leaderboardTable += '| Rank | Player&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Score&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |\\n';
+            leaderboardTable += '|:----:|:-----------------------------|:-----------------|:-----------------------|\\n';
             
             scores.forEach((score, index) => {
               const rank = index + 1;
               const rankEmoji = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
-              leaderboardTable += \`| \${rankEmoji} \${rank} | \${score.name} | \${score.score} | \${score.date} |\n\`;
+              // Pad player name and score for better visual spacing if needed, or rely on column width
+              const playerName = score.name.padEnd(28, ' '); // Example padding
+              const scoreStr = String(score.score).padEnd(15, ' ');
+              const dateStr = score.date.padEnd(20, ' ');
+              leaderboardTable += `| ${rankEmoji} ${rank} | ${playerName} | ${scoreStr} | ${dateStr} |\\n`;
             });
             
             // Check if leaderboard section already exists
