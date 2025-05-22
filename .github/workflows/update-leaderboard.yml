@@ -90,7 +90,7 @@ jobs:
               const playerName = score.name.padEnd(28, ' '); // Example padding
               const scoreStr = String(score.score).padEnd(15, ' ');
               const dateStr = score.date.padEnd(20, ' '); // Corrected: Added closing backtick
-              leaderboardTable += '| ${rankEmoji} ${rank} | ${playerName} | ${scoreStr} | ${dateStr} |\\n';
+              leaderboardTable += `| ${rankEmoji} ${rank} | ${playerName} | ${scoreStr} | ${dateStr} |\\\\n`; // Changed single quotes to backticks
             });
             
             // Check if leaderboard section already exists
