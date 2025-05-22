@@ -80,8 +80,8 @@ jobs:
             
             // Create leaderboard markdown table
             let leaderboardTable = '## 🏆 Leaderboard\\n\\n';
-            leaderboardTable += '| Rank | Player&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Score&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |\\n';
-            leaderboardTable += '|:----:|:-----------------------------|:-----------------|:-----------------------|\\n';
+            leaderboardTable += `| Rank | Player&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Score&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |\\n`;
+            leaderboardTable += `|:----:|:-----------------------------|:-----------------|:-----------------------|\\n`;
             
             scores.forEach((score, index) => {
               const rank = index + 1;
@@ -89,8 +89,8 @@ jobs:
               // Pad player name and score for better visual spacing if needed, or rely on column width
               const playerName = score.name.padEnd(28, ' '); // Example padding
               const scoreStr = String(score.score).padEnd(15, ' ');
-              const dateStr = score.date.padEnd(20, ' ');
-              leaderboardTable += `| ${rankEmoji} ${rank} | ${playerName} | ${scoreStr} | ${dateStr} |\\n`;
+              const dateStr = score.date.padEnd(20, ' ');`
+              leaderboardTable += `| ${rankEmoji} ${rank} | ${playerName} | ${scoreStr} | ${dateStr} |\\n`; // Changed \n to \\n
             });
             
             // Check if leaderboard section already exists
