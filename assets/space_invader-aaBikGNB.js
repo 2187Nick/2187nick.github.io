@@ -14465,7 +14465,7 @@ function defaultConstrain(transform2, extent, translateExtent) {
     dy1 > dy0 ? (dy0 + dy1) / 2 : Math.min(0, dy0) || Math.max(0, dy1)
   );
 }
-function zoom$1() {
+function zoom() {
   var filter2 = defaultFilter, extent = defaultExtent, constrain = defaultConstrain, wheelDelta2 = defaultWheelDelta, touchable = defaultTouchable, scaleExtent = [0, Infinity], translateExtent = [[-Infinity, -Infinity], [Infinity, Infinity]], duration = 250, interpolate2 = interpolateZoom, listeners = dispatch("start", "zoom", "end"), touchstarting, touchfirst, touchending, touchDelay = 500, wheelDelay = 150, clickDistance2 = 0, tapDistance = 10;
   function zoom2(selection2) {
     selection2.property("__zoom", defaultTransform).on("wheel.zoom", wheeled, { passive: false }).on("mousedown.zoom", mousedowned).on("dblclick.zoom", dblclicked).filter(touchable).on("touchstart.zoom", touchstarted).on("touchmove.zoom", touchmoved).on("touchend.zoom touchcancel.zoom", touchended).style("-webkit-tap-highlight-color", "rgba(0,0,0,0)");
@@ -16514,7 +16514,7 @@ function XYMinimap({ domNode, panZoom, getTransform, getViewScale }) {
         zoom: transform2[2]
       }, extent, translateExtent);
     };
-    const zoomAndPanHandler = zoom$1().on("start", panStartHandler).on("zoom", pannable ? panHandler : null).on("zoom.wheel", zoomable ? zoomHandler : null);
+    const zoomAndPanHandler = zoom().on("start", panStartHandler).on("zoom", pannable ? panHandler : null).on("zoom.wheel", zoomable ? zoomHandler : null);
     selection2.call(zoomAndPanHandler, {});
   }
   function destroy() {
@@ -16713,7 +16713,7 @@ function XYPanZoom({ domNode, minZoom, maxZoom, paneClickDistance, translateExte
     isPanScrolling: false
   };
   const bbox = domNode.getBoundingClientRect();
-  const d3ZoomInstance = zoom$1().clickDistance(!isNumeric(paneClickDistance) || paneClickDistance < 0 ? 0 : paneClickDistance).scaleExtent([minZoom, maxZoom]).translateExtent(translateExtent);
+  const d3ZoomInstance = zoom().clickDistance(!isNumeric(paneClickDistance) || paneClickDistance < 0 ? 0 : paneClickDistance).scaleExtent([minZoom, maxZoom]).translateExtent(translateExtent);
   const d3Selection = select(domNode).call(d3ZoomInstance);
   setViewportConstrained({
     x: viewport.x,
@@ -27908,27 +27908,28 @@ const ScoreSubmission = ({ score, onClose, onSubmitSuccess }) => {
       textAlign: "center",
       border: "1px solid #22c55e"
     }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { style: { color: "#4ade80", marginBottom: "16px" }, children: "Score Submitted!" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { style: { color: "#4ade80", marginBottom: "12px", fontSize: "14px" }, children: "Score Submitted!" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { style: { fontSize: "12px" }, children: [
         "Your score of ",
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontWeight: "bold", color: "#f59e0b" }, children: score }),
         " has been submitted as ",
         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontWeight: "bold" }, children: nickname }),
         "."
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { marginBottom: "20px" }, children: "The leaderboard will be updated shortly." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { marginBottom: "16px", fontSize: "12px" }, children: "The leaderboard will be updated shortly." }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "button",
         {
           onClick: onClose,
           style: {
-            padding: "8px 16px",
+            padding: "6px 12px",
             backgroundColor: "#22c55e",
             color: "white",
             border: "none",
             borderRadius: "4px",
             cursor: "pointer",
-            fontWeight: "bold"
+            fontWeight: "bold",
+            fontSize: "12px"
           },
           children: "Close"
         }
@@ -27938,14 +27939,14 @@ const ScoreSubmission = ({ score, onClose, onSubmitSuccess }) => {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
     backgroundColor: "rgba(0, 0, 0, 0.9)",
     borderRadius: "8px",
-    padding: "24px",
+    padding: "16px",
     border: "1px solid #38bdf8",
-    boxShadow: "0 0 20px rgba(56, 189, 248, 0.2)",
+    boxShadow: "0 0 15px rgba(56, 189, 248, 0.2)",
     width: "100%",
-    maxWidth: "400px",
+    maxWidth: "200px",
     margin: "0 auto"
   }, children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { style: { color: "#38bdf8", marginBottom: "16px", textAlign: "center" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { style: { color: "#38bdf8", marginBottom: "12px", textAlign: "center", fontSize: "14px" }, children: [
       "Submit Your Score: ",
       score
     ] }),
@@ -27957,15 +27958,16 @@ const ScoreSubmission = ({ score, onClose, onSubmitSuccess }) => {
       marginBottom: "16px"
     }, children: error }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: "20px" }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: "16px" }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "label",
           {
             htmlFor: "nickname",
             style: {
               display: "block",
-              marginBottom: "8px",
-              fontWeight: "bold"
+              marginBottom: "6px",
+              fontWeight: "bold",
+              fontSize: "12px"
             },
             children: "Nickname:"
           }
@@ -27982,12 +27984,13 @@ const ScoreSubmission = ({ score, onClose, onSubmitSuccess }) => {
             disabled: submitting,
             style: {
               width: "100%",
-              padding: "10px",
+              padding: "8px",
               borderRadius: "4px",
               border: "1px solid #38bdf8",
               backgroundColor: "rgba(56, 189, 248, 0.1)",
               color: "white",
-              outline: "none"
+              outline: "none",
+              fontSize: "12px"
             }
           }
         )
@@ -27995,7 +27998,7 @@ const ScoreSubmission = ({ score, onClose, onSubmitSuccess }) => {
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
         display: "flex",
         justifyContent: "space-between",
-        gap: "12px"
+        gap: "8px"
       }, children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "button",
@@ -28004,13 +28007,14 @@ const ScoreSubmission = ({ score, onClose, onSubmitSuccess }) => {
             disabled: submitting,
             style: {
               flex: "1",
-              padding: "10px",
+              padding: "8px",
               backgroundColor: submitting ? "#6b7280" : "#3b82f6",
               color: "white",
               border: "none",
               borderRadius: "4px",
               cursor: submitting ? "not-allowed" : "pointer",
-              fontWeight: "bold"
+              fontWeight: "bold",
+              fontSize: "12px"
             },
             children: submitting ? "Submitting..." : "Submit Score"
           }
@@ -28023,13 +28027,14 @@ const ScoreSubmission = ({ score, onClose, onSubmitSuccess }) => {
             disabled: submitting,
             style: {
               flex: "1",
-              padding: "10px",
+              padding: "8px",
               backgroundColor: "#6b7280",
               color: "white",
               border: "none",
               borderRadius: "4px",
               cursor: submitting ? "not-allowed" : "pointer",
-              fontWeight: "bold"
+              fontWeight: "bold",
+              fontSize: "12px"
             },
             children: "Cancel"
           }
@@ -28056,19 +28061,20 @@ const LeaderboardComponent = () => {
     /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { style: {
       fontFamily: "'Press Start 2P', monospace",
       color: "#38bdf8",
-      marginBottom: "16px",
-      fontSize: "18px"
+      marginBottom: "12px",
+      fontSize: "14px"
     }, children: "🏆 High Scores" }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("table", { style: {
-      width: "100%",
+      width: "90%",
       borderCollapse: "collapse",
-      marginTop: "8px",
-      color: "white"
+      marginTop: "6px",
+      color: "white",
+      fontSize: "10px"
     }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("thead", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { style: { borderBottom: "2px solid #38bdf8" }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("th", { style: { padding: "8px", textAlign: "center" }, children: "Rank" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("th", { style: { padding: "8px", textAlign: "left" }, children: "Player" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("th", { style: { padding: "8px", textAlign: "right" }, children: "Score" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("th", { style: { padding: "4px", textAlign: "center", fontSize: "10px" }, children: "Rank" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("th", { style: { padding: "4px", textAlign: "left", fontSize: "10px" }, children: "Player" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("th", { style: { padding: "4px", textAlign: "right", fontSize: "10px" }, children: "Score" })
       ] }) }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("tbody", { children: [
         scores.map((entry, index2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -28079,14 +28085,14 @@ const LeaderboardComponent = () => {
               borderBottom: "1px solid rgba(56, 189, 248, 0.3)"
             },
             children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("td", { style: { padding: "8px", textAlign: "center" }, children: index2 === 0 ? "🥇" : index2 === 1 ? "🥈" : index2 === 2 ? "🥉" : index2 + 1 }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("td", { style: { padding: "8px", textAlign: "left", fontWeight: "bold" }, children: entry.name }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("td", { style: { padding: "8px", textAlign: "right", color: "#f59e0b" }, children: entry.score })
+              /* @__PURE__ */ jsxRuntimeExports.jsx("td", { style: { padding: "4px", textAlign: "center", fontSize: "10px" }, children: index2 === 0 ? "🥇" : index2 === 1 ? "🥈" : index2 === 2 ? "🥉" : index2 + 1 }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("td", { style: { padding: "4px", textAlign: "left", fontWeight: "bold", fontSize: "10px" }, children: entry.name }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("td", { style: { padding: "4px", textAlign: "right", color: "#f59e0b", fontSize: "10px" }, children: entry.score })
             ]
           },
           index2
         )),
-        scores.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("tr", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("td", { colSpan: "3", style: { padding: "16px", textAlign: "center" }, children: "No scores yet. Be the first!" }) })
+        scores.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("tr", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("td", { colSpan: "3", style: { padding: "12px", textAlign: "center", fontSize: "10px" }, children: "No scores yet. Be the first!" }) })
       ] })
     ] })
   ] });
@@ -28122,12 +28128,12 @@ const GameOverModal = ({ score, level, onRestart, onClose, isWin }) => {
       zIndex: 9999
     }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
       backgroundColor: "rgba(0, 0, 0, 0.95)",
-      padding: "2rem",
+      padding: "1rem",
       borderRadius: "8px",
-      border: "5px solid #ff3800",
-      boxShadow: "0 0 30px rgba(255, 56, 0, 0.8)",
+      border: "3px solid #ff3800",
+      boxShadow: "0 0 20px rgba(255, 56, 0, 0.6)",
       width: "90%",
-      maxWidth: "500px"
+      maxWidth: "200px"
     }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       ScoreSubmission,
       {
@@ -28150,25 +28156,25 @@ const GameOverModal = ({ score, level, onRestart, onClose, isWin }) => {
     zIndex: 9999
   }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
     backgroundColor: "rgba(0, 0, 0, 0.95)",
-    padding: "2rem",
+    padding: "1.5rem",
     borderRadius: "8px",
-    border: "5px solid #ff3800",
-    boxShadow: "0 0 30px rgba(255, 56, 0, 0.8)",
+    border: "3px solid #ff3800",
+    boxShadow: "0 0 20px rgba(255, 56, 0, 0.6)",
     color: "white",
     width: "90%",
-    maxWidth: "500px",
+    maxWidth: "200px",
     textAlign: "center"
   }, children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { style: {
       fontFamily: "'Press Start 2P', monospace",
       color: isWin ? "#4ade80" : "#ef4444",
-      fontSize: "20px",
-      marginBottom: "24px"
+      fontSize: "16px",
+      marginBottom: "16px"
     }, children: isWin ? "You Win!" : "Game Over" }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { style: {
       fontFamily: "'Press Start 2P', monospace",
-      fontSize: "16px",
-      marginBottom: "16px",
+      fontSize: "14px",
+      marginBottom: "12px",
       color: "#ffffff"
     }, children: [
       "Your Score: ",
@@ -28176,59 +28182,54 @@ const GameOverModal = ({ score, level, onRestart, onClose, isWin }) => {
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { style: {
       fontFamily: "'Press Start 2P', monospace",
-      fontSize: "14px",
-      marginBottom: "24px",
+      fontSize: "12px",
+      marginBottom: "16px",
       color: "#ffffff"
     }, children: [
       "Level Reached: ",
       /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "#3b82f6" }, children: level })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { style: {
-      fontSize: "20px",
-      marginBottom: "24px"
-    }, children: [
-      "Level: ",
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "#f59e0b", fontWeight: "bold" }, children: level })
-    ] }),
     isHighEnough && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
-      marginBottom: "24px",
-      padding: "12px",
+      marginBottom: "16px",
+      padding: "8px",
       backgroundColor: "rgba(79, 70, 229, 0.2)",
       borderRadius: "6px",
       border: "1px solid #6366f1"
     }, children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { marginBottom: "12px", color: "#c4b5fd" }, children: "🏆 Congratulations! You got a high score!" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { marginBottom: "8px", color: "#c4b5fd", fontSize: "10px" }, children: "🏆 Congratulations! You got a high score!" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "button",
         {
           onClick: () => setShowSubmission(true),
           style: {
-            padding: "8px 16px",
+            padding: "6px 12px",
             backgroundColor: "#6366f1",
             border: "none",
             borderRadius: "4px",
             color: "white",
             fontWeight: "bold",
-            cursor: "pointer"
+            cursor: "pointer",
+            fontSize: "10px"
           },
           children: "Submit Score"
         }
       )
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginBottom: "24px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(LeaderboardComponent, {}) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "center", gap: "12px" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginBottom: "16px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(LeaderboardComponent, {}) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "center", gap: "8px" }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "button",
         {
           onClick: onRestart,
           style: {
-            padding: "10px 20px",
+            padding: "8px 16px",
             backgroundColor: "#3b82f6",
             border: "none",
             borderRadius: "4px",
             color: "white",
             fontWeight: "bold",
-            cursor: "pointer"
+            cursor: "pointer",
+            fontSize: "12px"
           },
           children: "Play Again"
         }
@@ -28238,13 +28239,14 @@ const GameOverModal = ({ score, level, onRestart, onClose, isWin }) => {
         {
           onClick: onClose,
           style: {
-            padding: "10px 20px",
+            padding: "8px 16px",
             backgroundColor: "#6b7280",
             border: "none",
             borderRadius: "4px",
             color: "white",
             fontWeight: "bold",
-            cursor: "pointer"
+            cursor: "pointer",
+            fontSize: "12px"
           },
           children: "Close"
         }
@@ -28252,6 +28254,10 @@ const GameOverModal = ({ score, level, onRestart, onClose, isWin }) => {
     ] })
   ] }) });
 };
+const TICK_MS = 200;
+const BULLET_STEP = 25;
+const INV_STEP = 30;
+const INV_DROP = 10;
 const Button = ({ style: style2 = {}, children: children2, ...rest }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
   "button",
   {
@@ -28301,36 +28307,30 @@ const loadSound = (url) => {
   return audio;
 };
 const getGameDimensions = () => {
-  const isMobile = window.innerWidth < 768;
-  const spacingX = isMobile ? 160 : 160;
-  const cols = 10;
-  const margin = 200;
-  const invaderWidth = 40;
-  const totalWidth2 = margin + cols * spacingX + invaderWidth;
-  const zoom2 = isMobile ? 0.99 : 0.95;
+  const GAME_WIDTH = 600;
+  const GAME_HEIGHT = 600;
+  const cols = 6;
+  const margin2 = 100;
+  const invaderWidth = 25;
+  const spacingX = (GAME_WIDTH - margin2 * 2 - invaderWidth) / (cols - 1);
   return {
-    isMobile,
-    width: isMobile ? window.innerWidth + 500 : Math.max(window.innerWidth, totalWidth2),
-    height: isMobile ? 500 : 800,
-    playerY: isMobile ? 1e3 : 800,
-    zoom: zoom2,
-    totalWidth: totalWidth2,
+    width: GAME_WIDTH,
+    height: GAME_HEIGHT,
+    playerY: GAME_HEIGHT - 40,
+    // Fixed position near bottom
     invaderSpacingX: spacingX,
-    invaderSpacingY: isMobile ? 80 : 140
+    invaderSpacingY: 45,
+    // Tighter vertical spacing for mobile-friendly layout
+    margin: margin2
   };
 };
 const dimensions = getGameDimensions();
-const { width, playerY, zoom, totalWidth, invaderSpacingX, invaderSpacingY } = dimensions;
+const { width, playerY, invaderSpacingY, margin } = dimensions;
 const WIDTH = width;
 const PLAYER_Y = playerY;
-const INV_COLS = window.innerWidth < 768 ? 4 : 10;
-const INV_ROWS = window.innerWidth < 768 ? 5 : 3;
-const INV_SPACING_X = invaderSpacingX;
+const INV_COLS = 6;
+const INV_ROWS = 3;
 const INV_SPACING_Y = invaderSpacingY;
-const TICK_MS = window.innerWidth < 768 ? 120 : 120;
-const BULLET_STEP = 20;
-const INV_STEP = window.innerWidth < 768 ? 10 : 10;
-const INV_DROP = window.innerWidth < 768 ? 10 : 20;
 const LevelTransition = ({ level }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
   motion.div,
   {
@@ -28407,10 +28407,9 @@ function SpaceInvaders() {
   const shotsFiredRef = reactExports.useRef(0);
   const forceRender = reactExports.useCallback(() => {
     setForceUpdate((prev) => prev + 1);
-    console.log("Forcing re-render");
   }, []);
   const lastShotRef = reactExports.useRef(0);
-  const SHOOT_COOLDOWN = window.innerWidth < 768 ? 200 : 100;
+  const SHOOT_COOLDOWN = 0;
   const playSound = reactExports.useCallback((soundName) => {
     const sound = soundsRef.current[soundName];
     if (sound) {
@@ -28419,7 +28418,7 @@ function SpaceInvaders() {
     }
   }, []);
   const handleShoot = reactExports.useCallback(() => {
-    if (!active) return;
+    if (!active || showLevelTransition) return;
     const now2 = Date.now();
     if (now2 - lastShotRef.current < SHOOT_COOLDOWN) return;
     lastShotRef.current = now2;
@@ -28448,7 +28447,7 @@ function SpaceInvaders() {
       }
     ]);
     playSound("shoot");
-  }, [active, playerX, playSound, SHOOT_COOLDOWN]);
+  }, [active, playerX, playSound, showLevelTransition]);
   const soundsRef = reactExports.useRef({});
   reactExports.useEffect(() => {
     Object.entries(SOUNDS).forEach(([key, url]) => {
@@ -28479,13 +28478,15 @@ function SpaceInvaders() {
       data: { label: "🚀" },
       style: {
         background: "#0369a1",
-        width: 40,
-        height: 40,
+        width: 30,
+        // Smaller for mobile-friendly size
+        height: 30,
         borderRadius: "50%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        fontSize: 22,
+        fontSize: 18,
+        // Smaller emoji
         color: "white",
         border: "none"
       }
@@ -28493,12 +28494,11 @@ function SpaceInvaders() {
     []
   );
   const initGame = (startNewGame = true) => {
-    console.log("=== INIT GAME CALLED ===");
-    console.log("startNewGame:", startNewGame);
+    if (showLevelTransition && startNewGame) {
+      startNewGame = false;
+    }
     const currentLevel = startNewGame ? 1 : levelRef.current;
-    console.log("Using level:", currentLevel);
     if (startNewGame) {
-      console.log("Starting new game, resetting to level 1");
       setLevel(1);
       levelRef.current = 1;
       setShotsFired(0);
@@ -28506,8 +28506,10 @@ function SpaceInvaders() {
       setScore(0);
       scoreRef.current = 0;
     } else {
-      console.log("Continuing at level:", currentLevel);
+      const preservedScore = scoreRef.current;
       setLevel(currentLevel);
+      setScore(preservedScore);
+      scoreRef.current = preservedScore;
     }
     const invadersPerRow = Math.min(INV_COLS + Math.floor(currentLevel / 2), 14);
     const invaderRows = Math.min(INV_ROWS + Math.floor(currentLevel / 3), 6);
@@ -28519,9 +28521,13 @@ function SpaceInvaders() {
         const isElite = currentLevel > 4 && r === 0;
         const emoji = isElite ? "👾" : isSpecial ? "👿" : "👽";
         const pointValue = calculateInvaderPoints(r, currentLevel, isSpecial || isElite);
+        const xPos = margin + c * ((WIDTH - 2 * margin) / (invadersPerRow - 1));
         inv.push({
           id: `inv-${id2++}`,
-          position: { x: 200 + c * INV_SPACING_X, y: 150 + r * INV_SPACING_Y },
+          position: {
+            x: xPos,
+            y: 60 + r * INV_SPACING_Y
+          },
           draggable: false,
           data: {
             label: emoji,
@@ -28529,10 +28535,10 @@ function SpaceInvaders() {
           },
           style: {
             background: isElite ? "#7e22ce" : isSpecial ? "#b91c1c" : "#0369a1",
-            width: 40,
-            height: 40,
-            borderRadius: 8,
-            fontSize: 20,
+            width: 25,
+            height: 25,
+            borderRadius: 6,
+            fontSize: 16,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -28543,37 +28549,44 @@ function SpaceInvaders() {
         });
       }
     }
-    console.log("Setting game state...");
     setInvaders(inv);
     setBullets([]);
-    setPlayerX(WIDTH / 2 - 20);
+    setPlayerX(WIDTH / 2);
     setDir(1);
     setActive(true);
     setGameOver(false);
     setGameWon(false);
     setFinalScore(0);
-    console.log("Game initialized successfully!");
-    console.log(`New state: gameOver=false, gameWon=false, active=true, level: ${currentLevel}, score: ${scoreRef.current}`);
     if (startNewGame) {
       playSound("gameStart");
     }
   };
   reactExports.useEffect(() => {
-    if (!active) return;
+    if (!active || showLevelTransition) return;
     const onKey = (e) => {
-      if (e.key === "ArrowLeft") setPlayerX((x) => Math.max(10, x - 20));
-      else if (e.key === "ArrowRight") setPlayerX((x) => Math.min(WIDTH - 50, x + 20));
-      else if (e.key === " " || e.key === "ArrowUp") {
+      if (e.key === "ArrowLeft") {
+        setPlayerX((x) => {
+          const newX = Math.max(0, x - 20);
+          return newX;
+        });
+      } else if (e.key === "ArrowRight") {
+        setPlayerX((x) => {
+          const newX = Math.min(WIDTH - 30, x + 20);
+          return newX;
+        });
+      } else if (e.key === " " || e.key === "ArrowUp") {
         e.preventDefault();
         handleShoot();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [active, handleShoot]);
+  }, [active, handleShoot, showLevelTransition]);
   reactExports.useEffect(() => {
-    scoreRef.current = score;
-  }, [score]);
+    if (!showLevelTransition) {
+      scoreRef.current = score;
+    }
+  }, [score, showLevelTransition]);
   reactExports.useEffect(() => {
     levelRef.current = level;
   }, [level]);
@@ -28587,11 +28600,11 @@ function SpaceInvaders() {
     dirRef.current = dir;
   }, [dir]);
   reactExports.useEffect(() => {
-    console.log("Game loop useEffect initiated");
     if (!active) return;
-    const invaderSpeed = INV_STEP + Math.floor(levelRef.current / 2);
+    const currentLevel = levelRef.current;
+    const invaderSpeed = INV_STEP + Math.floor(currentLevel / 3);
+    const invaderDropDistance = INV_DROP + Math.floor(currentLevel / 2);
     const loop = setInterval(() => {
-      console.log("Game loop tick");
       const currentBullets = bulletsRef.current;
       const currentInvaders = invadersRef.current;
       const currentDir = dirRef.current;
@@ -28604,7 +28617,7 @@ function SpaceInvaders() {
         ...n,
         position: {
           x: n.position.x + newDir * invaderSpeed,
-          y: n.position.y + (edgeHit ? INV_DROP : 0)
+          y: n.position.y + (edgeHit ? invaderDropDistance : 0)
         }
       }));
       const remainingInvaders = [];
@@ -28612,9 +28625,16 @@ function SpaceInvaders() {
       let hitPoints = 0;
       movedInvaders.forEach((inv) => {
         const hit = movedBullets.some((b) => {
-          const withinX = b.position.x >= inv.position.x && b.position.x <= inv.position.x + 40;
-          const withinY = b.position.y >= inv.position.y && b.position.y <= inv.position.y + 40;
-          return withinX && withinY;
+          const bulletCenterX = b.position.x + 6;
+          const bulletCenterY = b.position.y + 10;
+          const invaderCenterX = inv.position.x + 12.5;
+          const invaderCenterY = inv.position.y + 12.5;
+          const distanceX = Math.abs(bulletCenterX - invaderCenterX);
+          const distanceY = Math.abs(bulletCenterY - invaderCenterY);
+          const collisionThresholdX = 15;
+          const collisionThresholdY = 15;
+          const collision = distanceX <= collisionThresholdX && distanceY <= collisionThresholdY;
+          return collision;
         });
         if (!hit) {
           remainingInvaders.push(inv);
@@ -28633,10 +28653,17 @@ function SpaceInvaders() {
         playSound("explosion");
       }
       const survivingBullets = movedBullets.filter((b) => {
-        return !remainingInvaders.some((inv) => {
-          const withinX = b.position.x >= inv.position.x && b.position.x <= inv.position.x + 40;
-          const withinY = b.position.y >= inv.position.y && b.position.y <= inv.position.y + 40;
-          return withinX && withinY;
+        return !movedInvaders.some((inv) => {
+          if (remainingInvaders.find((ri) => ri.id === inv.id)) return false;
+          const bulletCenterX = b.position.x + 6;
+          const bulletCenterY = b.position.y + 10;
+          const invaderCenterX = inv.position.x + 12.5;
+          const invaderCenterY = inv.position.y + 12.5;
+          const distanceX = Math.abs(bulletCenterX - invaderCenterX);
+          const distanceY = Math.abs(bulletCenterY - invaderCenterY);
+          const collisionThresholdX = 15;
+          const collisionThresholdY = 15;
+          return distanceX <= collisionThresholdX && distanceY <= collisionThresholdY;
         });
       });
       setBullets(survivingBullets);
@@ -28656,7 +28683,6 @@ function SpaceInvaders() {
       if (remainingInvaders.length === 0) {
         playSound("gameWin");
         const currentLevelValue = levelRef.current;
-        console.log("Current level at completion:", currentLevelValue);
         const totalInvaders = currentLevelValue <= 2 ? INV_COLS * INV_ROWS : Math.min(INV_COLS + Math.floor(currentLevelValue / 2), 14) * Math.min(INV_ROWS + Math.floor(currentLevelValue / 3), 6);
         const efficiencyBonus = calculateEfficiencyBonus(shotsFiredRef.current, totalInvaders, currentLevelValue);
         const currentScore = scoreRef.current;
@@ -28664,36 +28690,34 @@ function SpaceInvaders() {
         scoreRef.current = newScoreWithBonus;
         setScore(newScoreWithBonus);
         const nextLevel = currentLevelValue + 1;
-        console.log("Transitioning to level:", nextLevel);
-        levelRef.current = nextLevel;
-        setLevel(nextLevel);
         setActive(false);
-        console.log(`LEVEL ${currentLevelValue} COMPLETE!`);
-        console.log(`Accuracy Bonus: ${efficiencyBonus} pts`);
-        console.log(`Shots Fired: ${shotsFiredRef.current}/${totalInvaders}`);
         setShotsFired(0);
         shotsFiredRef.current = 0;
-        setShowLevelTransition(true);
+        setShowLevelTransition(nextLevel);
         const startNextLevel = () => {
-          console.log("Starting next level:", nextLevel);
+          scoreRef.current;
           setShowLevelTransition(false);
-          initGame(false);
+          levelRef.current = nextLevel;
+          setLevel(nextLevel);
+          setTimeout(() => {
+            initGame(false);
+          }, 50);
         };
         setTimeout(startNextLevel, 3e3);
       }
     }, TICK_MS);
     return () => clearInterval(loop);
-  }, [active, playSound, forceRender, invaders]);
+  }, [active, playSound, forceRender]);
   const playerNode = reactExports.useMemo(() => makePlayer(playerX), [makePlayer, playerX]);
   reactExports.useEffect(() => {
     const nodesWithTooltips = [
       playerNode,
       ...invaders.map((inv) => ({
         ...inv,
-        // For desktop, add a title to show points on hover
+        // Show point tooltips on all devices
         data: {
           ...inv.data,
-          title: window.innerWidth >= 768 ? `${inv.data.pointValue} pts` : void 0
+          title: `${inv.data.pointValue} pts`
         }
       })),
       ...bullets
@@ -28701,15 +28725,34 @@ function SpaceInvaders() {
     setNodes(nodesWithTooltips);
   }, [playerNode, invaders, bullets, setNodes]);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
       height: "100vh",
-      width: "100%",
+      width: "100vw",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "#000000",
+      padding: "10px",
+      // Small padding to prevent edge touching
+      margin: 0,
+      position: "fixed",
+      top: 0,
+      left: 0
+    }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
+      width: "300px",
+      height: "600px",
+      minWidth: "300px",
+      // Prevent shrinking
+      maxWidth: "300px",
+      // Prevent growing
       display: "flex",
       flexDirection: "column",
       color: "white",
-      overflow: "visible",
-      // Allow modal to overflow
-      backgroundColor: "#000000"
+      overflow: "hidden",
+      backgroundColor: "#000000",
+      border: "2px solid #38bdf8",
+      borderRadius: "10px",
+      boxShadow: "0 0 20px rgba(56, 189, 248, 0.3)"
     }, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         motion.div,
@@ -28719,20 +28762,22 @@ function SpaceInvaders() {
           style: {
             textAlign: "center",
             backgroundColor: "#0f172a",
-            padding: "12px 0",
+            padding: "8px 0",
             borderBottom: "2px solid #38bdf8",
             boxShadow: "0 4px 12px rgba(56, 189, 248, 0.4)",
-            fontFamily: "'Press Start 2P', monospace, system-ui"
+            fontFamily: "'Press Start 2P', monospace, system-ui",
+            flexShrink: 0
           },
           children: /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { style: {
             margin: 0,
-            fontSize: window.innerWidth < 768 ? "24px" : "32px",
+            fontSize: "16px",
+            // Smaller for fixed container
             background: "linear-gradient(to right, #38bdf8, #818cf8)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             fontWeight: "bold",
             textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
-            letterSpacing: "2px"
+            letterSpacing: "1px"
           }, children: "SPACE INVADERS" })
         }
       ),
@@ -28742,26 +28787,30 @@ function SpaceInvaders() {
           initial: { y: -50, opacity: 0 },
           animate: { y: 0, opacity: 1 },
           style: {
-            padding: "16px",
+            padding: "8px 12px",
             display: "flex",
-            gap: "16px",
+            gap: "12px",
             alignItems: "center",
             backgroundColor: "#000000",
             boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
             zIndex: 10,
-            borderBottom: "1px solid rgb(51, 51, 51)"
+            borderBottom: "1px solid rgb(51, 51, 51)",
+            flexShrink: 0
           },
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { type: "button", onClick: (e) => {
               e.preventDefault();
+              if (showLevelTransition) {
+                return;
+              }
               initGame();
             }, children: active ? "Restart" : "Start" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginLeft: "auto", display: "flex", gap: "16px" }, children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { fontSize: "14px", fontWeight: "600", color: "#3b82f6" }, children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginLeft: "auto", display: "flex", gap: "12px" }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { fontSize: "10px", fontWeight: "600", color: "#3b82f6" }, children: [
                 "Level: ",
                 level
               ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { fontSize: "14px", fontWeight: "600", color: "green" }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { fontSize: "10px", fontWeight: "600", color: "green" }, children: [
                 "Score: ",
                 score
               ] })
@@ -28769,107 +28818,236 @@ function SpaceInvaders() {
           ]
         }
       ),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flex: 1, position: "relative", width: "100%", backgroundColor: "#000000" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100vw", height: "80vh", background: "#000000" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        index,
-        {
-          nodes,
-          edges: [],
-          panOnDrag: false,
-          zoomOnScroll: false,
-          panOnScroll: false,
-          minZoom: window.innerWidth < 768 ? 0.4 : 0.2,
-          maxZoom: 1,
-          defaultViewport: {
-            x: 0,
-            y: 0,
-            zoom: Math.min(window.innerWidth / totalWidth, zoom)
-          },
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(Background, { gap: 40, size: 1.5, color: "#333333", variant: "lines", style: { opacity: 0.4 } })
-        }
-      ) }) }),
-      active && window.innerWidth < 768 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
-        height: "128px",
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
+        flex: 1,
+        position: "relative",
+        width: "100%",
         backgroundColor: "#000000",
         display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
         justifyContent: "center",
-        alignItems: "center",
-        borderTop: "1px solid rgb(51, 51, 51)"
-      }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        width: "100%",
-        maxWidth: "340px"
+        padding: "0"
+        // No padding needed in fixed container
       }, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
+          width: "100%",
+          // Fill the container width (350px)
+          height: "400px",
+          // Fixed height for game area
+          background: "#000000",
+          overflow: "hidden",
+          position: "relative"
+        }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          index,
           {
-            onTouchStart: () => setPlayerX((x) => Math.max(10, x - 20)),
-            onTouchEnd: (e) => e.preventDefault(),
-            style: {
-              width: "64px",
-              height: "64px",
-              borderRadius: "50%",
-              backgroundColor: "rgba(59, 130, 246, 0.5)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "white",
-              fontSize: "28px",
-              border: "none",
-              padding: 0,
-              touchAction: "manipulation"
+            nodes,
+            edges: [],
+            panOnDrag: false,
+            zoomOnScroll: false,
+            panOnScroll: false,
+            minZoom: 0.5,
+            maxZoom: 0.5,
+            defaultViewport: {
+              x: 0,
+              y: 0,
+              zoom: 0.5
+              // Use full zoom to utilize the 300px width
             },
-            children: "←"
+            style: { width: "100%", height: "100%" },
+            proOptions: { hideAttribution: true },
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Background, { gap: 40, size: 1.5, color: "#333333", variant: "lines", style: { opacity: 0.4 } })
           }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            onPointerDown: handleShoot,
-            onTouchStart: handleShoot,
-            style: {
-              width: "64px",
-              height: "64px",
-              borderRadius: "50%",
-              backgroundColor: "rgba(59, 130, 246, 0.5)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "white",
-              fontSize: "28px",
-              border: "none",
-              padding: 0,
-              touchAction: "manipulation"
-            },
-            children: "🔥"
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            onTouchStart: () => setPlayerX((x) => Math.min(WIDTH - 50, x + 20)),
-            onTouchEnd: (e) => e.preventDefault(),
-            style: {
-              width: "64px",
-              height: "64px",
-              borderRadius: "50%",
-              backgroundColor: "rgba(59, 130, 246, 0.5)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "white",
-              fontSize: "28px",
-              border: "none",
-              padding: 0,
-              touchAction: "manipulation"
-            },
-            children: "→"
-          }
-        )
-      ] }) })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: showLevelTransition && /* @__PURE__ */ jsxRuntimeExports.jsx(LevelTransition, { level: levelRef.current }) }),
+        ) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
+          width: "100%",
+          // Full width of container
+          height: "80px",
+          // Fixed height for controls
+          backgroundColor: "#000000",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          borderTop: "1px solid #38bdf8",
+          position: "relative",
+          zIndex: 20
+        }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          width: "100%",
+          maxWidth: "280px",
+          padding: "0 10px"
+        }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              onTouchStart: () => {
+                if (showLevelTransition) return;
+                setPlayerX((x) => {
+                  const newX = Math.max(0, x - 20);
+                  return newX;
+                });
+              },
+              onTouchEnd: (e) => e.preventDefault(),
+              onClick: () => {
+                if (showLevelTransition) return;
+                setPlayerX((x) => {
+                  const newX = Math.max(0, x - 20);
+                  return newX;
+                });
+              },
+              style: {
+                width: "50px",
+                height: "50px",
+                borderRadius: "12px",
+                backgroundColor: "rgba(56, 189, 248, 0.9)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                color: "white",
+                fontSize: "0px",
+                // Hide text, use pseudo-element for arrow
+                fontWeight: "bold",
+                border: "3px solid #0ea5e9",
+                padding: 0,
+                touchAction: "manipulation",
+                cursor: "pointer",
+                boxShadow: "0 6px 16px rgba(56, 189, 248, 0.5)",
+                transition: "all 0.2s ease",
+                position: "relative",
+                background: "linear-gradient(135deg, rgba(56, 189, 248, 0.9), rgba(14, 165, 233, 0.9))"
+              },
+              onMouseEnter: (e) => {
+                e.target.style.backgroundColor = "rgba(56, 189, 248, 1)";
+                e.target.style.transform = "scale(1.1)";
+                e.target.style.boxShadow = "0 8px 20px rgba(56, 189, 248, 0.6)";
+              },
+              onMouseLeave: (e) => {
+                e.target.style.backgroundColor = "rgba(56, 189, 248, 0.9)";
+                e.target.style.transform = "scale(1)";
+                e.target.style.boxShadow = "0 6px 16px rgba(56, 189, 248, 0.5)";
+              },
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
+                width: 0,
+                height: 0,
+                borderTop: "10px solid transparent",
+                borderBottom: "10px solid transparent",
+                borderRight: "14px solid white",
+                marginLeft: "-2px"
+              } })
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              onPointerDown: (e) => {
+                if (showLevelTransition) return;
+                handleShoot();
+              },
+              onTouchStart: (e) => {
+                if (showLevelTransition) return;
+                handleShoot();
+              },
+              onClick: (e) => {
+                if (showLevelTransition) return;
+                handleShoot();
+              },
+              style: {
+                width: "50px",
+                height: "50px",
+                borderRadius: "12px",
+                backgroundColor: "rgba(239, 68, 68, 0.9)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                color: "white",
+                fontSize: "20px",
+                fontWeight: "bold",
+                border: "3px solid #dc2626",
+                padding: 0,
+                touchAction: "manipulation",
+                cursor: "pointer",
+                boxShadow: "0 6px 16px rgba(239, 68, 68, 0.5)",
+                transition: "all 0.2s ease",
+                background: "linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.9))"
+              },
+              onMouseEnter: (e) => {
+                e.target.style.backgroundColor = "rgba(239, 68, 68, 1)";
+                e.target.style.transform = "scale(1.1)";
+                e.target.style.boxShadow = "0 8px 20px rgba(239, 68, 68, 0.6)";
+              },
+              onMouseLeave: (e) => {
+                e.target.style.backgroundColor = "rgba(239, 68, 68, 0.9)";
+                e.target.style.transform = "scale(1)";
+                e.target.style.boxShadow = "0 6px 16px rgba(239, 68, 68, 0.5)";
+              },
+              children: "🚀"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              onTouchStart: () => {
+                if (showLevelTransition) return;
+                setPlayerX((x) => {
+                  const newX = Math.min(WIDTH - 30, x + 20);
+                  return newX;
+                });
+              },
+              onTouchEnd: (e) => e.preventDefault(),
+              onClick: () => {
+                if (showLevelTransition) return;
+                setPlayerX((x) => {
+                  const newX = Math.min(WIDTH - 30, x + 20);
+                  return newX;
+                });
+              },
+              style: {
+                width: "50px",
+                height: "50px",
+                borderRadius: "12px",
+                backgroundColor: "rgba(56, 189, 248, 0.9)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                color: "white",
+                fontSize: "0px",
+                // Hide text, use pseudo-element for arrow
+                fontWeight: "bold",
+                border: "3px solid #0ea5e9",
+                padding: 0,
+                touchAction: "manipulation",
+                cursor: "pointer",
+                boxShadow: "0 6px 16px rgba(56, 189, 248, 0.5)",
+                transition: "all 0.2s ease",
+                position: "relative",
+                background: "linear-gradient(135deg, rgba(56, 189, 248, 0.9), rgba(14, 165, 233, 0.9))"
+              },
+              onMouseEnter: (e) => {
+                e.target.style.backgroundColor = "rgba(56, 189, 248, 1)";
+                e.target.style.transform = "scale(1.1)";
+                e.target.style.boxShadow = "0 8px 20px rgba(56, 189, 248, 0.6)";
+              },
+              onMouseLeave: (e) => {
+                e.target.style.backgroundColor = "rgba(56, 189, 248, 0.9)";
+                e.target.style.transform = "scale(1)";
+                e.target.style.boxShadow = "0 6px 16px rgba(56, 189, 248, 0.5)";
+              },
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
+                width: 0,
+                height: 0,
+                borderTop: "10px solid transparent",
+                borderBottom: "10px solid transparent",
+                borderLeft: "14px solid white",
+                marginRight: "-2px"
+              } })
+            }
+          )
+        ] }) })
+      ] })
+    ] }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: showLevelTransition && /* @__PURE__ */ jsxRuntimeExports.jsx(LevelTransition, { level: showLevelTransition }) }),
     (gameOver2 || gameWon) && /* @__PURE__ */ jsxRuntimeExports.jsx(
       GameOverModal,
       {
@@ -28893,4 +29071,4 @@ function SpaceInvaders() {
 clientExports.createRoot(document.getElementById("root")).render(
   /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(SpaceInvaders, {}) })
 );
-//# sourceMappingURL=space_invader-CydS-SIr.js.map
+//# sourceMappingURL=space_invader-aaBikGNB.js.map
