@@ -538,7 +538,7 @@ function requireReact() {
   return react.exports;
 }
 var reactExports = requireReact();
-const React = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
+const ReactExports = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
 var client = { exports: {} };
 var reactDomClient_production = {};
 var scheduler = { exports: {} };
@@ -831,7 +831,7 @@ var hasRequiredReactDom_production;
 function requireReactDom_production() {
   if (hasRequiredReactDom_production) return reactDom_production;
   hasRequiredReactDom_production = 1;
-  var React2 = requireReact();
+  var React = requireReact();
   function formatProdErrorMessage(code) {
     var url = "https://react.dev/errors/" + code;
     if (1 < arguments.length) {
@@ -870,7 +870,7 @@ function requireReactDom_production() {
       implementation
     };
   }
-  var ReactSharedInternals = React2.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+  var ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
   function getCrossOriginStringAs(as, input) {
     if ("font" === as) return "";
     if ("string" === typeof input)
@@ -1007,7 +1007,7 @@ var hasRequiredReactDomClient_production;
 function requireReactDomClient_production() {
   if (hasRequiredReactDomClient_production) return reactDomClient_production;
   hasRequiredReactDomClient_production = 1;
-  var Scheduler = requireScheduler(), React2 = requireReact(), ReactDOM2 = requireReactDom();
+  var Scheduler = requireScheduler(), React = requireReact(), ReactDOM = requireReactDom();
   function formatProdErrorMessage(code) {
     var url = "https://react.dev/errors/" + code;
     if (1 < arguments.length) {
@@ -1175,7 +1175,7 @@ function requireReactDomClient_production() {
       }
     return null;
   }
-  var isArrayImpl = Array.isArray, ReactSharedInternals = React2.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM2.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, sharedNotPendingObject = {
+  var isArrayImpl = Array.isArray, ReactSharedInternals = React.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, sharedNotPendingObject = {
     pending: false,
     data: null,
     method: null,
@@ -11961,7 +11961,7 @@ function requireReactDomClient_production() {
       0 === i && attemptExplicitHydrationTarget(target);
     }
   };
-  var isomorphicReactPackageVersion$jscomp$inline_1785 = React2.version;
+  var isomorphicReactPackageVersion$jscomp$inline_1785 = React.version;
   if ("19.1.0" !== isomorphicReactPackageVersion$jscomp$inline_1785)
     throw Error(
       formatProdErrorMessage(
@@ -12079,7 +12079,6 @@ function requireClient() {
   return client.exports;
 }
 var clientExports = requireClient();
-const ReactDOM = /* @__PURE__ */ getDefaultExportFromCjs(clientExports);
 function cc(names) {
   if (typeof names === "string" || typeof names === "number") return "" + names;
   let out = "";
@@ -14466,7 +14465,7 @@ function defaultConstrain(transform2, extent, translateExtent) {
     dy1 > dy0 ? (dy0 + dy1) / 2 : Math.min(0, dy0) || Math.max(0, dy1)
   );
 }
-function zoom() {
+function zoom$1() {
   var filter2 = defaultFilter, extent = defaultExtent, constrain = defaultConstrain, wheelDelta2 = defaultWheelDelta, touchable = defaultTouchable, scaleExtent = [0, Infinity], translateExtent = [[-Infinity, -Infinity], [Infinity, Infinity]], duration = 250, interpolate2 = interpolateZoom, listeners = dispatch("start", "zoom", "end"), touchstarting, touchfirst, touchending, touchDelay = 500, wheelDelay = 150, clickDistance2 = 0, tapDistance = 10;
   function zoom2(selection2) {
     selection2.property("__zoom", defaultTransform).on("wheel.zoom", wheeled, { passive: false }).on("mousedown.zoom", mousedowned).on("dblclick.zoom", dblclicked).filter(touchable).on("touchstart.zoom", touchstarted).on("touchmove.zoom", touchmoved).on("touchend.zoom touchcancel.zoom", touchended).style("-webkit-tap-highlight-color", "rgba(0,0,0,0)");
@@ -14830,9 +14829,9 @@ const isEdgeBase = (element) => "id" in element && "source" in element && "targe
 const isNodeBase = (element) => "id" in element && "position" in element && !("source" in element) && !("target" in element);
 const isInternalNodeBase = (element) => "id" in element && "internals" in element && !("source" in element) && !("target" in element);
 const getNodePositionWithOrigin = (node, nodeOrigin = [0, 0]) => {
-  const { width, height } = getNodeDimensions(node);
+  const { width: width2, height } = getNodeDimensions(node);
   const origin = node.origin ?? nodeOrigin;
-  const offsetX = width * origin[0];
+  const offsetX = width2 * origin[0];
   const offsetY = height * origin[1];
   return {
     x: node.position.x - offsetX,
@@ -14879,10 +14878,10 @@ const getNodesInside = (nodes, rect, [tx, ty, tScale] = [0, 0, 1], partially = f
     if (excludeNonSelectableNodes && !selectable || hidden) {
       continue;
     }
-    const width = measured.width ?? node.width ?? node.initialWidth ?? null;
+    const width2 = measured.width ?? node.width ?? node.initialWidth ?? null;
     const height = measured.height ?? node.height ?? node.initialHeight ?? null;
     const overlappingArea = getOverlappingArea(paneRect, nodeToRect(node));
-    const area = (width ?? 0) * (height ?? 0);
+    const area = (width2 ?? 0) * (height ?? 0);
     const partiallyVisible = partially && overlappingArea > 0;
     const forceInitialRender = !node.internals.handleBounds;
     const isVisible = forceInitialRender || partiallyVisible || overlappingArea >= area;
@@ -14910,13 +14909,13 @@ function getFitViewNodes(nodeLookup, options) {
   });
   return fitViewNodes;
 }
-async function fitViewport({ nodes, width, height, panZoom, minZoom, maxZoom }, options) {
+async function fitViewport({ nodes, width: width2, height, panZoom, minZoom, maxZoom }, options) {
   if (nodes.size === 0) {
     return Promise.resolve(true);
   }
   const nodesToFit = getFitViewNodes(nodes, options);
   const bounds = getInternalNodesBounds(nodesToFit);
-  const viewport = getViewportForBounds(bounds, width, height, (options == null ? void 0 : options.minZoom) ?? minZoom, (options == null ? void 0 : options.maxZoom) ?? maxZoom, (options == null ? void 0 : options.padding) ?? 0.1);
+  const viewport = getViewportForBounds(bounds, width2, height, (options == null ? void 0 : options.minZoom) ?? minZoom, (options == null ? void 0 : options.maxZoom) ?? maxZoom, (options == null ? void 0 : options.padding) ?? 0.1);
   await panZoom.setViewport(viewport, { duration: options == null ? void 0 : options.duration });
   return Promise.resolve(true);
 }
@@ -14996,9 +14995,9 @@ async function getElementsToRemove({ nodesToRemove = [], edgesToRemove = [], nod
   return onBeforeDeleteResult;
 }
 const clamp$1 = (val, min = 0, max = 1) => Math.min(Math.max(val, min), max);
-const clampPosition = (position = { x: 0, y: 0 }, extent, dimensions) => ({
-  x: clamp$1(position.x, extent[0][0], extent[1][0] - ((dimensions == null ? void 0 : dimensions.width) ?? 0)),
-  y: clamp$1(position.y, extent[0][1], extent[1][1] - ((dimensions == null ? void 0 : dimensions.height) ?? 0))
+const clampPosition = (position = { x: 0, y: 0 }, extent, dimensions2) => ({
+  x: clamp$1(position.x, extent[0][0], extent[1][0] - ((dimensions2 == null ? void 0 : dimensions2.width) ?? 0)),
+  y: clamp$1(position.y, extent[0][1], extent[1][1] - ((dimensions2 == null ? void 0 : dimensions2.height) ?? 0))
 });
 function clampPositionToParent(childPosition, childDimensions, parent) {
   const { width: parentWidth, height: parentHeight } = getNodeDimensions(parent);
@@ -15027,10 +15026,10 @@ const getBoundsOfBoxes = (box1, box2) => ({
   x2: Math.max(box1.x2, box2.x2),
   y2: Math.max(box1.y2, box2.y2)
 });
-const rectToBox = ({ x, y, width, height }) => ({
+const rectToBox = ({ x, y, width: width2, height }) => ({
   x,
   y,
-  x2: x + width,
+  x2: x + width2,
   y2: y + height
 });
 const boxToRect = ({ x, y, x2, y2 }) => ({
@@ -15107,10 +15106,10 @@ function parsePadding(padding, viewport) {
   console.error(`[React Flow] The padding value "${padding}" is invalid. Please provide a number or a string with a valid unit (px or %).`);
   return 0;
 }
-function parsePaddings(padding, width, height) {
+function parsePaddings(padding, width2, height) {
   if (typeof padding === "string" || typeof padding === "number") {
     const paddingY = parsePadding(padding, height);
-    const paddingX = parsePadding(padding, width);
+    const paddingX = parsePadding(padding, width2);
     return {
       top: paddingY,
       right: paddingX,
@@ -15123,16 +15122,16 @@ function parsePaddings(padding, width, height) {
   if (typeof padding === "object") {
     const top = parsePadding(padding.top ?? padding.y ?? 0, height);
     const bottom = parsePadding(padding.bottom ?? padding.y ?? 0, height);
-    const left = parsePadding(padding.left ?? padding.x ?? 0, width);
-    const right = parsePadding(padding.right ?? padding.x ?? 0, width);
+    const left = parsePadding(padding.left ?? padding.x ?? 0, width2);
+    const right = parsePadding(padding.right ?? padding.x ?? 0, width2);
     return { top, right, bottom, left, x: left + right, y: top + bottom };
   }
   return { top: 0, right: 0, bottom: 0, left: 0, x: 0, y: 0 };
 }
-function calculateAppliedPaddings(bounds, x, y, zoom2, width, height) {
+function calculateAppliedPaddings(bounds, x, y, zoom2, width2, height) {
   const { x: left, y: top } = rendererPointToPoint(bounds, [x, y, zoom2]);
   const { x: boundRight, y: boundBottom } = rendererPointToPoint({ x: bounds.x + bounds.width, y: bounds.y + bounds.height }, [x, y, zoom2]);
-  const right = width - boundRight;
+  const right = width2 - boundRight;
   const bottom = height - boundBottom;
   return {
     left: Math.floor(left),
@@ -15141,17 +15140,17 @@ function calculateAppliedPaddings(bounds, x, y, zoom2, width, height) {
     bottom: Math.floor(bottom)
   };
 }
-const getViewportForBounds = (bounds, width, height, minZoom, maxZoom, padding) => {
-  const p = parsePaddings(padding, width, height);
-  const xZoom = (width - p.x) / bounds.width;
+const getViewportForBounds = (bounds, width2, height, minZoom, maxZoom, padding) => {
+  const p = parsePaddings(padding, width2, height);
+  const xZoom = (width2 - p.x) / bounds.width;
   const yZoom = (height - p.y) / bounds.height;
   const zoom2 = Math.min(xZoom, yZoom);
   const clampedZoom = clamp$1(zoom2, minZoom, maxZoom);
   const boundsCenterX = bounds.x + bounds.width / 2;
   const boundsCenterY = bounds.y + bounds.height / 2;
-  const x = width / 2 - boundsCenterX * clampedZoom;
+  const x = width2 / 2 - boundsCenterX * clampedZoom;
   const y = height / 2 - boundsCenterY * clampedZoom;
-  const newPadding = calculateAppliedPaddings(bounds, x, y, clampedZoom, width, height);
+  const newPadding = calculateAppliedPaddings(bounds, x, y, clampedZoom, width2, height);
   const offset = {
     left: Math.min(newPadding.left - p.left, 0),
     top: Math.min(newPadding.top - p.top, 0),
@@ -15182,13 +15181,13 @@ function nodeHasDimensions(node) {
   var _a, _b;
   return (((_a = node.measured) == null ? void 0 : _a.width) ?? node.width ?? node.initialWidth) !== void 0 && (((_b = node.measured) == null ? void 0 : _b.height) ?? node.height ?? node.initialHeight) !== void 0;
 }
-function evaluateAbsolutePosition(position, dimensions = { width: 0, height: 0 }, parentId, nodeLookup, nodeOrigin) {
+function evaluateAbsolutePosition(position, dimensions2 = { width: 0, height: 0 }, parentId, nodeLookup, nodeOrigin) {
   const positionAbsolute = { ...position };
   const parent = nodeLookup.get(parentId);
   if (parent) {
     const origin = parent.origin || nodeOrigin;
-    positionAbsolute.x += parent.internals.positionAbsolute.x - (dimensions.width ?? 0) * origin[0];
-    positionAbsolute.y += parent.internals.positionAbsolute.y - (dimensions.height ?? 0) * origin[1];
+    positionAbsolute.x += parent.internals.positionAbsolute.x - (dimensions2.width ?? 0) * origin[0];
+    positionAbsolute.y += parent.internals.positionAbsolute.y - (dimensions2.height ?? 0) * origin[1];
   }
   return positionAbsolute;
 }
@@ -15343,7 +15342,7 @@ function getElevatedEdgeZIndex({ sourceNode, targetNode, selected: selected2 = f
   const selectedZIndex = Math.max(sourceNode.internals.z || 0, targetNode.internals.z || 0, 1e3);
   return zIndex + (edgeOrConnectedNodeSelected ? selectedZIndex : 0);
 }
-function isEdgeVisible({ sourceNode, targetNode, width, height, transform: transform2 }) {
+function isEdgeVisible({ sourceNode, targetNode, width: width2, height, transform: transform2 }) {
   const edgeBox = getBoundsOfBoxes(nodeToBox(sourceNode), nodeToBox(targetNode));
   if (edgeBox.x === edgeBox.x2) {
     edgeBox.x2 += 1;
@@ -15354,7 +15353,7 @@ function isEdgeVisible({ sourceNode, targetNode, width, height, transform: trans
   const viewRect = {
     x: -transform2[0] / transform2[2],
     y: -transform2[1] / transform2[2],
-    width: width / transform2[2],
+    width: width2 / transform2[2],
     height: height / transform2[2]
   };
   return getOverlappingArea(viewRect, boxToRect(edgeBox)) > 0;
@@ -15595,18 +15594,18 @@ function toHandleBounds(handles) {
 function getHandlePosition(node, handle, fallbackPosition = Position.Left, center = false) {
   const x = ((handle == null ? void 0 : handle.x) ?? 0) + node.internals.positionAbsolute.x;
   const y = ((handle == null ? void 0 : handle.y) ?? 0) + node.internals.positionAbsolute.y;
-  const { width, height } = handle ?? getNodeDimensions(node);
+  const { width: width2, height } = handle ?? getNodeDimensions(node);
   if (center) {
-    return { x: x + width / 2, y: y + height / 2 };
+    return { x: x + width2 / 2, y: y + height / 2 };
   }
   const position = (handle == null ? void 0 : handle.position) ?? fallbackPosition;
   switch (position) {
     case Position.Top:
-      return { x: x + width / 2, y };
+      return { x: x + width2 / 2, y };
     case Position.Right:
-      return { x: x + width, y: y + height / 2 };
+      return { x: x + width2, y: y + height / 2 };
     case Position.Bottom:
-      return { x: x + width / 2, y: y + height };
+      return { x: x + width2 / 2, y: y + height };
     case Position.Left:
       return { x, y: y + height / 2 };
   }
@@ -15788,14 +15787,14 @@ function handleExpandParent(children2, nodeLookup, parentLookup, nodeOrigin = [0
     parentExpansions.forEach(({ expandedRect, parent }, parentId) => {
       var _a2;
       const positionAbsolute = parent.internals.positionAbsolute;
-      const dimensions = getNodeDimensions(parent);
+      const dimensions2 = getNodeDimensions(parent);
       const origin = parent.origin ?? nodeOrigin;
       const xChange = expandedRect.x < positionAbsolute.x ? Math.round(Math.abs(positionAbsolute.x - expandedRect.x)) : 0;
       const yChange = expandedRect.y < positionAbsolute.y ? Math.round(Math.abs(positionAbsolute.y - expandedRect.y)) : 0;
-      const newWidth = Math.max(dimensions.width, Math.round(expandedRect.width));
-      const newHeight = Math.max(dimensions.height, Math.round(expandedRect.height));
-      const widthChange = (newWidth - dimensions.width) * origin[0];
-      const heightChange = (newHeight - dimensions.height) * origin[1];
+      const newWidth = Math.max(dimensions2.width, Math.round(expandedRect.width));
+      const newHeight = Math.max(dimensions2.height, Math.round(expandedRect.height));
+      const widthChange = (newWidth - dimensions2.width) * origin[0];
+      const heightChange = (newHeight - dimensions2.height) * origin[1];
       if (xChange > 0 || yChange > 0 || widthChange || heightChange) {
         changes.push({
           id: parentId,
@@ -15818,7 +15817,7 @@ function handleExpandParent(children2, nodeLookup, parentLookup, nodeOrigin = [0
           }
         });
       }
-      if (dimensions.width < expandedRect.width || dimensions.height < expandedRect.height || xChange || yChange) {
+      if (dimensions2.width < expandedRect.width || dimensions2.height < expandedRect.height || xChange || yChange) {
         changes.push({
           id: parentId,
           type: "dimensions",
@@ -15859,21 +15858,21 @@ function updateNodeInternals(updates, nodeLookup, parentLookup, domNode, nodeOri
       updatedInternals = true;
       continue;
     }
-    const dimensions = getDimensions(update.nodeElement);
-    const dimensionChanged = node.measured.width !== dimensions.width || node.measured.height !== dimensions.height;
-    const doUpdate = !!(dimensions.width && dimensions.height && (dimensionChanged || !node.internals.handleBounds || update.force));
+    const dimensions2 = getDimensions(update.nodeElement);
+    const dimensionChanged = node.measured.width !== dimensions2.width || node.measured.height !== dimensions2.height;
+    const doUpdate = !!(dimensions2.width && dimensions2.height && (dimensionChanged || !node.internals.handleBounds || update.force));
     if (doUpdate) {
       const nodeBounds = update.nodeElement.getBoundingClientRect();
       const extent = isCoordinateExtent(node.extent) ? node.extent : nodeExtent;
       let { positionAbsolute } = node.internals;
       if (node.parentId && node.extent === "parent") {
-        positionAbsolute = clampPositionToParent(positionAbsolute, dimensions, nodeLookup.get(node.parentId));
+        positionAbsolute = clampPositionToParent(positionAbsolute, dimensions2, nodeLookup.get(node.parentId));
       } else if (extent) {
-        positionAbsolute = clampPosition(positionAbsolute, extent, dimensions);
+        positionAbsolute = clampPosition(positionAbsolute, extent, dimensions2);
       }
       const newNode = {
         ...node,
-        measured: dimensions,
+        measured: dimensions2,
         internals: {
           ...node.internals,
           positionAbsolute,
@@ -15892,7 +15891,7 @@ function updateNodeInternals(updates, nodeLookup, parentLookup, domNode, nodeOri
         changes.push({
           id: node.id,
           type: "dimensions",
-          dimensions
+          dimensions: dimensions2
         });
         if (node.expandParent && node.parentId) {
           parentExpandChildren.push({
@@ -15910,7 +15909,7 @@ function updateNodeInternals(updates, nodeLookup, parentLookup, domNode, nodeOri
   }
   return { changes, updatedInternals };
 }
-async function panBy({ delta, panZoom, transform: transform2, translateExtent, width, height }) {
+async function panBy({ delta, panZoom, transform: transform2, translateExtent, width: width2, height }) {
   if (!panZoom || !delta.x && !delta.y) {
     return Promise.resolve(false);
   }
@@ -15920,7 +15919,7 @@ async function panBy({ delta, panZoom, transform: transform2, translateExtent, w
     zoom: transform2[2]
   }, [
     [0, 0],
-    [width, height]
+    [width2, height]
   ], translateExtent);
   const transformChanged = !!nextViewport && (nextViewport.x !== transform2[0] || nextViewport.y !== transform2[1] || nextViewport.k !== transform2[2]);
   return Promise.resolve(transformChanged);
@@ -16470,7 +16469,7 @@ const XYHandle = {
 };
 function XYMinimap({ domNode, panZoom, getTransform, getViewScale }) {
   const selection2 = select(domNode);
-  function update({ translateExtent, width, height, zoomStep = 10, pannable = true, zoomable = true, inversePan = false }) {
+  function update({ translateExtent, width: width2, height, zoomStep = 10, pannable = true, zoomable = true, inversePan = false }) {
     const zoomHandler = (event) => {
       const transform2 = getTransform();
       if (event.sourceEvent.type !== "wheel" || !panZoom) {
@@ -16507,7 +16506,7 @@ function XYMinimap({ domNode, panZoom, getTransform, getViewScale }) {
       };
       const extent = [
         [0, 0],
-        [width, height]
+        [width2, height]
       ];
       panZoom.setViewportConstrained({
         x: position.x,
@@ -16515,7 +16514,7 @@ function XYMinimap({ domNode, panZoom, getTransform, getViewScale }) {
         zoom: transform2[2]
       }, extent, translateExtent);
     };
-    const zoomAndPanHandler = zoom().on("start", panStartHandler).on("zoom", pannable ? panHandler : null).on("zoom.wheel", zoomable ? zoomHandler : null);
+    const zoomAndPanHandler = zoom$1().on("start", panStartHandler).on("zoom", pannable ? panHandler : null).on("zoom.wheel", zoomable ? zoomHandler : null);
     selection2.call(zoomAndPanHandler, {});
   }
   function destroy() {
@@ -16714,7 +16713,7 @@ function XYPanZoom({ domNode, minZoom, maxZoom, paneClickDistance, translateExte
     isPanScrolling: false
   };
   const bbox = domNode.getBoundingClientRect();
-  const d3ZoomInstance = zoom().clickDistance(!isNumeric(paneClickDistance) || paneClickDistance < 0 ? 0 : paneClickDistance).scaleExtent([minZoom, maxZoom]).translateExtent(translateExtent);
+  const d3ZoomInstance = zoom$1().clickDistance(!isNumeric(paneClickDistance) || paneClickDistance < 0 ? 0 : paneClickDistance).scaleExtent([minZoom, maxZoom]).translateExtent(translateExtent);
   const d3Selection = select(domNode).call(d3ZoomInstance);
   setViewportConstrained({
     x: viewport.x,
@@ -16875,8 +16874,8 @@ var ResizeControlVariant;
   ResizeControlVariant2["Line"] = "line";
   ResizeControlVariant2["Handle"] = "handle";
 })(ResizeControlVariant || (ResizeControlVariant = {}));
-function getResizeDirection({ width, prevWidth, height, prevHeight, affectsX, affectsY }) {
-  const deltaWidth = width - prevWidth;
+function getResizeDirection({ width: width2, prevWidth, height, prevHeight, affectsX, affectsY }) {
+  const deltaWidth = width2 - prevWidth;
   const deltaHeight = height - prevHeight;
   const direction = [deltaWidth > 0 ? 1 : deltaWidth < 0 ? -1 : 0, deltaHeight > 0 ? 1 : deltaHeight < 0 ? -1 : 0];
   if (deltaWidth && affectsX) {
@@ -17048,13 +17047,13 @@ function nodeToParentExtent(node) {
 function nodeToChildExtent(child, parent, nodeOrigin) {
   const x = parent.position.x + child.position.x;
   const y = parent.position.y + child.position.y;
-  const width = child.measured.width ?? 0;
+  const width2 = child.measured.width ?? 0;
   const height = child.measured.height ?? 0;
-  const originOffsetX = nodeOrigin[0] * width;
+  const originOffsetX = nodeOrigin[0] * width2;
   const originOffsetY = nodeOrigin[1] * height;
   return [
     [x - originOffsetX, y - originOffsetY],
-    [x + width - originOffsetX, y + height - originOffsetY]
+    [x + width2 - originOffsetX, y + height - originOffsetY]
   ];
 }
 function XYResizer({ domNode, nodeId, getStoreItems, onChange, onEnd }) {
@@ -17137,8 +17136,8 @@ function XYResizer({ domNode, nodeId, getStoreItems, onChange, onEnd }) {
       const { x: prevX, y: prevY, width: prevWidth, height: prevHeight } = prevValues;
       const change = {};
       const nodeOrigin = node.origin ?? storeNodeOrigin;
-      const { width, height, x, y } = getDimensionsAfterResize(startValues, controlDirection, pointerPosition, boundaries, keepAspectRatio, nodeOrigin, parentExtent, childExtent);
-      const isWidthChange = width !== prevWidth;
+      const { width: width2, height, x, y } = getDimensionsAfterResize(startValues, controlDirection, pointerPosition, boundaries, keepAspectRatio, nodeOrigin, parentExtent, childExtent);
+      const isWidthChange = width2 !== prevWidth;
       const isHeightChange = height !== prevHeight;
       const isXPosChange = x !== prevX && isWidthChange;
       const isYPosChange = y !== prevY && isHeightChange;
@@ -17155,7 +17154,7 @@ function XYResizer({ domNode, nodeId, getStoreItems, onChange, onEnd }) {
           const yChange = y - prevY;
           for (const childNode of childNodes) {
             childNode.position = {
-              x: childNode.position.x - xChange + nodeOrigin[0] * (width - prevWidth),
+              x: childNode.position.x - xChange + nodeOrigin[0] * (width2 - prevWidth),
               y: childNode.position.y - yChange + nodeOrigin[1] * (height - prevHeight)
             };
             childChanges.push(childNode);
@@ -17163,7 +17162,7 @@ function XYResizer({ domNode, nodeId, getStoreItems, onChange, onEnd }) {
         }
       }
       if (isWidthChange || isHeightChange) {
-        change.width = isWidthChange && (!resizeDirection || resizeDirection === "horizontal") ? width : prevValues.width;
+        change.width = isWidthChange && (!resizeDirection || resizeDirection === "horizontal") ? width2 : prevValues.width;
         change.height = isHeightChange && (!resizeDirection || resizeDirection === "vertical") ? height : prevValues.height;
         prevValues.width = change.width;
         prevValues.height = change.height;
@@ -17226,11 +17225,11 @@ var hasRequiredUseSyncExternalStoreShim_production;
 function requireUseSyncExternalStoreShim_production() {
   if (hasRequiredUseSyncExternalStoreShim_production) return useSyncExternalStoreShim_production;
   hasRequiredUseSyncExternalStoreShim_production = 1;
-  var React2 = requireReact();
+  var React = requireReact();
   function is(x, y) {
     return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
   }
-  var objectIs = "function" === typeof Object.is ? Object.is : is, useState = React2.useState, useEffect = React2.useEffect, useLayoutEffect = React2.useLayoutEffect, useDebugValue2 = React2.useDebugValue;
+  var objectIs = "function" === typeof Object.is ? Object.is : is, useState = React.useState, useEffect = React.useEffect, useLayoutEffect = React.useLayoutEffect, useDebugValue2 = React.useDebugValue;
   function useSyncExternalStore$2(subscribe, getSnapshot) {
     var value = getSnapshot(), _useState = useState({ inst: { value, getSnapshot } }), inst = _useState[0].inst, forceUpdate = _useState[1];
     useLayoutEffect(
@@ -17267,7 +17266,7 @@ function requireUseSyncExternalStoreShim_production() {
     return getSnapshot();
   }
   var shim2 = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
-  useSyncExternalStoreShim_production.useSyncExternalStore = void 0 !== React2.useSyncExternalStore ? React2.useSyncExternalStore : shim2;
+  useSyncExternalStoreShim_production.useSyncExternalStore = void 0 !== React.useSyncExternalStore ? React.useSyncExternalStore : shim2;
   return useSyncExternalStoreShim_production;
 }
 var hasRequiredShim;
@@ -17292,11 +17291,11 @@ var hasRequiredWithSelector_production;
 function requireWithSelector_production() {
   if (hasRequiredWithSelector_production) return withSelector_production;
   hasRequiredWithSelector_production = 1;
-  var React2 = requireReact(), shim2 = requireShim();
+  var React = requireReact(), shim2 = requireShim();
   function is(x, y) {
     return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
   }
-  var objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore = shim2.useSyncExternalStore, useRef = React2.useRef, useEffect = React2.useEffect, useMemo = React2.useMemo, useDebugValue2 = React2.useDebugValue;
+  var objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore = shim2.useSyncExternalStore, useRef = React.useRef, useEffect = React.useEffect, useMemo = React.useMemo, useDebugValue2 = React.useDebugValue;
   withSelector_production.useSyncExternalStoreWithSelector = function(subscribe, getSnapshot, getServerSnapshot, selector2, isEqual) {
     var instRef = useRef(null);
     if (null === instRef.current) {
@@ -17392,7 +17391,7 @@ const createStoreImpl = (createState2) => {
   return api;
 };
 const createStore$1 = (createState2) => createState2 ? createStoreImpl(createState2) : createStoreImpl;
-const { useDebugValue } = React;
+const { useDebugValue } = ReactExports;
 const { useSyncExternalStoreWithSelector } = useSyncExternalStoreExports;
 const identity = (arg) => arg;
 function useStoreWithEqualityFn(api, selector2 = identity, equalityFn) {
@@ -17809,9 +17808,9 @@ const useViewportHelper = () => {
         return { x, y, zoom: zoom2 };
       },
       setCenter: async (x, y, options) => {
-        const { width, height, maxZoom, panZoom } = store.getState();
+        const { width: width2, height, maxZoom, panZoom } = store.getState();
         const nextZoom = typeof (options == null ? void 0 : options.zoom) !== "undefined" ? options.zoom : maxZoom;
-        const centerX = width / 2 - x * nextZoom;
+        const centerX = width2 / 2 - x * nextZoom;
         const centerY = height / 2 - y * nextZoom;
         if (!panZoom) {
           return Promise.resolve(false);
@@ -17824,8 +17823,8 @@ const useViewportHelper = () => {
         return Promise.resolve(true);
       },
       fitBounds: async (bounds, options) => {
-        const { width, height, minZoom, maxZoom, panZoom } = store.getState();
-        const viewport = getViewportForBounds(bounds, width, height, minZoom, maxZoom, (options == null ? void 0 : options.padding) ?? 0.1);
+        const { width: width2, height, minZoom, maxZoom, panZoom } = store.getState();
+        const viewport = getViewportForBounds(bounds, width2, height, minZoom, maxZoom, (options == null ? void 0 : options.padding) ?? 0.1);
         if (!panZoom) {
           return Promise.resolve(false);
         }
@@ -18843,11 +18842,11 @@ function getNodeInlineStyleDimensions(node) {
   };
 }
 const selector$f = (s) => {
-  const { width, height, x, y } = getInternalNodesBounds(s.nodeLookup, {
+  const { width: width2, height, x, y } = getInternalNodesBounds(s.nodeLookup, {
     filter: (node) => !!node.selected
   });
   return {
-    width: isNumeric(width) ? width : null,
+    width: isNumeric(width2) ? width2 : null,
     height: isNumeric(height) ? height : null,
     userSelectionActive: s.userSelectionActive,
     transformString: `translate(${s.transform[0]}px,${s.transform[1]}px) scale(${s.transform[2]}) translate(${x}px,${y}px)`
@@ -18855,7 +18854,7 @@ const selector$f = (s) => {
 };
 function NodesSelection({ onSelectionContextMenu, noPanClassName, disableKeyboardA11y }) {
   const store = useStoreApi();
-  const { width, height, transformString, userSelectionActive } = useStore(selector$f, shallow$1);
+  const { width: width2, height, transformString, userSelectionActive } = useStore(selector$f, shallow$1);
   const moveSelectedNodes = useMoveSelectedNodes();
   const nodeRef = reactExports.useRef(null);
   reactExports.useEffect(() => {
@@ -18869,7 +18868,7 @@ function NodesSelection({ onSelectionContextMenu, noPanClassName, disableKeyboar
   useDrag({
     nodeRef
   });
-  if (userSelectionActive || !width || !height) {
+  if (userSelectionActive || !width2 || !height) {
     return null;
   }
   const onContextMenu = onSelectionContextMenu ? (event) => {
@@ -18888,7 +18887,7 @@ function NodesSelection({ onSelectionContextMenu, noPanClassName, disableKeyboar
   return jsxRuntimeExports.jsx("div", { className: cc(["react-flow__nodesselection", "react-flow__container", noPanClassName]), style: {
     transform: transformString
   }, children: jsxRuntimeExports.jsx("div", { ref: nodeRef, className: "react-flow__nodesselection-rect", onContextMenu, tabIndex: disableKeyboardA11y ? void 0 : -1, onKeyDown: disableKeyboardA11y ? void 0 : onKeyDown, style: {
-    width,
+    width: width2,
     height
   } }) });
 }
@@ -19187,12 +19186,12 @@ function useMarkerSymbol(type) {
   }, [type]);
   return symbol;
 }
-const Marker = ({ id: id2, type, color: color2, width = 12.5, height = 12.5, markerUnits = "strokeWidth", strokeWidth, orient = "auto-start-reverse" }) => {
+const Marker = ({ id: id2, type, color: color2, width: width2 = 12.5, height = 12.5, markerUnits = "strokeWidth", strokeWidth, orient = "auto-start-reverse" }) => {
   const Symbol2 = useMarkerSymbol(type);
   if (!Symbol2) {
     return null;
   }
-  return jsxRuntimeExports.jsx("marker", { className: "react-flow__arrowhead", id: id2, markerWidth: `${width}`, markerHeight: `${height}`, viewBox: "-10 -10 20 20", markerUnits, orient, refX: "0", refY: "0", children: jsxRuntimeExports.jsx(Symbol2, { color: color2, strokeWidth }) });
+  return jsxRuntimeExports.jsx("marker", { className: "react-flow__arrowhead", id: id2, markerWidth: `${width2}`, markerHeight: `${height}`, viewBox: "-10 -10 20 20", markerUnits, orient, refX: "0", refY: "0", children: jsxRuntimeExports.jsx(Symbol2, { color: color2, strokeWidth }) });
 };
 const MarkerDefinitions = ({ defaultColor, rfId }) => {
   const edges = useStore((s) => s.edges);
@@ -19612,12 +19611,12 @@ const selector$7 = (s) => ({
   height: s.height
 });
 function ConnectionLineWrapper({ containerStyle: containerStyle2, style: style2, type, component }) {
-  const { nodesConnectable, width, height, isValid, inProgress } = useStore(selector$7, shallow$1);
-  const renderConnection = !!(width && nodesConnectable && inProgress);
+  const { nodesConnectable, width: width2, height, isValid, inProgress } = useStore(selector$7, shallow$1);
+  const renderConnection = !!(width2 && nodesConnectable && inProgress);
   if (!renderConnection) {
     return null;
   }
-  return jsxRuntimeExports.jsx("svg", { style: containerStyle2, width, height, className: "react-flow__connectionline react-flow__container", children: jsxRuntimeExports.jsx("g", { className: cc(["react-flow__connection", getConnectionStatus(isValid)]), children: jsxRuntimeExports.jsx(ConnectionLine, { style: style2, type, CustomComponent: component, isValid }) }) });
+  return jsxRuntimeExports.jsx("svg", { style: containerStyle2, width: width2, height, className: "react-flow__connectionline react-flow__container", children: jsxRuntimeExports.jsx("g", { className: cc(["react-flow__connection", getConnectionStatus(isValid)]), children: jsxRuntimeExports.jsx(ConnectionLine, { style: style2, type, CustomComponent: component, isValid }) }) });
 }
 const ConnectionLine = ({ style: style2, type = ConnectionLineType.Bezier, CustomComponent, isValid }) => {
   const { inProgress, from, fromNode, fromHandle, fromPosition, to, toNode, toHandle, toPosition } = useConnection();
@@ -19681,7 +19680,7 @@ function GraphViewComponent({ nodeTypes, edgeTypes, onInit, onNodeClick, onEdgeC
 }
 GraphViewComponent.displayName = "GraphView";
 const GraphView = reactExports.memo(GraphViewComponent);
-const getInitialState = ({ nodes, edges, defaultNodes, defaultEdges, width, height, fitView, fitViewOptions, minZoom = 0.5, maxZoom = 2, nodeOrigin, nodeExtent } = {}) => {
+const getInitialState = ({ nodes, edges, defaultNodes, defaultEdges, width: width2, height, fitView, fitViewOptions, minZoom = 0.5, maxZoom = 2, nodeOrigin, nodeExtent } = {}) => {
   const nodeLookup = /* @__PURE__ */ new Map();
   const parentLookup = /* @__PURE__ */ new Map();
   const connectionLookup = /* @__PURE__ */ new Map();
@@ -19697,11 +19696,11 @@ const getInitialState = ({ nodes, edges, defaultNodes, defaultEdges, width, heig
     elevateNodesOnSelect: false
   });
   let transform2 = [0, 0, 1];
-  if (fitView && width && height) {
+  if (fitView && width2 && height) {
     const bounds = getInternalNodesBounds(nodeLookup, {
       filter: (node) => !!((node.width || node.initialWidth) && (node.height || node.initialHeight))
     });
-    const { x, y, zoom: zoom2 } = getViewportForBounds(bounds, width, height, minZoom, maxZoom, (fitViewOptions == null ? void 0 : fitViewOptions.padding) ?? 0.1);
+    const { x, y, zoom: zoom2 } = getViewportForBounds(bounds, width2, height, minZoom, maxZoom, (fitViewOptions == null ? void 0 : fitViewOptions.padding) ?? 0.1);
     transform2 = [x, y, zoom2];
   }
   return {
@@ -19764,15 +19763,15 @@ const getInitialState = ({ nodes, edges, defaultNodes, defaultEdges, width, heig
     debug: false
   };
 };
-const createStore = ({ nodes, edges, defaultNodes, defaultEdges, width, height, fitView, fitViewOptions, minZoom, maxZoom, nodeOrigin, nodeExtent }) => createWithEqualityFn((set2, get2) => {
+const createStore = ({ nodes, edges, defaultNodes, defaultEdges, width: width2, height, fitView, fitViewOptions, minZoom, maxZoom, nodeOrigin, nodeExtent }) => createWithEqualityFn((set2, get2) => {
   async function resolveFitView() {
-    const { nodeLookup, panZoom, fitViewOptions: fitViewOptions2, fitViewResolver, width: width2, height: height2, minZoom: minZoom2, maxZoom: maxZoom2 } = get2();
+    const { nodeLookup, panZoom, fitViewOptions: fitViewOptions2, fitViewResolver, width: width22, height: height2, minZoom: minZoom2, maxZoom: maxZoom2 } = get2();
     if (!panZoom) {
       return;
     }
     await fitViewport({
       nodes: nodeLookup,
-      width: width2,
+      width: width22,
       height: height2,
       panZoom,
       minZoom: minZoom2,
@@ -19785,7 +19784,7 @@ const createStore = ({ nodes, edges, defaultNodes, defaultEdges, width, height, 
     ...getInitialState({
       nodes,
       edges,
-      width,
+      width: width2,
       height,
       fitView,
       fitViewOptions,
@@ -19993,8 +19992,8 @@ const createStore = ({ nodes, edges, defaultNodes, defaultEdges, width, height, 
       set2({ nodeExtent: nextNodeExtent });
     },
     panBy: (delta) => {
-      const { transform: transform2, width: width2, height: height2, panZoom, translateExtent } = get2();
-      return panBy({ delta, panZoom, transform: transform2, translateExtent, width: width2, height: height2 });
+      const { transform: transform2, width: width22, height: height2, panZoom, translateExtent } = get2();
+      return panBy({ delta, panZoom, transform: transform2, translateExtent, width: width22, height: height2 });
     },
     cancelConnection: () => {
       set2({
@@ -20007,13 +20006,13 @@ const createStore = ({ nodes, edges, defaultNodes, defaultEdges, width, height, 
     reset: () => set2({ ...getInitialState() })
   };
 }, Object.is);
-function ReactFlowProvider({ initialNodes: nodes, initialEdges: edges, defaultNodes, defaultEdges, initialWidth: width, initialHeight: height, initialMinZoom: minZoom, initialMaxZoom: maxZoom, initialFitViewOptions: fitViewOptions, fitView, nodeOrigin, nodeExtent, children: children2 }) {
+function ReactFlowProvider({ initialNodes: nodes, initialEdges: edges, defaultNodes, defaultEdges, initialWidth: width2, initialHeight: height, initialMinZoom: minZoom, initialMaxZoom: maxZoom, initialFitViewOptions: fitViewOptions, fitView, nodeOrigin, nodeExtent, children: children2 }) {
   const [store] = reactExports.useState(() => createStore({
     nodes,
     edges,
     defaultNodes,
     defaultEdges,
-    width,
+    width: width2,
     height,
     fitView,
     minZoom,
@@ -20024,12 +20023,12 @@ function ReactFlowProvider({ initialNodes: nodes, initialEdges: edges, defaultNo
   }));
   return jsxRuntimeExports.jsx(Provider$1, { value: store, children: jsxRuntimeExports.jsx(BatchProvider, { children: children2 }) });
 }
-function Wrapper({ children: children2, nodes, edges, defaultNodes, defaultEdges, width, height, fitView, fitViewOptions, minZoom, maxZoom, nodeOrigin, nodeExtent }) {
+function Wrapper({ children: children2, nodes, edges, defaultNodes, defaultEdges, width: width2, height, fitView, fitViewOptions, minZoom, maxZoom, nodeOrigin, nodeExtent }) {
   const isWrapped = reactExports.useContext(StoreContext);
   if (isWrapped) {
     return jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: children2 });
   }
-  return jsxRuntimeExports.jsx(ReactFlowProvider, { initialNodes: nodes, initialEdges: edges, defaultNodes, defaultEdges, initialWidth: width, initialHeight: height, fitView, initialFitViewOptions: fitViewOptions, initialMinZoom: minZoom, initialMaxZoom: maxZoom, nodeOrigin, nodeExtent, children: children2 });
+  return jsxRuntimeExports.jsx(ReactFlowProvider, { initialNodes: nodes, initialEdges: edges, defaultNodes, defaultEdges, initialWidth: width2, initialHeight: height, fitView, initialFitViewOptions: fitViewOptions, initialMinZoom: minZoom, initialMaxZoom: maxZoom, nodeOrigin, nodeExtent, children: children2 });
 }
 const wrapperStyle = {
   width: "100%",
@@ -20038,14 +20037,14 @@ const wrapperStyle = {
   position: "relative",
   zIndex: 0
 };
-function ReactFlow({ nodes, edges, defaultNodes, defaultEdges, className, nodeTypes, edgeTypes, onNodeClick, onEdgeClick, onInit, onMove, onMoveStart, onMoveEnd, onConnect, onConnectStart, onConnectEnd, onClickConnectStart, onClickConnectEnd, onNodeMouseEnter, onNodeMouseMove, onNodeMouseLeave, onNodeContextMenu, onNodeDoubleClick, onNodeDragStart, onNodeDrag, onNodeDragStop, onNodesDelete, onEdgesDelete, onDelete, onSelectionChange, onSelectionDragStart, onSelectionDrag, onSelectionDragStop, onSelectionContextMenu, onSelectionStart, onSelectionEnd, onBeforeDelete, connectionMode, connectionLineType = ConnectionLineType.Bezier, connectionLineStyle, connectionLineComponent, connectionLineContainerStyle, deleteKeyCode = "Backspace", selectionKeyCode = "Shift", selectionOnDrag = false, selectionMode = SelectionMode.Full, panActivationKeyCode = "Space", multiSelectionKeyCode = isMacOs() ? "Meta" : "Control", zoomActivationKeyCode = isMacOs() ? "Meta" : "Control", snapToGrid, snapGrid, onlyRenderVisibleElements = false, selectNodesOnDrag, nodesDraggable, nodesConnectable, nodesFocusable, nodeOrigin = defaultNodeOrigin, edgesFocusable, edgesReconnectable, elementsSelectable = true, defaultViewport: defaultViewport$1 = defaultViewport, minZoom = 0.5, maxZoom = 2, translateExtent = infiniteExtent, preventScrolling = true, nodeExtent, defaultMarkerColor = "#b1b1b7", zoomOnScroll = true, zoomOnPinch = true, panOnScroll = false, panOnScrollSpeed = 0.5, panOnScrollMode = PanOnScrollMode.Free, zoomOnDoubleClick = true, panOnDrag = true, onPaneClick, onPaneMouseEnter, onPaneMouseMove, onPaneMouseLeave, onPaneScroll, onPaneContextMenu, paneClickDistance = 0, nodeClickDistance = 0, children: children2, onReconnect, onReconnectStart, onReconnectEnd, onEdgeContextMenu, onEdgeDoubleClick, onEdgeMouseEnter, onEdgeMouseMove, onEdgeMouseLeave, reconnectRadius = 10, onNodesChange, onEdgesChange, noDragClassName = "nodrag", noWheelClassName = "nowheel", noPanClassName = "nopan", fitView, fitViewOptions, connectOnClick, attributionPosition, proOptions, defaultEdgeOptions, elevateNodesOnSelect, elevateEdgesOnSelect, disableKeyboardA11y = false, autoPanOnConnect, autoPanOnNodeDrag, autoPanSpeed, connectionRadius, isValidConnection, onError, style: style2, id: id2, nodeDragThreshold, viewport, onViewportChange, width, height, colorMode = "light", debug, onScroll, ...rest }, ref) {
+function ReactFlow({ nodes, edges, defaultNodes, defaultEdges, className, nodeTypes, edgeTypes, onNodeClick, onEdgeClick, onInit, onMove, onMoveStart, onMoveEnd, onConnect, onConnectStart, onConnectEnd, onClickConnectStart, onClickConnectEnd, onNodeMouseEnter, onNodeMouseMove, onNodeMouseLeave, onNodeContextMenu, onNodeDoubleClick, onNodeDragStart, onNodeDrag, onNodeDragStop, onNodesDelete, onEdgesDelete, onDelete, onSelectionChange, onSelectionDragStart, onSelectionDrag, onSelectionDragStop, onSelectionContextMenu, onSelectionStart, onSelectionEnd, onBeforeDelete, connectionMode, connectionLineType = ConnectionLineType.Bezier, connectionLineStyle, connectionLineComponent, connectionLineContainerStyle, deleteKeyCode = "Backspace", selectionKeyCode = "Shift", selectionOnDrag = false, selectionMode = SelectionMode.Full, panActivationKeyCode = "Space", multiSelectionKeyCode = isMacOs() ? "Meta" : "Control", zoomActivationKeyCode = isMacOs() ? "Meta" : "Control", snapToGrid, snapGrid, onlyRenderVisibleElements = false, selectNodesOnDrag, nodesDraggable, nodesConnectable, nodesFocusable, nodeOrigin = defaultNodeOrigin, edgesFocusable, edgesReconnectable, elementsSelectable = true, defaultViewport: defaultViewport$1 = defaultViewport, minZoom = 0.5, maxZoom = 2, translateExtent = infiniteExtent, preventScrolling = true, nodeExtent, defaultMarkerColor = "#b1b1b7", zoomOnScroll = true, zoomOnPinch = true, panOnScroll = false, panOnScrollSpeed = 0.5, panOnScrollMode = PanOnScrollMode.Free, zoomOnDoubleClick = true, panOnDrag = true, onPaneClick, onPaneMouseEnter, onPaneMouseMove, onPaneMouseLeave, onPaneScroll, onPaneContextMenu, paneClickDistance = 0, nodeClickDistance = 0, children: children2, onReconnect, onReconnectStart, onReconnectEnd, onEdgeContextMenu, onEdgeDoubleClick, onEdgeMouseEnter, onEdgeMouseMove, onEdgeMouseLeave, reconnectRadius = 10, onNodesChange, onEdgesChange, noDragClassName = "nodrag", noWheelClassName = "nowheel", noPanClassName = "nopan", fitView, fitViewOptions, connectOnClick, attributionPosition, proOptions, defaultEdgeOptions, elevateNodesOnSelect, elevateEdgesOnSelect, disableKeyboardA11y = false, autoPanOnConnect, autoPanOnNodeDrag, autoPanSpeed, connectionRadius, isValidConnection, onError, style: style2, id: id2, nodeDragThreshold, viewport, onViewportChange, width: width2, height, colorMode = "light", debug, onScroll, ...rest }, ref) {
   const rfId = id2 || "1";
   const colorModeClassName = useColorModeClass(colorMode);
   const wrapperOnScroll = reactExports.useCallback((e) => {
     e.currentTarget.scrollTo({ top: 0, left: 0, behavior: "instant" });
     onScroll == null ? void 0 : onScroll(e);
   }, [onScroll]);
-  return jsxRuntimeExports.jsx("div", { "data-testid": "rf__wrapper", ...rest, onScroll: wrapperOnScroll, style: { ...style2, ...wrapperStyle }, ref, className: cc(["react-flow", className, colorModeClassName]), id: id2, children: jsxRuntimeExports.jsxs(Wrapper, { nodes, edges, width, height, fitView, fitViewOptions, minZoom, maxZoom, nodeOrigin, nodeExtent, children: [jsxRuntimeExports.jsx(GraphView, { onInit, onNodeClick, onEdgeClick, onNodeMouseEnter, onNodeMouseMove, onNodeMouseLeave, onNodeContextMenu, onNodeDoubleClick, nodeTypes, edgeTypes, connectionLineType, connectionLineStyle, connectionLineComponent, connectionLineContainerStyle, selectionKeyCode, selectionOnDrag, selectionMode, deleteKeyCode, multiSelectionKeyCode, panActivationKeyCode, zoomActivationKeyCode, onlyRenderVisibleElements, defaultViewport: defaultViewport$1, translateExtent, minZoom, maxZoom, preventScrolling, zoomOnScroll, zoomOnPinch, zoomOnDoubleClick, panOnScroll, panOnScrollSpeed, panOnScrollMode, panOnDrag, onPaneClick, onPaneMouseEnter, onPaneMouseMove, onPaneMouseLeave, onPaneScroll, onPaneContextMenu, paneClickDistance, nodeClickDistance, onSelectionContextMenu, onSelectionStart, onSelectionEnd, onReconnect, onReconnectStart, onReconnectEnd, onEdgeContextMenu, onEdgeDoubleClick, onEdgeMouseEnter, onEdgeMouseMove, onEdgeMouseLeave, reconnectRadius, defaultMarkerColor, noDragClassName, noWheelClassName, noPanClassName, rfId, disableKeyboardA11y, nodeExtent, viewport, onViewportChange }), jsxRuntimeExports.jsx(StoreUpdater, { nodes, edges, defaultNodes, defaultEdges, onConnect, onConnectStart, onConnectEnd, onClickConnectStart, onClickConnectEnd, nodesDraggable, nodesConnectable, nodesFocusable, edgesFocusable, edgesReconnectable, elementsSelectable, elevateNodesOnSelect, elevateEdgesOnSelect, minZoom, maxZoom, nodeExtent, onNodesChange, onEdgesChange, snapToGrid, snapGrid, connectionMode, translateExtent, connectOnClick, defaultEdgeOptions, fitView, fitViewOptions, onNodesDelete, onEdgesDelete, onDelete, onNodeDragStart, onNodeDrag, onNodeDragStop, onSelectionDrag, onSelectionDragStart, onSelectionDragStop, onMove, onMoveStart, onMoveEnd, noPanClassName, nodeOrigin, rfId, autoPanOnConnect, autoPanOnNodeDrag, autoPanSpeed, onError, connectionRadius, isValidConnection, selectNodesOnDrag, nodeDragThreshold, onBeforeDelete, paneClickDistance, debug }), jsxRuntimeExports.jsx(SelectionListener, { onSelectionChange }), children2, jsxRuntimeExports.jsx(Attribution, { proOptions, position: attributionPosition }), jsxRuntimeExports.jsx(A11yDescriptions, { rfId, disableKeyboardA11y })] }) });
+  return jsxRuntimeExports.jsx("div", { "data-testid": "rf__wrapper", ...rest, onScroll: wrapperOnScroll, style: { ...style2, ...wrapperStyle }, ref, className: cc(["react-flow", className, colorModeClassName]), id: id2, children: jsxRuntimeExports.jsxs(Wrapper, { nodes, edges, width: width2, height, fitView, fitViewOptions, minZoom, maxZoom, nodeOrigin, nodeExtent, children: [jsxRuntimeExports.jsx(GraphView, { onInit, onNodeClick, onEdgeClick, onNodeMouseEnter, onNodeMouseMove, onNodeMouseLeave, onNodeContextMenu, onNodeDoubleClick, nodeTypes, edgeTypes, connectionLineType, connectionLineStyle, connectionLineComponent, connectionLineContainerStyle, selectionKeyCode, selectionOnDrag, selectionMode, deleteKeyCode, multiSelectionKeyCode, panActivationKeyCode, zoomActivationKeyCode, onlyRenderVisibleElements, defaultViewport: defaultViewport$1, translateExtent, minZoom, maxZoom, preventScrolling, zoomOnScroll, zoomOnPinch, zoomOnDoubleClick, panOnScroll, panOnScrollSpeed, panOnScrollMode, panOnDrag, onPaneClick, onPaneMouseEnter, onPaneMouseMove, onPaneMouseLeave, onPaneScroll, onPaneContextMenu, paneClickDistance, nodeClickDistance, onSelectionContextMenu, onSelectionStart, onSelectionEnd, onReconnect, onReconnectStart, onReconnectEnd, onEdgeContextMenu, onEdgeDoubleClick, onEdgeMouseEnter, onEdgeMouseMove, onEdgeMouseLeave, reconnectRadius, defaultMarkerColor, noDragClassName, noWheelClassName, noPanClassName, rfId, disableKeyboardA11y, nodeExtent, viewport, onViewportChange }), jsxRuntimeExports.jsx(StoreUpdater, { nodes, edges, defaultNodes, defaultEdges, onConnect, onConnectStart, onConnectEnd, onClickConnectStart, onClickConnectEnd, nodesDraggable, nodesConnectable, nodesFocusable, edgesFocusable, edgesReconnectable, elementsSelectable, elevateNodesOnSelect, elevateEdgesOnSelect, minZoom, maxZoom, nodeExtent, onNodesChange, onEdgesChange, snapToGrid, snapGrid, connectionMode, translateExtent, connectOnClick, defaultEdgeOptions, fitView, fitViewOptions, onNodesDelete, onEdgesDelete, onDelete, onNodeDragStart, onNodeDrag, onNodeDragStop, onSelectionDrag, onSelectionDragStart, onSelectionDragStop, onMove, onMoveStart, onMoveEnd, noPanClassName, nodeOrigin, rfId, autoPanOnConnect, autoPanOnNodeDrag, autoPanSpeed, onError, connectionRadius, isValidConnection, selectNodesOnDrag, nodeDragThreshold, onBeforeDelete, paneClickDistance, debug }), jsxRuntimeExports.jsx(SelectionListener, { onSelectionChange }), children2, jsxRuntimeExports.jsx(Attribution, { proOptions, position: attributionPosition }), jsxRuntimeExports.jsx(A11yDescriptions, { rfId, disableKeyboardA11y })] }) });
 }
 var index = fixedForwardRef(ReactFlow);
 function useNodesState(initialNodes) {
@@ -20053,8 +20052,8 @@ function useNodesState(initialNodes) {
   const onNodesChange = reactExports.useCallback((changes) => setNodes((nds) => applyNodeChanges(changes, nds)), []);
   return [nodes, setNodes, onNodesChange];
 }
-function LinePattern({ dimensions, lineWidth, variant, className }) {
-  return jsxRuntimeExports.jsx("path", { strokeWidth: lineWidth, d: `M${dimensions[0] / 2} 0 V${dimensions[1]} M0 ${dimensions[1] / 2} H${dimensions[0]}`, className: cc(["react-flow__background-pattern", variant, className]) });
+function LinePattern({ dimensions: dimensions2, lineWidth, variant, className }) {
+  return jsxRuntimeExports.jsx("path", { strokeWidth: lineWidth, d: `M${dimensions2[0] / 2} 0 V${dimensions2[1]} M0 ${dimensions2[1] / 2} H${dimensions2[0]}`, className: cc(["react-flow__background-pattern", variant, className]) });
 }
 function DotPattern({ radius, className }) {
   return jsxRuntimeExports.jsx("circle", { cx: radius, cy: radius, r: radius, className: cc(["react-flow__background-pattern", "dots", className]) });
@@ -20162,10 +20161,10 @@ function ControlsComponent({ style: style2, showZoom = true, showFitView = true,
 }
 ControlsComponent.displayName = "Controls";
 reactExports.memo(ControlsComponent);
-function MiniMapNodeComponent({ id: id2, x, y, width, height, style: style2, color: color2, strokeColor, strokeWidth, className, borderRadius, shapeRendering, selected: selected2, onClick }) {
+function MiniMapNodeComponent({ id: id2, x, y, width: width2, height, style: style2, color: color2, strokeColor, strokeWidth, className, borderRadius, shapeRendering, selected: selected2, onClick }) {
   const { background, backgroundColor } = style2 || {};
   const fill = color2 || background || backgroundColor;
-  return jsxRuntimeExports.jsx("rect", { className: cc(["react-flow__minimap-node", { selected: selected2 }, className]), x, y, rx: borderRadius, ry: borderRadius, width, height, style: {
+  return jsxRuntimeExports.jsx("rect", { className: cc(["react-flow__minimap-node", { selected: selected2 }, className]), x, y, rx: borderRadius, ry: borderRadius, width: width2, height, style: {
     fill,
     stroke: strokeColor,
     strokeWidth
@@ -20204,23 +20203,23 @@ function MiniMapNodes({
   )) });
 }
 function NodeComponentWrapperInner({ id: id2, nodeColorFunc, nodeStrokeColorFunc, nodeClassNameFunc, nodeBorderRadius, nodeStrokeWidth, shapeRendering, NodeComponent, onClick }) {
-  const { node, x, y, width, height } = useStore((s) => {
+  const { node, x, y, width: width2, height } = useStore((s) => {
     const { internals } = s.nodeLookup.get(id2);
     const node2 = internals.userNode;
     const { x: x2, y: y2 } = internals.positionAbsolute;
-    const { width: width2, height: height2 } = getNodeDimensions(node2);
+    const { width: width22, height: height2 } = getNodeDimensions(node2);
     return {
       node: node2,
       x: x2,
       y: y2,
-      width: width2,
+      width: width22,
       height: height2
     };
   }, shallow$1);
   if (!node || node.hidden || !nodeHasDimensions(node)) {
     return null;
   }
-  return jsxRuntimeExports.jsx(NodeComponent, { x, y, width, height, style: node.style, selected: !!node.selected, className: nodeClassNameFunc(node), color: nodeColorFunc(node), borderRadius: nodeBorderRadius, strokeColor: nodeStrokeColorFunc(node), strokeWidth: nodeStrokeWidth, shapeRendering, onClick, id: node.id });
+  return jsxRuntimeExports.jsx(NodeComponent, { x, y, width: width2, height, style: node.style, selected: !!node.selected, className: nodeClassNameFunc(node), color: nodeColorFunc(node), borderRadius: nodeBorderRadius, strokeColor: nodeStrokeColorFunc(node), strokeWidth: nodeStrokeWidth, shapeRendering, onClick, id: node.id });
 }
 const NodeComponentWrapper = reactExports.memo(NodeComponentWrapperInner);
 var MiniMapNodes$1 = reactExports.memo(MiniMapNodes);
@@ -20285,7 +20284,7 @@ function MiniMapComponent({
   const offset = offsetScale * viewScale;
   const x = boundingRect.x - (viewWidth - boundingRect.width) / 2 - offset;
   const y = boundingRect.y - (viewHeight - boundingRect.height) / 2 - offset;
-  const width = viewWidth + offset * 2;
+  const width2 = viewWidth + offset * 2;
   const height = viewHeight + offset * 2;
   const labelledBy = `${ARIA_LABEL_KEY}-${rfId}`;
   const viewScaleRef = reactExports.useRef(0);
@@ -20335,7 +20334,7 @@ function MiniMapComponent({
     "--xy-minimap-node-background-color-props": typeof nodeColor === "string" ? nodeColor : void 0,
     "--xy-minimap-node-stroke-color-props": typeof nodeStrokeColor === "string" ? nodeStrokeColor : void 0,
     "--xy-minimap-node-stroke-width-props": typeof nodeStrokeWidth === "number" ? nodeStrokeWidth : void 0
-  }, className: cc(["react-flow__minimap", className]), "data-testid": "rf__minimap", children: jsxRuntimeExports.jsxs("svg", { width: elementWidth, height: elementHeight, viewBox: `${x} ${y} ${width} ${height}`, className: "react-flow__minimap-svg", role: "img", "aria-labelledby": labelledBy, ref: svg, onClick: onSvgClick, children: [ariaLabel && jsxRuntimeExports.jsx("title", { id: labelledBy, children: ariaLabel }), jsxRuntimeExports.jsx(MiniMapNodes$1, { onClick: onSvgNodeClick, nodeColor, nodeStrokeColor, nodeBorderRadius, nodeClassName, nodeStrokeWidth, nodeComponent }), jsxRuntimeExports.jsx("path", { className: "react-flow__minimap-mask", d: `M${x - offset},${y - offset}h${width + offset * 2}v${height + offset * 2}h${-width - offset * 2}z
+  }, className: cc(["react-flow__minimap", className]), "data-testid": "rf__minimap", children: jsxRuntimeExports.jsxs("svg", { width: elementWidth, height: elementHeight, viewBox: `${x} ${y} ${width2} ${height}`, className: "react-flow__minimap-svg", role: "img", "aria-labelledby": labelledBy, ref: svg, onClick: onSvgClick, children: [ariaLabel && jsxRuntimeExports.jsx("title", { id: labelledBy, children: ariaLabel }), jsxRuntimeExports.jsx(MiniMapNodes$1, { onClick: onSvgNodeClick, nodeColor, nodeStrokeColor, nodeBorderRadius, nodeClassName, nodeStrokeWidth, nodeComponent }), jsxRuntimeExports.jsx("path", { className: "react-flow__minimap-mask", d: `M${x - offset},${y - offset}h${width2 + offset * 2}v${height + offset * 2}h${-width2 - offset * 2}z
         M${viewBB.x},${viewBB.y}h${viewBB.width}v${viewBB.height}h${-viewBB.width}z`, fillRule: "evenodd", pointerEvents: "none" })] }) });
 }
 MiniMapComponent.displayName = "MiniMap";
@@ -20374,23 +20373,23 @@ function ResizeControl({ nodeId, position, variant = ResizeControlVariant.Handle
           const node = nodeLookup.get(id2);
           if (node && node.expandParent && node.parentId) {
             const origin = node.origin ?? nodeOrigin;
-            const width = change.width ?? node.measured.width ?? 0;
+            const width2 = change.width ?? node.measured.width ?? 0;
             const height = change.height ?? node.measured.height ?? 0;
             const child = {
               id: node.id,
               parentId: node.parentId,
               rect: {
-                width,
+                width: width2,
                 height,
                 ...evaluateAbsolutePosition({
                   x: change.x ?? node.position.x,
                   y: change.y ?? node.position.y
-                }, { width, height }, node.parentId, nodeLookup, origin)
+                }, { width: width2, height }, node.parentId, nodeLookup, origin)
               }
             };
             const parentExpandChanges = handleExpandParent([child], nodeLookup, parentLookup, nodeOrigin);
             changes.push(...parentExpandChanges);
-            nextPosition.x = change.x ? Math.max(origin[0] * width, change.x) : void 0;
+            nextPosition.x = change.x ? Math.max(origin[0] * width2, change.x) : void 0;
             nextPosition.y = change.y ? Math.max(origin[1] * height, change.y) : void 0;
           }
           if (nextPosition.x !== void 0 && nextPosition.y !== void 0) {
@@ -20424,13 +20423,13 @@ function ResizeControl({ nodeId, position, variant = ResizeControlVariant.Handle
           }
           triggerNodeChanges(changes);
         },
-        onEnd: ({ width, height }) => {
+        onEnd: ({ width: width2, height }) => {
           const dimensionChange = {
             id: id2,
             type: "dimensions",
             resizing: false,
             dimensions: {
-              width,
+              width: width2,
               height
             }
           };
@@ -23285,6 +23284,112 @@ const MotionConfigContext = reactExports.createContext({
   isStatic: false,
   reducedMotion: "never"
 });
+class PopChildMeasure extends reactExports.Component {
+  getSnapshotBeforeUpdate(prevProps) {
+    const element = this.props.childRef.current;
+    if (element && prevProps.isPresent && !this.props.isPresent) {
+      const parent = element.offsetParent;
+      const parentWidth = isHTMLElement(parent) ? parent.offsetWidth || 0 : 0;
+      const size = this.props.sizeRef.current;
+      size.height = element.offsetHeight || 0;
+      size.width = element.offsetWidth || 0;
+      size.top = element.offsetTop;
+      size.left = element.offsetLeft;
+      size.right = parentWidth - size.width - size.left;
+    }
+    return null;
+  }
+  /**
+   * Required with getSnapshotBeforeUpdate to stop React complaining.
+   */
+  componentDidUpdate() {
+  }
+  render() {
+    return this.props.children;
+  }
+}
+function PopChild({ children: children2, isPresent, anchorX }) {
+  const id2 = reactExports.useId();
+  const ref = reactExports.useRef(null);
+  const size = reactExports.useRef({
+    width: 0,
+    height: 0,
+    top: 0,
+    left: 0,
+    right: 0
+  });
+  const { nonce } = reactExports.useContext(MotionConfigContext);
+  reactExports.useInsertionEffect(() => {
+    const { width: width2, height, top, left, right } = size.current;
+    if (isPresent || !ref.current || !width2 || !height)
+      return;
+    const x = anchorX === "left" ? `left: ${left}` : `right: ${right}`;
+    ref.current.dataset.motionPopId = id2;
+    const style2 = document.createElement("style");
+    if (nonce)
+      style2.nonce = nonce;
+    document.head.appendChild(style2);
+    if (style2.sheet) {
+      style2.sheet.insertRule(`
+          [data-motion-pop-id="${id2}"] {
+            position: absolute !important;
+            width: ${width2}px !important;
+            height: ${height}px !important;
+            ${x}px !important;
+            top: ${top}px !important;
+          }
+        `);
+    }
+    return () => {
+      if (document.head.contains(style2)) {
+        document.head.removeChild(style2);
+      }
+    };
+  }, [isPresent]);
+  return jsxRuntimeExports.jsx(PopChildMeasure, { isPresent, childRef: ref, sizeRef: size, children: reactExports.cloneElement(children2, { ref }) });
+}
+const PresenceChild = ({ children: children2, initial, isPresent, onExitComplete, custom, presenceAffectsLayout, mode, anchorX }) => {
+  const presenceChildren = useConstant(newChildrenMap);
+  const id2 = reactExports.useId();
+  let isReusedContext = true;
+  let context = reactExports.useMemo(() => {
+    isReusedContext = false;
+    return {
+      id: id2,
+      initial,
+      isPresent,
+      custom,
+      onExitComplete: (childId) => {
+        presenceChildren.set(childId, true);
+        for (const isComplete of presenceChildren.values()) {
+          if (!isComplete)
+            return;
+        }
+        onExitComplete && onExitComplete();
+      },
+      register: (childId) => {
+        presenceChildren.set(childId, false);
+        return () => presenceChildren.delete(childId);
+      }
+    };
+  }, [isPresent, presenceChildren, onExitComplete]);
+  if (presenceAffectsLayout && isReusedContext) {
+    context = { ...context };
+  }
+  reactExports.useMemo(() => {
+    presenceChildren.forEach((_, key) => presenceChildren.set(key, false));
+  }, [isPresent]);
+  reactExports.useEffect(() => {
+    !isPresent && !presenceChildren.size && onExitComplete && onExitComplete();
+  }, [isPresent]);
+  if (mode === "popLayout") {
+    children2 = jsxRuntimeExports.jsx(PopChild, { isPresent, anchorX, children: children2 });
+  }
+  return jsxRuntimeExports.jsx(PresenceContext.Provider, { value: context, children: children2 });
+};
+function newChildrenMap() {
+  return /* @__PURE__ */ new Map();
+}
 function usePresence(subscribe = true) {
   const context = reactExports.useContext(PresenceContext);
   if (context === null)
@@ -23299,6 +23404,81 @@ function usePresence(subscribe = true) {
   const safeToRemove = reactExports.useCallback(() => subscribe && onExitComplete && onExitComplete(id2), [id2, onExitComplete, subscribe]);
   return !isPresent && onExitComplete ? [false, safeToRemove] : [true];
 }
+const getChildKey = (child) => child.key || "";
+function onlyElements(children2) {
+  const filtered = [];
+  reactExports.Children.forEach(children2, (child) => {
+    if (reactExports.isValidElement(child))
+      filtered.push(child);
+  });
+  return filtered;
+}
+const AnimatePresence = ({ children: children2, custom, initial = true, onExitComplete, presenceAffectsLayout = true, mode = "sync", propagate = false, anchorX = "left" }) => {
+  const [isParentPresent, safeToRemove] = usePresence(propagate);
+  const presentChildren = reactExports.useMemo(() => onlyElements(children2), [children2]);
+  const presentKeys = propagate && !isParentPresent ? [] : presentChildren.map(getChildKey);
+  const isInitialRender = reactExports.useRef(true);
+  const pendingPresentChildren = reactExports.useRef(presentChildren);
+  const exitComplete = useConstant(() => /* @__PURE__ */ new Map());
+  const [diffedChildren, setDiffedChildren] = reactExports.useState(presentChildren);
+  const [renderedChildren, setRenderedChildren] = reactExports.useState(presentChildren);
+  useIsomorphicLayoutEffect(() => {
+    isInitialRender.current = false;
+    pendingPresentChildren.current = presentChildren;
+    for (let i = 0; i < renderedChildren.length; i++) {
+      const key = getChildKey(renderedChildren[i]);
+      if (!presentKeys.includes(key)) {
+        if (exitComplete.get(key) !== true) {
+          exitComplete.set(key, false);
+        }
+      } else {
+        exitComplete.delete(key);
+      }
+    }
+  }, [renderedChildren, presentKeys.length, presentKeys.join("-")]);
+  const exitingChildren = [];
+  if (presentChildren !== diffedChildren) {
+    let nextChildren = [...presentChildren];
+    for (let i = 0; i < renderedChildren.length; i++) {
+      const child = renderedChildren[i];
+      const key = getChildKey(child);
+      if (!presentKeys.includes(key)) {
+        nextChildren.splice(i, 0, child);
+        exitingChildren.push(child);
+      }
+    }
+    if (mode === "wait" && exitingChildren.length) {
+      nextChildren = exitingChildren;
+    }
+    setRenderedChildren(onlyElements(nextChildren));
+    setDiffedChildren(presentChildren);
+    return null;
+  }
+  const { forceRender } = reactExports.useContext(LayoutGroupContext);
+  return jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: renderedChildren.map((child) => {
+    const key = getChildKey(child);
+    const isPresent = propagate && !isParentPresent ? false : presentChildren === renderedChildren || presentKeys.includes(key);
+    const onExit = () => {
+      if (exitComplete.has(key)) {
+        exitComplete.set(key, true);
+      } else {
+        return;
+      }
+      let isEveryExitComplete = true;
+      exitComplete.forEach((isExitComplete) => {
+        if (!isExitComplete)
+          isEveryExitComplete = false;
+      });
+      if (isEveryExitComplete) {
+        forceRender == null ? void 0 : forceRender();
+        setRenderedChildren(pendingPresentChildren.current);
+        propagate && (safeToRemove == null ? void 0 : safeToRemove());
+        onExitComplete && onExitComplete();
+      }
+    };
+    return jsxRuntimeExports.jsx(PresenceChild, { isPresent, initial: !isInitialRender.current || initial ? void 0 : false, custom, presenceAffectsLayout, mode, onExitComplete: isPresent ? void 0 : onExit, anchorX, children: child }, key);
+  }) });
+};
 const LazyContext = reactExports.createContext({ strict: false });
 const featureProps = {
   animation: [
@@ -27604,23 +27784,1073 @@ const createMotionComponent = /* @__PURE__ */ createMotionComponentFactory({
   ...layout
 }, createDomVisualElement);
 const motion = /* @__PURE__ */ createDOMMotionComponentProxy(createMotionComponent);
-export {
-  Background as B,
-  LayoutGroupContext as L,
-  MotionConfigContext as M,
-  PresenceContext as P,
-  ReactDOM as R,
-  usePresence as a,
-  useIsomorphicLayoutEffect as b,
-  useNodesState as c,
-  index as d,
-  clientExports as e,
-  React as f,
-  ReactFlowProvider as g,
-  isHTMLElement as i,
-  jsxRuntimeExports as j,
-  motion as m,
-  reactExports as r,
-  useConstant as u
+const startSound = "" + new URL("Mario 1 - Mario Riff-DIBFaSI-.mp3", import.meta.url).href;
+const shoot = "" + new URL("fireball-Bu_16San.mp3", import.meta.url).href;
+const explosion = "" + new URL("Break_Brick-CyosectS.mp3", import.meta.url).href;
+const gameWin = "" + new URL("game-win-sm_HM3fJ.mp3", import.meta.url).href;
+const gameOver = "" + new URL("die-ofaorudv.mp3", import.meta.url).href;
+const useLeaderboard = () => {
+  const [scores, setScores] = reactExports.useState([]);
+  const [loading, setLoading] = reactExports.useState(true);
+  const [error, setError] = reactExports.useState(null);
+  const fetchLeaderboard = async () => {
+    try {
+      console.log("Fetching leaderboard data...");
+      setLoading(true);
+      const response = await fetch(
+        "https://raw.githubusercontent.com/2187Nick/2187Nick.github.io/main/leaderboard/scores.json",
+        { cache: "no-store" }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch leaderboard data");
+      }
+      const data = await response.json();
+      setScores(data);
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching leaderboard:", err);
+      setError("Failed to load leaderboard. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  reactExports.useEffect(() => {
+    fetchLeaderboard();
+  }, []);
+  const isHighScore = (newScore) => {
+    console.log("Checking if score is high enough:", newScore, "Current scores:", scores);
+    if (newScore <= 0) {
+      console.log("Score is 0 or negative, not high enough");
+      return false;
+    }
+    if (scores.length < 3) {
+      console.log("Less than 3 scores in leaderboard, score is high enough");
+      return true;
+    }
+    const lowestScore = Math.min(...scores.map((s) => s.score));
+    console.log("Lowest score in leaderboard:", lowestScore);
+    return newScore > lowestScore;
+  };
+  const submitScore = async (nickname, score) => {
+    try {
+      const apiUrl = "https://falling-thunder-fd3b.nick-80f.workers.dev/";
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          nickname,
+          score
+        })
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to submit score");
+      }
+      await fetchLeaderboard();
+      return { success: true };
+    } catch (err) {
+      console.error("Error submitting score:", err);
+      return {
+        success: false,
+        error: err.message || "Failed to submit score. Please try again."
+      };
+    }
+  };
+  return {
+    scores,
+    loading,
+    error,
+    fetchLeaderboard,
+    isHighScore,
+    submitScore
+  };
 };
-//# sourceMappingURL=proxy-B2eiEogY.js.map
+const ScoreSubmission = ({ score, onClose, onSubmitSuccess }) => {
+  const [nickname, setNickname] = reactExports.useState("");
+  const [submitting, setSubmitting] = reactExports.useState(false);
+  const [error, setError] = reactExports.useState(null);
+  const [success, setSuccess] = reactExports.useState(false);
+  const { submitScore } = useLeaderboard();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!nickname.trim()) {
+      setError("Please enter a nickname");
+      return;
+    }
+    setError(null);
+    setSubmitting(true);
+    try {
+      const result = await submitScore(nickname.trim(), score);
+      if (!result.success) {
+        throw new Error(result.error || "Failed to submit score");
+      }
+      setSuccess(true);
+      if (onSubmitSuccess) {
+        onSubmitSuccess(nickname.trim(), score);
+      }
+      setTimeout(() => {
+        onClose();
+      }, 2e3);
+    } catch (err) {
+      console.error("Error submitting score:", err);
+      setError(err.message || "Failed to submit score. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+  if (success) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
+      backgroundColor: "rgba(22, 163, 74, 0.2)",
+      borderRadius: "8px",
+      padding: "20px",
+      textAlign: "center",
+      border: "1px solid #22c55e"
+    }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { style: { color: "#4ade80", marginBottom: "16px" }, children: "Score Submitted!" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+        "Your score of ",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontWeight: "bold", color: "#f59e0b" }, children: score }),
+        " has been submitted as ",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { fontWeight: "bold" }, children: nickname }),
+        "."
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { marginBottom: "20px" }, children: "The leaderboard will be updated shortly." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "button",
+        {
+          onClick: onClose,
+          style: {
+            padding: "8px 16px",
+            backgroundColor: "#22c55e",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+            fontWeight: "bold"
+          },
+          children: "Close"
+        }
+      )
+    ] });
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
+    backgroundColor: "rgba(0, 0, 0, 0.9)",
+    borderRadius: "8px",
+    padding: "24px",
+    border: "1px solid #38bdf8",
+    boxShadow: "0 0 20px rgba(56, 189, 248, 0.2)",
+    width: "100%",
+    maxWidth: "400px",
+    margin: "0 auto"
+  }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { style: { color: "#38bdf8", marginBottom: "16px", textAlign: "center" }, children: [
+      "Submit Your Score: ",
+      score
+    ] }),
+    error && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: {
+      color: "#ef4444",
+      backgroundColor: "rgba(239, 68, 68, 0.1)",
+      padding: "10px",
+      borderRadius: "4px",
+      marginBottom: "16px"
+    }, children: error }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginBottom: "20px" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "label",
+          {
+            htmlFor: "nickname",
+            style: {
+              display: "block",
+              marginBottom: "8px",
+              fontWeight: "bold"
+            },
+            children: "Nickname:"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "input",
+          {
+            type: "text",
+            id: "nickname",
+            value: nickname,
+            onChange: (e) => setNickname(e.target.value),
+            placeholder: "Enter your nickname",
+            maxLength: 15,
+            disabled: submitting,
+            style: {
+              width: "100%",
+              padding: "10px",
+              borderRadius: "4px",
+              border: "1px solid #38bdf8",
+              backgroundColor: "rgba(56, 189, 248, 0.1)",
+              color: "white",
+              outline: "none"
+            }
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
+        display: "flex",
+        justifyContent: "space-between",
+        gap: "12px"
+      }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "submit",
+            disabled: submitting,
+            style: {
+              flex: "1",
+              padding: "10px",
+              backgroundColor: submitting ? "#6b7280" : "#3b82f6",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: submitting ? "not-allowed" : "pointer",
+              fontWeight: "bold"
+            },
+            children: submitting ? "Submitting..." : "Submit Score"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            type: "button",
+            onClick: onClose,
+            disabled: submitting,
+            style: {
+              flex: "1",
+              padding: "10px",
+              backgroundColor: "#6b7280",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: submitting ? "not-allowed" : "pointer",
+              fontWeight: "bold"
+            },
+            children: "Cancel"
+          }
+        )
+      ] })
+    ] })
+  ] });
+};
+const LeaderboardComponent = () => {
+  const { scores, loading, error } = useLeaderboard();
+  if (loading) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "leaderboard", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "🏆 High Scores" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "Loading scores..." })
+    ] });
+  }
+  if (error) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "leaderboard", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { children: "🏆 High Scores" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "error", children: error })
+    ] });
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "leaderboard", style: { textAlign: "center" }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { style: {
+      fontFamily: "'Press Start 2P', monospace",
+      color: "#38bdf8",
+      marginBottom: "16px",
+      fontSize: "18px"
+    }, children: "🏆 High Scores" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("table", { style: {
+      width: "100%",
+      borderCollapse: "collapse",
+      marginTop: "8px",
+      color: "white"
+    }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("thead", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("tr", { style: { borderBottom: "2px solid #38bdf8" }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("th", { style: { padding: "8px", textAlign: "center" }, children: "Rank" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("th", { style: { padding: "8px", textAlign: "left" }, children: "Player" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("th", { style: { padding: "8px", textAlign: "right" }, children: "Score" })
+      ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("tbody", { children: [
+        scores.map((entry, index2) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "tr",
+          {
+            style: {
+              backgroundColor: index2 % 2 === 0 ? "rgba(56, 189, 248, 0.1)" : "transparent",
+              borderBottom: "1px solid rgba(56, 189, 248, 0.3)"
+            },
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("td", { style: { padding: "8px", textAlign: "center" }, children: index2 === 0 ? "🥇" : index2 === 1 ? "🥈" : index2 === 2 ? "🥉" : index2 + 1 }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("td", { style: { padding: "8px", textAlign: "left", fontWeight: "bold" }, children: entry.name }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("td", { style: { padding: "8px", textAlign: "right", color: "#f59e0b" }, children: entry.score })
+            ]
+          },
+          index2
+        )),
+        scores.length === 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("tr", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("td", { colSpan: "3", style: { padding: "16px", textAlign: "center" }, children: "No scores yet. Be the first!" }) })
+      ] })
+    ] })
+  ] });
+};
+const GameOverModal = ({ score, level, onRestart, onClose, isWin }) => {
+  const [showSubmission, setShowSubmission] = reactExports.useState(false);
+  const { isHighScore, fetchLeaderboard } = useLeaderboard();
+  const [isHighEnough, setIsHighEnough] = reactExports.useState(false);
+  reactExports.useEffect(() => {
+    console.log("Now try and fetch leaderboard data");
+    fetchLeaderboard().then(() => {
+      const highEnough = isHighScore(score);
+      console.log("GameOverModal rendered - Score:", score, "IsWin:", isWin, "High enough:", highEnough);
+      setIsHighEnough(highEnough);
+    });
+  }, [score, isHighScore, fetchLeaderboard]);
+  const handleSubmitSuccess = async () => {
+    console.log("Score submitted successfully, refreshing leaderboard");
+    await fetchLeaderboard();
+    setIsHighEnough(false);
+  };
+  if (showSubmission) {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.8)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 9999
+    }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
+      backgroundColor: "rgba(0, 0, 0, 0.95)",
+      padding: "2rem",
+      borderRadius: "8px",
+      border: "5px solid #ff3800",
+      boxShadow: "0 0 30px rgba(255, 56, 0, 0.8)",
+      width: "90%",
+      maxWidth: "500px"
+    }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ScoreSubmission,
+      {
+        score,
+        onClose: () => setShowSubmission(false),
+        onSubmitSuccess: handleSubmitSuccess
+      }
+    ) }) });
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 9999
+  }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
+    backgroundColor: "rgba(0, 0, 0, 0.95)",
+    padding: "2rem",
+    borderRadius: "8px",
+    border: "5px solid #ff3800",
+    boxShadow: "0 0 30px rgba(255, 56, 0, 0.8)",
+    color: "white",
+    width: "90%",
+    maxWidth: "500px",
+    textAlign: "center"
+  }, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { style: {
+      fontFamily: "'Press Start 2P', monospace",
+      color: isWin ? "#4ade80" : "#ef4444",
+      fontSize: "20px",
+      marginBottom: "24px"
+    }, children: isWin ? "You Win!" : "Game Over" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { style: {
+      fontFamily: "'Press Start 2P', monospace",
+      fontSize: "16px",
+      marginBottom: "16px",
+      color: "#ffffff"
+    }, children: [
+      "Your Score: ",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "#f59e0b" }, children: score })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { style: {
+      fontFamily: "'Press Start 2P', monospace",
+      fontSize: "14px",
+      marginBottom: "24px",
+      color: "#ffffff"
+    }, children: [
+      "Level Reached: ",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "#3b82f6" }, children: level })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { style: {
+      fontSize: "20px",
+      marginBottom: "24px"
+    }, children: [
+      "Level: ",
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { style: { color: "#f59e0b", fontWeight: "bold" }, children: level })
+    ] }),
+    isHighEnough && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
+      marginBottom: "24px",
+      padding: "12px",
+      backgroundColor: "rgba(79, 70, 229, 0.2)",
+      borderRadius: "6px",
+      border: "1px solid #6366f1"
+    }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { marginBottom: "12px", color: "#c4b5fd" }, children: "🏆 Congratulations! You got a high score!" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "button",
+        {
+          onClick: () => setShowSubmission(true),
+          style: {
+            padding: "8px 16px",
+            backgroundColor: "#6366f1",
+            border: "none",
+            borderRadius: "4px",
+            color: "white",
+            fontWeight: "bold",
+            cursor: "pointer"
+          },
+          children: "Submit Score"
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginBottom: "24px" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(LeaderboardComponent, {}) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { display: "flex", justifyContent: "center", gap: "12px" }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "button",
+        {
+          onClick: onRestart,
+          style: {
+            padding: "10px 20px",
+            backgroundColor: "#3b82f6",
+            border: "none",
+            borderRadius: "4px",
+            color: "white",
+            fontWeight: "bold",
+            cursor: "pointer"
+          },
+          children: "Play Again"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "button",
+        {
+          onClick: onClose,
+          style: {
+            padding: "10px 20px",
+            backgroundColor: "#6b7280",
+            border: "none",
+            borderRadius: "4px",
+            color: "white",
+            fontWeight: "bold",
+            cursor: "pointer"
+          },
+          children: "Close"
+        }
+      )
+    ] })
+  ] }) });
+};
+const Button = ({ style: style2 = {}, children: children2, ...rest }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+  "button",
+  {
+    ...rest,
+    style: {
+      padding: "8px 12px",
+      borderRadius: "4px",
+      backgroundColor: "#404040",
+      border: "none",
+      color: "white",
+      cursor: "pointer",
+      fontSize: "14px",
+      transition: "background-color 0.2s, transform 0.2s",
+      ...style2
+    },
+    onMouseOver: (e) => {
+      e.currentTarget.style.backgroundColor = "#525252";
+    },
+    onMouseOut: (e) => {
+      e.currentTarget.style.backgroundColor = "#404040";
+    },
+    onMouseDown: (e) => {
+      e.currentTarget.style.transform = "scale(0.95)";
+    },
+    onMouseUp: (e) => {
+      e.currentTarget.style.transform = "scale(1)";
+    },
+    onTouchStart: (e) => {
+      e.currentTarget.style.transform = "scale(0.95)";
+    },
+    onTouchEnd: (e) => {
+      e.currentTarget.style.transform = "scale(1)";
+    },
+    children: children2
+  }
+);
+const SOUNDS = {
+  shoot,
+  explosion,
+  gameStart: startSound,
+  gameOver,
+  gameWin
+};
+const loadSound = (url) => {
+  const audio = new Audio(url);
+  audio.load();
+  return audio;
+};
+const getGameDimensions = () => {
+  const isMobile = window.innerWidth < 768;
+  const spacingX = isMobile ? 160 : 160;
+  const cols = 10;
+  const margin = 200;
+  const invaderWidth = 40;
+  const totalWidth2 = margin + cols * spacingX + invaderWidth;
+  const zoom2 = isMobile ? 0.99 : 0.95;
+  return {
+    isMobile,
+    width: isMobile ? window.innerWidth + 500 : Math.max(window.innerWidth, totalWidth2),
+    height: isMobile ? 500 : 800,
+    playerY: isMobile ? 1e3 : 800,
+    zoom: zoom2,
+    totalWidth: totalWidth2,
+    invaderSpacingX: spacingX,
+    invaderSpacingY: isMobile ? 80 : 140
+  };
+};
+const dimensions = getGameDimensions();
+const { width, playerY, zoom, totalWidth, invaderSpacingX, invaderSpacingY } = dimensions;
+const WIDTH = width;
+const PLAYER_Y = playerY;
+const INV_COLS = window.innerWidth < 768 ? 4 : 10;
+const INV_ROWS = window.innerWidth < 768 ? 5 : 3;
+const INV_SPACING_X = invaderSpacingX;
+const INV_SPACING_Y = invaderSpacingY;
+const TICK_MS = window.innerWidth < 768 ? 120 : 120;
+const BULLET_STEP = 20;
+const INV_STEP = window.innerWidth < 768 ? 10 : 10;
+const INV_DROP = window.innerWidth < 768 ? 10 : 20;
+const LevelTransition = ({ level }) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+  motion.div,
+  {
+    initial: { opacity: 0, scale: 0.5 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 1.5 },
+    style: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "rgba(0, 0, 0, 0.7)",
+      zIndex: 9999
+    },
+    children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      motion.div,
+      {
+        initial: { rotate: -10 },
+        animate: { rotate: 10 },
+        transition: { duration: 0.5, repeat: 3, repeatType: "reverse" },
+        style: {
+          padding: "2rem 3rem",
+          backgroundColor: "#0f172a",
+          border: "3px solid #38bdf8",
+          borderRadius: "10px",
+          boxShadow: "0 0 30px rgba(56, 189, 248, 0.6)",
+          textAlign: "center"
+        },
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { style: {
+            fontFamily: "'Press Start 2P', monospace",
+            fontSize: "24px",
+            marginBottom: "16px",
+            color: "#ffffff",
+            textShadow: "0 0 10px rgba(56, 189, 248, 0.8)"
+          }, children: [
+            "Level ",
+            level
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: {
+            fontFamily: "'Press Start 2P', monospace",
+            fontSize: "14px",
+            color: "#f59e0b"
+          }, children: "Get Ready!" })
+        ]
+      }
+    )
+  }
+);
+function SpaceInvaders() {
+  const [nodes, setNodes] = useNodesState([]);
+  const [invaders, setInvaders] = reactExports.useState([]);
+  const [bullets, setBullets] = reactExports.useState([]);
+  const [playerX, setPlayerX] = reactExports.useState(WIDTH / 2 - 20);
+  const [dir, setDir] = reactExports.useState(1);
+  const [active, setActive] = reactExports.useState(false);
+  const [score, setScore] = reactExports.useState(0);
+  const [level, setLevel] = reactExports.useState(1);
+  const [showLevelTransition, setShowLevelTransition] = reactExports.useState(false);
+  const levelRef = reactExports.useRef(1);
+  const scoreRef = reactExports.useRef(0);
+  const bulletsRef = reactExports.useRef([]);
+  const invadersRef = reactExports.useRef([]);
+  const dirRef = reactExports.useRef(1);
+  const [gameOver2, setGameOver] = reactExports.useState(false);
+  const [gameWon, setGameWon] = reactExports.useState(false);
+  const [finalScore, setFinalScore] = reactExports.useState(1e3);
+  const [forceUpdate, setForceUpdate] = reactExports.useState(0);
+  const forceRender = reactExports.useCallback(() => {
+    setForceUpdate((prev) => prev + 1);
+    console.log("Forcing re-render");
+  }, []);
+  const lastShotRef = reactExports.useRef(0);
+  const SHOOT_COOLDOWN = window.innerWidth < 768 ? 200 : 100;
+  const playSound = reactExports.useCallback((soundName) => {
+    const sound = soundsRef.current[soundName];
+    if (sound) {
+      sound.currentTime = 0;
+      sound.play().catch((e) => console.log("Sound play error:", e));
+    }
+  }, []);
+  const handleShoot = reactExports.useCallback(() => {
+    if (!active) return;
+    const now2 = Date.now();
+    if (now2 - lastShotRef.current < SHOOT_COOLDOWN) return;
+    lastShotRef.current = now2;
+    setBullets((bs) => [
+      ...bs,
+      {
+        id: `b-${now2}`,
+        position: { x: playerX + 14, y: PLAYER_Y - 24 },
+        draggable: false,
+        data: { label: "🔺" },
+        style: {
+          background: "#facc15",
+          width: 12,
+          height: 20,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: 12,
+          border: "none"
+        }
+      }
+    ]);
+    playSound("shoot");
+  }, [active, playerX, playSound, SHOOT_COOLDOWN]);
+  const soundsRef = reactExports.useRef({});
+  reactExports.useEffect(() => {
+    Object.entries(SOUNDS).forEach(([key, url]) => {
+      soundsRef.current[key] = loadSound(url);
+    });
+  }, []);
+  const calculateInvaderPoints = (row, level2, isSpecial = false) => {
+    const rowBonus = Math.max(3 - row, 0) * 50;
+    const levelBonus = (level2 - 1) * 25;
+    const specialBonus = isSpecial ? 100 : 0;
+    return 100 + rowBonus + levelBonus + specialBonus;
+  };
+  const makePlayer = reactExports.useCallback(
+    (x) => ({
+      id: "player",
+      position: { x, y: PLAYER_Y },
+      draggable: false,
+      data: { label: "🚀" },
+      style: {
+        background: "#0369a1",
+        width: 40,
+        height: 40,
+        borderRadius: "50%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontSize: 22,
+        color: "white",
+        border: "none"
+      }
+    }),
+    []
+  );
+  const initGame = (startNewGame = true) => {
+    console.log("=== INIT GAME CALLED ===");
+    if (startNewGame) {
+      setLevel(1);
+      levelRef.current = 1;
+    }
+    const currentLevel = startNewGame ? 1 : levelRef.current;
+    const invadersPerRow = Math.min(INV_COLS + Math.floor(currentLevel / 2), 14);
+    const invaderRows = Math.min(INV_ROWS + Math.floor(currentLevel / 3), 6);
+    const inv = [];
+    let id2 = 0;
+    for (let r = 0; r < invaderRows; r++) {
+      for (let c = 0; c < invadersPerRow; c++) {
+        const isSpecial = currentLevel > 3 && r < 2 || currentLevel > 2 && r === 0;
+        const isElite = currentLevel > 4 && r === 0;
+        const emoji = isElite ? "👾" : isSpecial ? "👿" : "👽";
+        const pointValue = calculateInvaderPoints(r, currentLevel, isSpecial || isElite);
+        inv.push({
+          id: `inv-${id2++}`,
+          position: { x: 200 + c * INV_SPACING_X, y: 150 + r * INV_SPACING_Y },
+          draggable: false,
+          data: {
+            label: emoji,
+            pointValue
+          },
+          style: {
+            background: isElite ? "#7e22ce" : isSpecial ? "#b91c1c" : "#0369a1",
+            width: 40,
+            height: 40,
+            borderRadius: 8,
+            fontSize: 20,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "white",
+            border: "none",
+            boxShadow: isElite ? "0 0 10px #a855f7" : isSpecial ? "0 0 5px #ef4444" : "none"
+          }
+        });
+      }
+    }
+    console.log("Setting game state...");
+    setInvaders(inv);
+    setBullets([]);
+    setPlayerX(WIDTH / 2 - 20);
+    setDir(1);
+    if (startNewGame) {
+      setScore(0);
+    }
+    setActive(true);
+    setGameOver(false);
+    setGameWon(false);
+    setFinalScore(0);
+    console.log("Game initialized successfully!");
+    console.log(`New state will be: gameOver=false, gameWon=false, active=true, level: ${currentLevel}`);
+    window.gameDebug = true;
+    playSound("gameStart");
+  };
+  reactExports.useEffect(() => {
+    if (!active) return;
+    const onKey = (e) => {
+      if (e.key === "ArrowLeft") setPlayerX((x) => Math.max(10, x - 20));
+      else if (e.key === "ArrowRight") setPlayerX((x) => Math.min(WIDTH - 50, x + 20));
+      else if (e.key === " " || e.key === "ArrowUp") {
+        e.preventDefault();
+        handleShoot();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [active, handleShoot]);
+  reactExports.useEffect(() => {
+    scoreRef.current = score;
+  }, [score]);
+  reactExports.useEffect(() => {
+    levelRef.current = level;
+  }, [level]);
+  reactExports.useEffect(() => {
+    bulletsRef.current = bullets;
+  }, [bullets]);
+  reactExports.useEffect(() => {
+    invadersRef.current = invaders;
+  }, [invaders]);
+  reactExports.useEffect(() => {
+    dirRef.current = dir;
+  }, [dir]);
+  reactExports.useEffect(() => {
+    console.log("Game loop useEffect initiated");
+    if (!active) return;
+    const invaderSpeed = INV_STEP + Math.floor(levelRef.current / 2);
+    const loop = setInterval(() => {
+      console.log("Game loop tick");
+      const currentBullets = bulletsRef.current;
+      const currentInvaders = invadersRef.current;
+      const currentDir = dirRef.current;
+      const movedBullets = currentBullets.map((b) => ({ ...b, position: { x: b.position.x, y: b.position.y - BULLET_STEP } })).filter((b) => b.position.y > -30);
+      const edgeHit = currentInvaders.some(
+        (n) => n.position.x + currentDir * invaderSpeed < 10 || n.position.x + currentDir * invaderSpeed > WIDTH - 50
+      );
+      const newDir = edgeHit ? currentDir * -1 : currentDir;
+      const movedInvaders = currentInvaders.map((n) => ({
+        ...n,
+        position: {
+          x: n.position.x + newDir * invaderSpeed,
+          y: n.position.y + (edgeHit ? INV_DROP : 0)
+        }
+      }));
+      const remainingInvaders = [];
+      let hitCount = 0;
+      let hitPoints = 0;
+      movedInvaders.forEach((inv) => {
+        const hit = movedBullets.some((b) => {
+          const withinX = b.position.x >= inv.position.x && b.position.x <= inv.position.x + 40;
+          const withinY = b.position.y >= inv.position.y && b.position.y <= inv.position.y + 40;
+          return withinX && withinY;
+        });
+        if (!hit) {
+          remainingInvaders.push(inv);
+        } else {
+          hitCount += 1;
+          const points = inv.data.pointValue || 100;
+          hitPoints += points;
+        }
+      });
+      if (hitCount) {
+        setScore((s) => {
+          const newScore = s + hitPoints;
+          scoreRef.current = newScore;
+          return newScore;
+        });
+        playSound("explosion");
+      }
+      const survivingBullets = movedBullets.filter((b) => {
+        return !remainingInvaders.some((inv) => {
+          const withinX = b.position.x >= inv.position.x && b.position.x <= inv.position.x + 40;
+          const withinY = b.position.y >= inv.position.y && b.position.y <= inv.position.y + 40;
+          return withinX && withinY;
+        });
+      });
+      setBullets(survivingBullets);
+      setInvaders(remainingInvaders);
+      setDir(newDir);
+      if (remainingInvaders.some((n) => n.position.y >= PLAYER_Y - 20)) {
+        const final = scoreRef.current;
+        setActive(false);
+        setGameOver(true);
+        setFinalScore(final);
+        setTimeout(() => {
+          document.body.style.overflow = "hidden";
+          forceRender();
+        }, 100);
+        playSound("gameOver");
+      }
+      if (remainingInvaders.length === 0) {
+        playSound("gameWin");
+        const newLevel = levelRef.current + 1;
+        setActive(false);
+        setShowLevelTransition(true);
+        setLevel(newLevel);
+        const nextLevel = newLevel;
+        setTimeout(() => {
+          setShowLevelTransition(false);
+          levelRef.current = nextLevel;
+          initGame(false);
+        }, 3e3);
+      }
+    }, TICK_MS);
+    return () => clearInterval(loop);
+  }, [active, playSound, forceRender, invaders]);
+  const playerNode = reactExports.useMemo(() => makePlayer(playerX), [makePlayer, playerX]);
+  reactExports.useEffect(() => {
+    const nodesWithTooltips = [
+      playerNode,
+      ...invaders.map((inv) => ({
+        ...inv,
+        // For desktop, add a title to show points on hover
+        data: {
+          ...inv.data,
+          title: window.innerWidth >= 768 ? `${inv.data.pointValue} pts` : void 0
+        }
+      })),
+      ...bullets
+    ];
+    setNodes(nodesWithTooltips);
+  }, [playerNode, invaders, bullets, setNodes]);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
+      height: "100vh",
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      color: "white",
+      overflow: "visible",
+      // Allow modal to overflow
+      backgroundColor: "#000000"
+    }, children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        motion.div,
+        {
+          initial: { y: -50, opacity: 0 },
+          animate: { y: 0, opacity: 1 },
+          style: {
+            textAlign: "center",
+            backgroundColor: "#0f172a",
+            padding: "12px 0",
+            borderBottom: "2px solid #38bdf8",
+            boxShadow: "0 4px 12px rgba(56, 189, 248, 0.4)",
+            fontFamily: "'Press Start 2P', monospace, system-ui"
+          },
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { style: {
+            margin: 0,
+            fontSize: window.innerWidth < 768 ? "24px" : "32px",
+            background: "linear-gradient(to right, #38bdf8, #818cf8)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            fontWeight: "bold",
+            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+            letterSpacing: "2px"
+          }, children: "SPACE INVADERS" })
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        motion.div,
+        {
+          initial: { y: -50, opacity: 0 },
+          animate: { y: 0, opacity: 1 },
+          style: {
+            padding: "16px",
+            display: "flex",
+            gap: "16px",
+            alignItems: "center",
+            backgroundColor: "#000000",
+            boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+            zIndex: 10,
+            borderBottom: "1px solid rgb(51, 51, 51)"
+          },
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { type: "button", onClick: (e) => {
+              e.preventDefault();
+              initGame();
+            }, children: active ? "Restart" : "Start" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: { marginLeft: "auto", display: "flex", gap: "16px" }, children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { fontSize: "14px", fontWeight: "600", color: "#3b82f6" }, children: [
+                "Level: ",
+                level
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { style: { fontSize: "14px", fontWeight: "600", color: "green" }, children: [
+                "Score: ",
+                score
+              ] })
+            ] })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { flex: 1, position: "relative", width: "100%", backgroundColor: "#000000" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { width: "100vw", height: "80vh", background: "#000000" }, children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        index,
+        {
+          nodes,
+          edges: [],
+          panOnDrag: false,
+          zoomOnScroll: false,
+          panOnScroll: false,
+          minZoom: window.innerWidth < 768 ? 0.4 : 0.2,
+          maxZoom: 1,
+          defaultViewport: {
+            x: 0,
+            y: 0,
+            zoom: Math.min(window.innerWidth / totalWidth, zoom)
+          },
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(Background, { gap: 40, size: 1.5, color: "#333333", variant: "lines", style: { opacity: 0.4 } })
+        }
+      ) }) }),
+      active && window.innerWidth < 768 && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
+        height: "128px",
+        backgroundColor: "#000000",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        borderTop: "1px solid rgb(51, 51, 51)"
+      }, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { style: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: "100%",
+        maxWidth: "340px"
+      }, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            onTouchStart: () => setPlayerX((x) => Math.max(10, x - 20)),
+            onTouchEnd: (e) => e.preventDefault(),
+            style: {
+              width: "64px",
+              height: "64px",
+              borderRadius: "50%",
+              backgroundColor: "rgba(59, 130, 246, 0.5)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "white",
+              fontSize: "28px",
+              border: "none",
+              padding: 0,
+              touchAction: "manipulation"
+            },
+            children: "←"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            onPointerDown: handleShoot,
+            onTouchStart: handleShoot,
+            style: {
+              width: "64px",
+              height: "64px",
+              borderRadius: "50%",
+              backgroundColor: "rgba(59, 130, 246, 0.5)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "white",
+              fontSize: "28px",
+              border: "none",
+              padding: 0,
+              touchAction: "manipulation"
+            },
+            children: "🔥"
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            onTouchStart: () => setPlayerX((x) => Math.min(WIDTH - 50, x + 20)),
+            onTouchEnd: (e) => e.preventDefault(),
+            style: {
+              width: "64px",
+              height: "64px",
+              borderRadius: "50%",
+              backgroundColor: "rgba(59, 130, 246, 0.5)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "white",
+              fontSize: "28px",
+              border: "none",
+              padding: 0,
+              touchAction: "manipulation"
+            },
+            children: "→"
+          }
+        )
+      ] }) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: showLevelTransition && /* @__PURE__ */ jsxRuntimeExports.jsx(LevelTransition, { level }) }),
+    (gameOver2 || gameWon) && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      GameOverModal,
+      {
+        score: finalScore,
+        level,
+        isWin: gameWon,
+        onRestart: () => {
+          document.body.style.overflow = "auto";
+          initGame();
+        },
+        onClose: () => {
+          document.body.style.overflow = "auto";
+          setActive(false);
+          setGameOver(false);
+          setGameWon(false);
+        }
+      }
+    )
+  ] });
+}
+clientExports.createRoot(document.getElementById("root")).render(
+  /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(SpaceInvaders, {}) })
+);
+//# sourceMappingURL=space_invader-LQ1t13Pa.js.map

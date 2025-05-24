@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 /* Base styles */
+
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #1a1a1a;
+    font-family: 'Press Start 2P', monospace;
+    background-color: #000000;
     color: #ffffff;
     margin: 0;
     padding: 0;
@@ -14,44 +17,87 @@ body {
 }
 
 /* Main page styles */
+
 .main-container {
-    background-color: #2d2d2d;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    padding: 40px;
+    background-color: #000000;
+    border: 2px solid #38bdf8;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+    padding: 30px;
     width: 90%;
     max-width: 800px;
     margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .project-card {
-    background-color: #383838;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 20px 0;
-    transition: transform 0.2s;
+    background-color: #000000;
+    border: 2px solid #38bdf8;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 20px auto;
+    max-width: 500px;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+    transition: all 0.3s ease;
+    width: 100%;
 }
 
 .project-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
+}
+
+.project-card h2 {
+    color: #38bdf8;
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.project-card p {
+    color: #94a3b8;
+    line-height: 1.6;
+    font-size: 0.8em;
+    margin-bottom: 25px;
 }
 
 .project-link {
     display: inline-block;
-    background-color: #4CAF50;
-    color: white;
-    text-decoration: none;
+    background-color: transparent;
+    border: 2px solid #38bdf8;
+    color: #38bdf8;
     padding: 12px 24px;
-    border-radius: 25px;
-    margin-top: 15px;
-    transition: background-color 0.2s;
+    border-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.8em;
+    text-decoration: none;
+    transition: all 0.3s ease;
 }
 
 .project-link:hover {
-    background-color: #45a049;
+    background-color: #38bdf8;
+    color: #000000;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+}
+
+h1 {
+    color: #38bdf8;
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+    letter-spacing: 2px;
+    margin-bottom: 40px;
+    font-size: 2em;
 }
 
 /* Game container styles */
+
 .game-container {
     background-color: #2d2d2d;
     border-radius: 10px;
@@ -150,20 +196,23 @@ h2 {
 
 footer {
     margin-top: 30px;
-    color: #bbbbbb;
-    font-size: 0.9em;
+    color: #64748b;
+    font-size: 0.7em;
 }
 
 footer a {
-    color: #4CAF50;
+    color: #38bdf8;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 footer a:hover {
-    text-decoration: underline;
+    color: #0ea5e9;
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.4);
 }
 
 /* Modal styles */
+
 .game-over-modal {
     position: fixed;
     top: 0;
