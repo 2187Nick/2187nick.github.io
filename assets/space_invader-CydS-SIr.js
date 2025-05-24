@@ -28403,6 +28403,8 @@ function SpaceInvaders() {
   const [gameWon, setGameWon] = reactExports.useState(false);
   const [finalScore, setFinalScore] = reactExports.useState(1e3);
   const [forceUpdate, setForceUpdate] = reactExports.useState(0);
+  const [shotsFired, setShotsFired] = reactExports.useState(0);
+  const shotsFiredRef = reactExports.useRef(0);
   const forceRender = reactExports.useCallback(() => {
     setForceUpdate((prev) => prev + 1);
     console.log("Forcing re-render");
@@ -28421,6 +28423,11 @@ function SpaceInvaders() {
     const now2 = Date.now();
     if (now2 - lastShotRef.current < SHOOT_COOLDOWN) return;
     lastShotRef.current = now2;
+    setShotsFired((s) => {
+      const newShots = s + 1;
+      shotsFiredRef.current = newShots;
+      return newShots;
+    });
     setBullets((bs) => [
       ...bs,
       {
@@ -28448,6 +28455,16 @@ function SpaceInvaders() {
       soundsRef.current[key] = loadSound(url);
     });
   }, []);
+  const calculateEfficiencyBonus = (shots, invaderCount, level2) => {
+    const perfectScore = invaderCount;
+    const maxBonus = 1e3 * level2;
+    if (shots <= perfectScore) {
+      return maxBonus;
+    }
+    const efficiency = perfectScore / shots;
+    const bonus = Math.floor(maxBonus * efficiency);
+    return Math.max(Math.floor(maxBonus * 0.1), bonus);
+  };
   const calculateInvaderPoints = (row, level2, isSpecial = false) => {
     const rowBonus = Math.max(3 - row, 0) * 50;
     const levelBonus = (level2 - 1) * 25;
@@ -28477,11 +28494,21 @@ function SpaceInvaders() {
   );
   const initGame = (startNewGame = true) => {
     console.log("=== INIT GAME CALLED ===");
+    console.log("startNewGame:", startNewGame);
+    const currentLevel = startNewGame ? 1 : levelRef.current;
+    console.log("Using level:", currentLevel);
     if (startNewGame) {
+      console.log("Starting new game, resetting to level 1");
       setLevel(1);
       levelRef.current = 1;
+      setShotsFired(0);
+      shotsFiredRef.current = 0;
+      setScore(0);
+      scoreRef.current = 0;
+    } else {
+      console.log("Continuing at level:", currentLevel);
+      setLevel(currentLevel);
     }
-    const currentLevel = startNewGame ? 1 : levelRef.current;
     const invadersPerRow = Math.min(INV_COLS + Math.floor(currentLevel / 2), 14);
     const invaderRows = Math.min(INV_ROWS + Math.floor(currentLevel / 3), 6);
     const inv = [];
@@ -28521,17 +28548,15 @@ function SpaceInvaders() {
     setBullets([]);
     setPlayerX(WIDTH / 2 - 20);
     setDir(1);
-    if (startNewGame) {
-      setScore(0);
-    }
     setActive(true);
     setGameOver(false);
     setGameWon(false);
     setFinalScore(0);
     console.log("Game initialized successfully!");
-    console.log(`New state will be: gameOver=false, gameWon=false, active=true, level: ${currentLevel}`);
-    window.gameDebug = true;
-    playSound("gameStart");
+    console.log(`New state: gameOver=false, gameWon=false, active=true, level: ${currentLevel}, score: ${scoreRef.current}`);
+    if (startNewGame) {
+      playSound("gameStart");
+    }
   };
   reactExports.useEffect(() => {
     if (!active) return;
@@ -28630,16 +28655,31 @@ function SpaceInvaders() {
       }
       if (remainingInvaders.length === 0) {
         playSound("gameWin");
-        const newLevel = levelRef.current + 1;
+        const currentLevelValue = levelRef.current;
+        console.log("Current level at completion:", currentLevelValue);
+        const totalInvaders = currentLevelValue <= 2 ? INV_COLS * INV_ROWS : Math.min(INV_COLS + Math.floor(currentLevelValue / 2), 14) * Math.min(INV_ROWS + Math.floor(currentLevelValue / 3), 6);
+        const efficiencyBonus = calculateEfficiencyBonus(shotsFiredRef.current, totalInvaders, currentLevelValue);
+        const currentScore = scoreRef.current;
+        const newScoreWithBonus = currentScore + efficiencyBonus;
+        scoreRef.current = newScoreWithBonus;
+        setScore(newScoreWithBonus);
+        const nextLevel = currentLevelValue + 1;
+        console.log("Transitioning to level:", nextLevel);
+        levelRef.current = nextLevel;
+        setLevel(nextLevel);
         setActive(false);
+        console.log(`LEVEL ${currentLevelValue} COMPLETE!`);
+        console.log(`Accuracy Bonus: ${efficiencyBonus} pts`);
+        console.log(`Shots Fired: ${shotsFiredRef.current}/${totalInvaders}`);
+        setShotsFired(0);
+        shotsFiredRef.current = 0;
         setShowLevelTransition(true);
-        setLevel(newLevel);
-        const nextLevel = newLevel;
-        setTimeout(() => {
+        const startNextLevel = () => {
+          console.log("Starting next level:", nextLevel);
           setShowLevelTransition(false);
-          levelRef.current = nextLevel;
           initGame(false);
-        }, 3e3);
+        };
+        setTimeout(startNextLevel, 3e3);
       }
     }, TICK_MS);
     return () => clearInterval(loop);
@@ -28829,7 +28869,7 @@ function SpaceInvaders() {
         )
       ] }) })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: showLevelTransition && /* @__PURE__ */ jsxRuntimeExports.jsx(LevelTransition, { level }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { children: showLevelTransition && /* @__PURE__ */ jsxRuntimeExports.jsx(LevelTransition, { level: levelRef.current }) }),
     (gameOver2 || gameWon) && /* @__PURE__ */ jsxRuntimeExports.jsx(
       GameOverModal,
       {
@@ -28853,4 +28893,4 @@ function SpaceInvaders() {
 clientExports.createRoot(document.getElementById("root")).render(
   /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(SpaceInvaders, {}) })
 );
-//# sourceMappingURL=space_invader-LQ1t13Pa.js.map
+//# sourceMappingURL=space_invader-CydS-SIr.js.map
