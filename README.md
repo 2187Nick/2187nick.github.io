@@ -10,7 +10,7 @@ Games using xyflow library
 | Rank | Player&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Score&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
 |:----:|:-----------------------------|:-----------------|:-----------------------|
 | 🥇 1 | Freddyt007                   | 213872          | 2025-05-25           |
-| 🥈 2 | Freddyt007                   | 140397          | 2025-05-25           |
-| 🥉 3 | Freddyt007                   | 138580          | 2025-05-25           |
+| 🥈 2 | N                            | 143273          | 2025-05-25           |
+| 🥉 3 | Freddyt007                   | 140397          | 2025-05-25           |
 
 
