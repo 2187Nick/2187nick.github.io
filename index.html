@@ -1,27 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Space Invaders XYFlow</title>
-
+    <title>2187Nick — XYFlow Projects</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Space Invaders XYFlow">
-
-  <link rel="stylesheet" crossorigin href="../assets/main-hvIiC0Sp.css">
+    <meta name="description" content="Interactive experiments built with XYFlow by 2187Nick">
+    <link rel="stylesheet" crossorigin href="../assets/main-hvIiC0Sp.css">
+    <style>
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            width: 100%;
+            justify-items: center;
+        }
+        .project-card {
+            max-width: 340px;
+            width: 100%;
+        }
+        .card-tag {
+            display: inline-block;
+            font-size: 0.55em;
+            letter-spacing: 2px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 14px;
+        }
+        .card-tag-game  { border: 1px solid #38bdf8; color: #38bdf8; }
+        .card-tag-ai    { border: 1px solid #7c3aed; color: #a78bfa; }
+        .project-card.ai-card {
+            border-color: #7c3aed;
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.2);
+        }
+        .project-card.ai-card:hover {
+            box-shadow: 0 0 28px rgba(124, 58, 237, 0.45);
+        }
+        .project-card.ai-card h2 {
+            color: #a78bfa;
+            text-shadow: 0 0 8px rgba(124, 58, 237, 0.5);
+        }
+        .project-link.ai-link {
+            border-color: #7c3aed;
+            color: #a78bfa;
+        }
+        .project-link.ai-link:hover {
+            background-color: #7c3aed;
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+        }
+    </style>
 </head>
 <body>
     <div class="main-container">
-        <h1>GameKing Challenge</h1>
-        <div class="content">           
+        <h1>XYFlow Lab</h1>
+        <div class="content">
+            <div class="project-card ai-card">
+                <span class="card-tag card-tag-ai">AI · VISUALIZATION</span>
+                <h2>Neural Pulse</h2>
+                <p>Watch a live neural network classify animals in real time. Signal propagation, animated edges, and interactive inference — all rendered with XYFlow nodes.</p>
+                <a href="neural-pulse.html" class="project-link ai-link">Launch Demo</a>
+            </div>
             <div class="project-card">
+                <span class="card-tag card-tag-game">GAME · LEADERBOARD</span>
                 <h2>Space Invaders</h2>
-                <p>High score gets the GameKing badge in discord</p>
-                <p>Built with XYFlow.</p>
-                <a href="space_invader.html" class="project-link">Play Space Invaders</a>
+                <p>High score earns the GameKing badge in Discord. Built entirely with XYFlow — every alien, bullet and ship is a React Flow node.</p>
+                <a href="space_invader.html" class="project-link">Play Now</a>
             </div>
         </div>
     </div>
     <footer>
-        <p>Created by <a href="https://github.com/2187Nick" target="_blank">2187Nick</a> | May 2025</p>
+        <p>Created by <a href="https://github.com/2187Nick" target="_blank">2187Nick</a> | Built with XYFlow</p>
     </footer>
 </body>
 </html>
