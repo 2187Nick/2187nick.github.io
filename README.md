@@ -10,7 +10,7 @@ Games using xyflow library
 | Rank | Player&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Score&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
 |:----:|:-----------------------------|:-----------------|:-----------------------|
 | 🥇 1 | Freddyt007                   | 213872          | 2025-05-25           |
-| 🥈 2 | jaxw                         | 179139          | 2025-05-29           |
-| 🥉 3 | jaxw                         | 178160          | 2025-05-29           |
+| 🥈 2 | EazyDuzIt                    | 183564          | 2026-03-03           |
+| 🥉 3 | jaxw                         | 179139          | 2025-05-29           |
 
 
